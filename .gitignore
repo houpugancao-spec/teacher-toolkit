@@ -1,0 +1,16 @@
+# Google Drive 系统文件
+desktop.ini
+*.tmp
+~$*
+
+# 敏感资料
+.env
+*.key
+credentials.*
+
+# Claude Code 本地设置（含 permissions、可能记录 token，绝不上云）
+.claude/
+
+# Node.js
+node_modules/
+package-lock.json
