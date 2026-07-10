@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孔子 · 第二节</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script>
+window.LESSON = {
+  id:"kongzi-2", n:2, title:"六艺 & 独立思考", subtitle:"The Six Arts & Thinking",
+  sections:[
+    { type:"hook", title:"猜一猜 Guess", sub:"古代学生要学「六艺」，里面有没有射箭？ Did the Six Arts include archery?",
+      options:[
+        { html:'🏹 有射箭 Yes, archery', correct:true },
+        { html:'❌ 没有 No archery', correct:false }
+      ],
+      reveal:'<div>有！六艺是「<b>礼 乐 射 御 书 数</b>」——<b>射</b>(射箭) 和 <b>御</b>(驾马车) 都是打仗的本领。<br>古代读书人要 <b>文武双全</b> (both scholar and warrior)！ 🏹🐎</div>'
+    },
+    { type:"listen", title:"听力① Listening 1", sub:"六艺 The Six Arts", audio:"audio/seg3.mp3",
+      questions:[
+        { ask:"① 六艺一共有几种本领？", py:"How many skills are in the Six Arts?", answer:1,
+          options:["三种 three","六种 six","十种 ten"] },
+        { ask:"② 下面哪个是六艺之一？", py:"Which one is part of the Six Arts?", answer:1,
+          options:["画画 painting","射箭 archery","游泳 swimming"] },
+        { ask:"③ 古代学射箭、驾马车主要为了什么？", py:"Why learn archery & chariots?", answer:1,
+          options:["为了游戏 for games","为了打仗 for war","为了运动 for exercise"] }
+      ] },
+    { type:"vocab", title:"生词 New words", sub:"点卡片翻面 Tap to flip",
+      words:[
+        {hz:"射箭",py:"shèjiàn",en:"archery",emo:"🏹"},
+        {hz:"音乐",py:"yīnyuè",en:"music",emo:"🎵"},
+        {hz:"古代",py:"gǔdài",en:"ancient",emo:"🏛️"},
+        {hz:"打仗",py:"dǎzhàng",en:"war / fight",emo:"⚔️"},
+        {hz:"礼仪",py:"lǐyí",en:"manners",emo:"🙇"},
+        {hz:"算术",py:"suànshù",en:"maths",emo:"🔢"},
+        {hz:"思考",py:"sīkǎo",en:"to think",emo:"🤔"},
+        {hz:"学习",py:"xuéxí",en:"to study",emo:"📚"}
+      ] },
+    { type:"match", title:"连一连 Match", sub:"汉字配英文 Match",
+      words:[
+        {hz:"射箭",en:"archery"},{hz:"音乐",en:"music"},{hz:"古代",en:"ancient"},
+        {hz:"打仗",en:"war"},{hz:"思考",en:"think"},{hz:"学习",en:"study"}
+      ] },
+    { type:"listen", title:"听力② Listening 2", sub:"会学习 How to learn well", audio:"audio/seg4.mp3",
+      questions:[
+        { ask:"① 孔子觉得学习时最重要的是什么？", py:"What matters most in learning?", answer:1,
+          options:["死记硬背 rote memorising","独立思考 thinking for yourself","考高分 high marks"] },
+        { ask:"② 「学而不思则罔」——只读书不动脑会怎样？", py:"Study without thinking =？", answer:0,
+          options:["会迷惑、糊涂 confused","会很聪明 clever","会很快乐 happy"] },
+        { ask:"③ 小明说：只会问问题、却不读书，会怎样？", py:"Only asking, never studying =？", answer:0,
+          options:["找不到答案 no answers","找到答案 find answers","很厉害 great"] }
+      ] },
+    { type:"culture", title:"六艺是什么？ The Six Arts", sub:"古代读书人的六种本领",
+      facts:[
+        {k:"🙇", html:'<b>礼 lǐ</b> — 礼仪 manners'},
+        {k:"🎵", html:'<b>乐 yuè</b> — 音乐 music'},
+        {k:"🏹", html:'<b>射 shè</b> — 射箭 archery'},
+        {k:"🐎", html:'<b>御 yù</b> — 驾马车 chariot driving'},
+        {k:"✍️", html:'<b>书 shū</b> — 写字 writing'},
+        {k:"🔢", html:'<b>数 shù</b> — 算术 maths'},
+        {k:"⚔️", html:'射、御 是「武」(打仗本领)，礼乐书数 是「文」→ 孔子要学生 <b>文武双全</b>。'},
+        {k:"🏫", html:'有点像今天学 语文 · 数学 · 音乐 · 体育。'}
+      ] },
+    { type:"speak", title:"说一说 Speak", sub:"用句型说一句 Use the frame",
+      frame:'六艺里我最想学 <b style="color:#c0392b">＿＿</b> ，<br>因为 <b style="color:#c0392b">＿＿</b> 。',
+      bank:["射箭 archery","音乐 music","驾马车 chariot"],
+      eg:'例：六艺里我最想学射箭，因为射箭又酷又能锻炼身体。'
+    },
+    { type:"quiz", title:"小测验 Mini quiz", sub:"记住了多少？",
+      questions:[
+        { ask:"1. 六艺一共有几种？", answer:0, options:["六种 six","四种 four","八种 eight"] },
+        { ask:"2. 「射箭」的英文是？", answer:0, options:["archery","music","writing"] },
+        { ask:"3. 古代学射箭主要为了？", answer:1, options:["游戏 games","打仗 war"] },
+        { ask:"4. 孔子最看重学习中的什么？", answer:0, options:["独立思考 thinking","死记硬背 rote"] },
+        { ask:"5. 「打仗」是什么意思？", answer:2, options:["study 学习","music 音乐","war / fight 打仗"] }
+      ] }
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

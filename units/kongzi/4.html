@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孔子 · 第四节</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script>
+window.LESSON = {
+  id:"kongzi-4", n:4, title:"两小儿辩日 & 真智慧", subtitle:"The Sun Debate & True Wisdom",
+  sections:[
+    { type:"hook", title:"猜一猜 Guess", sub:"两个小孩问孔子：太阳什么时候离我们近？孔子怎么回答？",
+      options:[
+        { html:'🤔 他说「我不知道」 "I don\'t know"', correct:true },
+        { html:'😎 他马上说出答案 gave the answer', correct:false }
+      ],
+      reveal:'<div>孔子说：「<b>我不知道</b>」！他不觉得承认不懂是丢脸的事。<br>「<b>知之为知之，不知为不知</b>」——知道就说知道，不知道就说不知道，<b>这才是真智慧</b>。 🧠</div>'
+    },
+    { type:"listen", title:"听力① Listening 1", sub:"两小儿辩日 The sun debate", audio:"audio/seg7.mp3",
+      questions:[
+        { ask:"① 两个小孩在争论什么？", py:"What were the children arguing about?", answer:0,
+          options:["太阳什么时候离人近 when the sun is closest","月亮 the moon","天气 the weather"] },
+        { ask:"② 一个小孩说早上的太阳更近，因为它？", py:"Morning sun is closer because it…", answer:0,
+          options:["看起来最大 looks biggest","最热 hottest","最亮 brightest"] },
+        { ask:"③ 孔子回答小孩的问题时说了什么？", py:"How did Confucius answer?", answer:1,
+          options:["马上说出答案 gave the answer","他说他不知道 said he didn't know","他生气了 got angry"] }
+      ] },
+    { type:"vocab", title:"生词 New words", sub:"点卡片翻面 Tap to flip",
+      words:[
+        {hz:"太阳",py:"tàiyáng",en:"sun",emo:"☀️"},
+        {hz:"早上",py:"zǎoshang",en:"morning",emo:"🌅"},
+        {hz:"中午",py:"zhōngwǔ",en:"noon",emo:"🕛"},
+        {hz:"争论",py:"zhēnglùn",en:"to argue",emo:"💬"},
+        {hz:"承认",py:"chéngrèn",en:"to admit",emo:"🙋"},
+        {hz:"智慧",py:"zhìhuì",en:"wisdom",emo:"🧠"},
+        {hz:"诚实",py:"chéngshí",en:"honest",emo:"😇"},
+        {hz:"尊敬",py:"zūnjìng",en:"to respect",emo:"🙇"}
+      ] },
+    { type:"match", title:"连一连 Match", sub:"汉字配英文 Match",
+      words:[
+        {hz:"太阳",en:"sun"},{hz:"早上",en:"morning"},{hz:"中午",en:"noon"},
+        {hz:"智慧",en:"wisdom"},{hz:"承认",en:"admit"},{hz:"诚实",en:"honest"}
+      ] },
+    { type:"listen", title:"听力② Listening 2", sub:"总结：了不起的孔子", audio:"audio/seg8.mp3",
+      questions:[
+        { ask:"① 中国人尊敬孔子，是因为他？", py:"Why is he respected?", answer:2,
+          options:["很有钱 rich","长得高 tall","好学、给大家平等机会、实事求是 studious, fair & honest"] },
+        { ask:"② 小华说孔子是什么样的人？", py:"What kind of person?", answer:0,
+          options:["勤奋好学、谦虚诚实 hard-working & humble","懒惰 lazy","骄傲 arrogant"] },
+        { ask:"③ 「不懂装懂」是好还是不好？", py:"Pretending to know — good or bad?", answer:1,
+          options:["很好 good","不好，应该诚实 bad, be honest","很聪明 clever"] }
+      ] },
+    { type:"culture", title:"真智慧 True wisdom", sub:"孔子为什么被尊为「圣人」",
+      facts:[
+        {k:"🧠", html:'<b>知之为知之，不知为不知</b> — say you know if you know, admit it if you don\'t.'},
+        {k:"😇", html:'承认「我不知道」不丢脸——这才是 <b>诚实</b> 和 <b>智慧</b>。'},
+        {k:"📖", html:'<b>两小儿辩日</b> 出自古书《列子》：连聪明的孔子也有不知道的事。'},
+        {k:"⭐", html:'孔子被尊为「<b>圣人</b>」，因为：好学 + 有教无类(平等) + 实事求是(诚实)。'}
+      ] },
+    { type:"speak", title:"说一说 Speak", sub:"用句型说一句 Use the frame",
+      frame:'如果我不知道答案，我会 <b style="color:#c0392b">＿＿</b> 。',
+      bank:["诚实地说「我不知道」","去查一查","问老师"],
+      eg:'例：如果我不知道答案，我会诚实地说「我不知道」，然后去查一查。'
+    },
+    { type:"quiz", title:"单元复习 Unit review", sub:"四节都考一考！ All four sections",
+      questions:[
+        { ask:"1.（第一节）孔子身高大约多少？", answer:0, options:["1.86 米","1.50 米","1.60 米"] },
+        { ask:"2.（第二节）六艺一共有几种？", answer:1, options:["三种","六种","十种"] },
+        { ask:"3.（第三节）「有教无类」意思是？", answer:0, options:["人人都能学习","只有贵族能学"] },
+        { ask:"4.（第四节）孔子被两小孩问住时说？", answer:1, options:["我知道答案","我不知道"] },
+        { ask:"5. 「知之为知之，不知为不知」教我们要？", answer:0, options:["诚实 honest","骄傲 proud"] }
+      ] }
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

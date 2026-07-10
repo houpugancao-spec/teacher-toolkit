@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孔子 · 第三节</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script>
+window.LESSON = {
+  id:"kongzi-3", n:3, title:"好学 & 有教无类", subtitle:"Love of Learning & Education for All",
+  sections:[
+    { type:"hook", title:"猜一猜 Guess", sub:"在孔子以前，谁能上学读书？ Before Confucius, who could go to school?",
+      options:[
+        { html:'👑 只有有钱的贵族 Only rich nobles', correct:true },
+        { html:'👨‍👩‍👧 所有人都可以 Everyone', correct:false }
+      ],
+      reveal:'<div>以前<b>只有贵族</b>能读书！但孔子是第一个说「<b>有教无类</b>」的老师——<br>不管有钱没钱，只要愿意学，他都教。 🌍</div>'
+    },
+    { type:"listen", title:"听力① Listening 1", sub:"孔子好学 A lifelong learner", audio:"audio/seg5.mp3",
+      questions:[
+        { ask:"① 孔子对学习是什么态度？", py:"His attitude to learning?", answer:1,
+          options:["学一点就够了 enough is enough","学而不厌，从不满足 never tired of it","不喜欢学 dislikes it"] },
+        { ask:"② 「三人行，必有我师」是什么意思？", py:'"Among any three, one can teach me"', answer:0,
+          options:["每个人都有值得我学的地方 everyone can teach me","三个人才有一个老师","我最厉害 I am the best"] },
+        { ask:"③ 看到别人的缺点，我们应该怎样？", py:"When we see others' faults?", answer:1,
+          options:["笑话别人 laugh at them","反省自己 reflect on ourselves","不管 ignore"] }
+      ] },
+    { type:"vocab", title:"生词 New words", sub:"点卡片翻面 Tap to flip",
+      words:[
+        {hz:"老师",py:"lǎoshī",en:"teacher",emo:"👨‍🏫"},
+        {hz:"学生",py:"xuéshēng",en:"student",emo:"🧑‍🎓"},
+        {hz:"帮助",py:"bāngzhù",en:"to help",emo:"🤝"},
+        {hz:"平等",py:"píngděng",en:"equal",emo:"⚖️"},
+        {hz:"贵族",py:"guìzú",en:"noble",emo:"👑"},
+        {hz:"长处",py:"chángchù",en:"strengths",emo:"👍"},
+        {hz:"缺点",py:"quēdiǎn",en:"weakness",emo:"👎"},
+        {hz:"反省",py:"fǎnxǐng",en:"to reflect",emo:"🪞"}
+      ] },
+    { type:"match", title:"连一连 Match", sub:"汉字配英文 Match",
+      words:[
+        {hz:"老师",en:"teacher"},{hz:"学生",en:"student"},{hz:"帮助",en:"help"},
+        {hz:"平等",en:"equal"},{hz:"贵族",en:"noble"},{hz:"长处",en:"strengths"}
+      ] },
+    { type:"listen", title:"听力② Listening 2", sub:"有教无类 Education for all", audio:"audio/seg6.mp3",
+      questions:[
+        { ask:"① 那个时候，学习本来是谁的特权？", py:"Learning was whose privilege?", answer:1,
+          options:["农民 farmers","贵族 nobles","小孩 children"] },
+        { ask:"② 孔子愿意教什么样的人？", py:"Whom did Confucius teach?", answer:1,
+          options:["只教有钱人 only the rich","只要愿意学，不管穷富都教 anyone willing to learn","只教聪明人 only clever ones"] },
+        { ask:"③ 孔子是第一个做什么的老师？", py:"What was he the first to do?", answer:0,
+          options:["让所有人都有机会学习 gave everyone a chance","只教贵族 only taught nobles","不教书 didn't teach"] }
+      ] },
+    { type:"culture", title:"有教无类 Education for all", sub:"孔子最了不起的一点",
+      facts:[
+        {k:"📜", html:'<b>有教无类 yǒu jiào wú lèi</b> — teach everyone, no matter rich or poor.'},
+        {k:"👑", html:'孔子以前：读书是贵族的 <b>特权</b> (privilege)，普通人不能上学。'},
+        {k:"🌍", html:'孔子第一个说：谁想学，我都教 → 让普通人也能读书。'},
+        {k:"🤝", html:'<b>三人行，必有我师</b> — 每个人都有值得学习的地方 (everyone can be your teacher)。'},
+        {k:"🏫", html:'联系今天：澳洲每个孩子都能上学，就是这个道理。'}
+      ] },
+    { type:"speak", title:"说一说 Speak（三人行必有我师）", sub:"找同学的长处 Find a classmate's strength",
+      frame:'我的同学 <b style="color:#c0392b">＿＿</b> 有一个长处，<br>是 <b style="color:#c0392b">＿＿</b> 。',
+      bank:["很热心 kind","跑得快 fast","会画画 draws well"],
+      eg:'例：我的同学小美有一个长处，是她很会帮助别人。'
+    },
+    { type:"quiz", title:"小测验 Mini quiz", sub:"记住了多少？",
+      questions:[
+        { ask:"1. 「有教无类」是什么意思？", answer:0, options:["人人都能学习 everyone can study","只有贵族能学","没有学校"] },
+        { ask:"2. 孔子以前，谁能上学？", answer:1, options:["所有人 everyone","贵族 nobles"] },
+        { ask:"3. 「三人行，必有我师」意思是？", answer:0, options:["每个人都有值得我学的地方","三个人才有老师"] },
+        { ask:"4. 「平等」的英文是？", answer:0, options:["equal","noble","teacher"] },
+        { ask:"5. 看到别人的缺点，应该？", answer:1, options:["笑话别人 laugh","反省自己 reflect"] }
+      ] }
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>
