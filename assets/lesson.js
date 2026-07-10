@@ -101,7 +101,7 @@
       <div id="submitFb" class="fb" style="margin-top:12px"></div>
     </div>
     <div class="done-box" id="done"><div class="star">🎉⭐</div><div>太棒了！你完成了这一课！</div><div class="n"><span id="finalScore">0</span> / ${maxScore}</div></div>
-    <p class="foot">${esc(L.unitTitle||"")} · 第${L.n}课<br>© VCE 中文备课 · 学生自测练习</p>
+    <p class="foot">${esc(L.unitTitle||"")} · 第${L.n}课<br>学生自测练习</p>
   </div>`;
   document.body.innerHTML = body;
 

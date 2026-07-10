@@ -13,7 +13,7 @@
   <input class="search" id="search" placeholder="🔍 搜索：课题 / 主题 / 关键词…">
   <div class="chips" id="chips"></div>
   <div id="list"></div>
-  <p class="foot">© VCE 中文备课 · 学生自测练习　|　老师在 Supabase 看成绩</p>
+  <p class="foot">学生自测练习</p>
 </div>
 
 <script src="assets/catalog.js"></script>
@@ -38,7 +38,9 @@
     if(filterUnit!=="all"&&u.id!==filterUnit)return false;
     if(!kw)return true;
     const hay=(le.title+" "+(le.tags||[]).join(" ")+" "+u.title+" "+u.topic+" "+u.level).toLowerCase();
-    return hay.includes(kw);
+    // 把查询拆成「拉丁词 + 单个中文字」，全部命中才算匹配
+    const terms=kw.match(/[a-z0-9]+|[一-鿿]/g)||[kw];
+    return terms.every(t=>hay.includes(t));
   }
   function card(le,u){
     const tags=(le.tags||[]).map(t=>`<span>${t}</span>`).join("");

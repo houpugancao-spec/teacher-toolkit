@@ -13,7 +13,7 @@ window.CATALOG = {
       topic: "人物·文化",
       lessons: [
         { id:"kongzi-1", n:1, title:"孔子是谁？", url:"units/kongzi/1.html",
-          tags:["孔子","身高","出身","生词"], ready:true },
+          tags:["孔子","身高","长人","出身","自学","圣人","生词"], ready:true },
         { id:"kongzi-2", n:2, title:"六艺 & 会学习", url:"units/kongzi/2.html",
           tags:["六艺","学习方法"], ready:false },
         { id:"kongzi-3", n:3, title:"有教无类 & 三人行", url:"units/kongzi/3.html",
