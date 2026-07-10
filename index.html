@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>中文听力练习</title>
+<title>VCE 中文</title>
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<div class="topbar"><div class="row"><div class="brand" id="brand">中文听力练习</div></div></div>
+<div class="topbar"><div class="row"><div class="brand" id="brand">VCE 中文</div></div></div>
 <div class="wrap">
-  <div class="hero"><h1 id="siteTitle">中文听力练习</h1><p id="tagline"></p></div>
-  <input class="search" id="search" placeholder="🔍 搜索：课题 / 主题 / 关键词…">
-  <div class="chips" id="chips"></div>
+  <div class="hero"><h1 id="siteTitle">VCE 中文</h1></div>
+  <input class="search" id="search" placeholder="🔍 全站搜索：课题 / 主题 / 关键词…">
+  <div class="chips" id="grades"></div>
+  <div class="crumb" id="crumb"></div>
   <div id="list"></div>
   <p class="foot">学生自测练习</p>
 </div>
@@ -20,52 +21,98 @@
 <script>
 (function(){
   const C=window.CATALOG;
+  const CN=["一","二","三","四","五","六","七","八","九","十","十一","十二"];
+  const CAT_ICO={lecture:"📖",practice:"✍️",homework:"📝",exam:"📊",other:"📦"};
+  const catName=id=>{const c=C.categories.find(x=>x.id===id);return c?c.name:id;};
   document.getElementById('brand').textContent=C.site;
   document.getElementById('siteTitle').textContent=C.site;
-  const tl=document.getElementById('tagline');
-  if(C.tagline){tl.textContent=C.tagline;}else{tl.style.display="none";}
   document.title=C.site;
-  let filterGrade="all", kw="";
 
-  // 每课的实际年级：单课 grade 优先，否则跟单元
-  const egrade=(le,u)=> le.grade || u.grade || "";
+  let state={g:0,cat:null,course:null,skill:null}, kw="";
+  const gradesEl=document.getElementById('grades'), crumbEl=document.getElementById('crumb'), listEl=document.getElementById('list');
 
-  // 筛选标签：全部 + 各年级
-  const chips=document.getElementById('chips');
-  const mk=(id,label)=>{const b=document.createElement('button');b.className='chip-f'+(id==="all"?' on':'');b.textContent=label;b.dataset.g=id;b.onclick=()=>{filterGrade=id;[...chips.children].forEach(c=>c.classList.toggle('on',c.dataset.g===id));render();};chips.appendChild(b);};
-  mk("all","全部");
-  (C.grades||[]).forEach(g=>mk(g,g));
+  // ---- 全站搜索索引 ----
+  const FLAT=[];
+  C.grades.forEach(g=>{
+    (g.lecture||[]).forEach(co=>(co.sections||[]).forEach(s=>FLAT.push({url:s.url,title:`第${CN[s.n-1]}节 ${s.title}`,ready:s.ready,tags:s.tags||[],path:`${g.name} · 授课 · ${co.no} ${co.title}`})));
+    const pr=g.practice||{};
+    Object.keys(pr).forEach(sk=>(pr[sk]||[]).forEach(it=>FLAT.push({url:it.url,title:it.title,ready:it.ready,tags:it.tags||[],path:`${g.name} · 练习 · ${sk}`})));
+    ["homework","exam","other"].forEach(k=>(g[k]||[]).forEach(it=>FLAT.push({url:it.url,title:it.title,ready:it.ready,tags:it.tags||[],path:`${g.name} · ${catName(k)}`})));
+  });
+  FLAT.forEach(f=>f.hay=(f.title+" "+f.tags.join(" ")+" "+f.path).toLowerCase());
+  function kwMatch(hay){const t=kw.match(/[a-z0-9]+|[一-鿿]/g)||[kw];return t.every(x=>hay.includes(x));}
+
+  // ---- 年级标签 ----
+  C.grades.forEach((g,i)=>{const b=document.createElement('button');b.className='chip-f'+(i===0?' on':'');b.textContent=g.name;b.onclick=()=>{state={g:i,cat:null,course:null,skill:null};render();};gradesEl.appendChild(b);});
 
   document.getElementById('search').addEventListener('input',e=>{kw=e.target.value.trim().toLowerCase();render();});
 
-  function matchKw(le,u){
-    if(!kw)return true;
-    const hay=(le.title+" "+(le.tags||[]).join(" ")+" "+u.title+" "+u.topic+" "+egrade(le,u)).toLowerCase();
-    // 拆成「拉丁词 + 单个中文字」，全部命中才算匹配
-    const terms=kw.match(/[a-z0-9]+|[一-鿿]/g)||[kw];
-    return terms.every(t=>hay.includes(t));
+  // ---- 卡片 ----
+  function catCard(g,c){
+    let cnt=0;
+    if(c.id==="lecture")cnt=(g.lecture||[]).length+" 门课";
+    else if(c.id==="practice"){let n=0;Object.values(g.practice||{}).forEach(a=>n+=a.length);cnt=n+" 个练习";}
+    else cnt=(g[c.id]||[]).length+" 项";
+    return `<div class="lcard nav cat" data-cat="${c.id}"><span class="ico">${CAT_ICO[c.id]||"📁"}</span><div><div class="tt">${c.name}</div><div class="cnt">${cnt}</div></div></div>`;
   }
-  function card(le,u){
-    const tags=(le.tags||[]).map(t=>`<span>${t}</span>`).join("");
-    if(le.ready===false)
-      return `<div class="lcard soon"><div class="no">第${le.n}课 · <span class="badge">敬请期待 Coming soon</span></div><div class="tt">${le.title}</div><div class="tags">${tags}</div></div>`;
-    return `<a class="lcard" href="${le.url}"><div class="no">第${le.n}课</div><div class="tt">${le.title}</div><div class="tags">${tags}</div></a>`;
+  function courseCard(co){return `<div class="lcard nav" data-course="${co.id}"><div class="no">${co.no}</div><div class="tt">${co.title}</div><div class="cnt">${co.topic||""} · ${(co.sections||[]).length} 节</div></div>`;}
+  function skillCard(g,sk){return `<div class="lcard nav" data-skill="${sk}"><div class="tt">${sk}</div><div class="cnt">${(g.practice[sk]||[]).length} 个</div></div>`;}
+  function linkCard(it,label){
+    const tags=(it.tags||[]).map(t=>`<span>${t}</span>`).join("");
+    const path=label?`<div class="res-path">${label}</div>`:"";
+    if(it.ready===false) return `<div class="lcard soon">${path}<div class="tt">${it.title}</div><div class="no"><span class="badge">敬请期待</span></div><div class="tags">${tags}</div></div>`;
+    return `<a class="lcard" href="${it.url}">${path}<div class="tt">${it.title}</div><div class="tags">${tags}</div></a>`;
   }
+  function sectionCard(s){
+    const it={url:s.url,title:`第${CN[s.n-1]}节 · ${s.title}`,ready:s.ready,tags:s.tags};
+    return linkCard(it);
+  }
+  const grid=h=>`<div class="cards">${h}</div>`;
+  const empty=t=>`<div class="empty">${t||"暂无内容 · 敬请期待"}</div>`;
+
+  // ---- 面包屑 ----
+  function crumb(){
+    const g=C.grades[state.g];
+    let h=`<a data-nav="grade">${g.name}</a>`;
+    if(state.cat){h+=`<span class="sep">›</span>`;
+      if(state.course||state.skill)h+=`<a data-nav="cat">${catName(state.cat)}</a>`;
+      else h+=`<span class="cur">${catName(state.cat)}</span>`;
+    }
+    if(state.course){const co=g.lecture.find(x=>x.id===state.course);h+=`<span class="sep">›</span><span class="cur">${co.no} ${co.title}</span>`;}
+    if(state.skill){h+=`<span class="sep">›</span><span class="cur">${state.skill}</span>`;}
+    crumbEl.innerHTML=h;
+  }
+
+  // ---- 渲染 ----
   function render(){
-    const box=document.getElementById('list'); let html="",any=false;
-    (C.grades||[]).forEach(g=>{
-      if(filterGrade!=="all"&&filterGrade!==g)return;
-      let gHtml="",gHas=false;
-      C.units.forEach(u=>{
-        const les=u.lessons.filter(le=>egrade(le,u)===g && matchKw(le,u));
-        if(!les.length)return; gHas=true;
-        gHtml+=`<div class="unit-h">${u.title} <span class="tag">${u.topic}</span></div>`;
-        gHtml+=`<div class="cards">${les.map(le=>card(le,u)).join("")}</div>`;
-      });
-      if(gHas){any=true;html+=`<div class="grade-h">${g}</div>`+gHtml;}
-    });
-    box.innerHTML=any?html:`<div class="empty">没有找到相关内容 No results</div>`;
+    [...gradesEl.children].forEach((c,i)=>c.classList.toggle('on',i===state.g));
+    if(kw){ crumbEl.innerHTML=""; const r=FLAT.filter(f=>kwMatch(f.hay)); listEl.innerHTML=r.length?grid(r.map(it=>linkCard(it,it.path)).join("")):empty("没有找到相关内容 No results"); return; }
+    crumb();
+    const g=C.grades[state.g];
+    if(!state.cat){ listEl.innerHTML=grid(C.categories.map(c=>catCard(g,c)).join("")); return; }
+    if(state.cat==="lecture"){
+      if(!state.course){ const co=g.lecture||[]; listEl.innerHTML=co.length?grid(co.map(courseCard).join("")):empty(); return; }
+      const course=g.lecture.find(x=>x.id===state.course);
+      listEl.innerHTML=grid((course.sections||[]).map(sectionCard).join("")); return;
+    }
+    if(state.cat==="practice"){
+      if(!state.skill){ listEl.innerHTML=grid(C.practiceSkills.map(sk=>skillCard(g,sk)).join("")); return; }
+      const items=g.practice[state.skill]||[]; listEl.innerHTML=items.length?grid(items.map(it=>linkCard(it)).join("")):empty(); return;
+    }
+    const items=g[state.cat]||[]; listEl.innerHTML=items.length?grid(items.map(it=>linkCard(it)).join("")):empty();
   }
+
+  // ---- 点击（下钻 + 面包屑）----
+  document.addEventListener('click',e=>{
+    const el=e.target.closest('[data-cat],[data-course],[data-skill],[data-nav]'); if(!el)return;
+    if(el.dataset.nav==="grade"){state.cat=state.course=state.skill=null;}
+    else if(el.dataset.nav==="cat"){state.course=state.skill=null;}
+    else if(el.dataset.cat){state.cat=el.dataset.cat;state.course=null;state.skill=null;}
+    else if(el.dataset.course){state.course=el.dataset.course;}
+    else if(el.dataset.skill){state.skill=el.dataset.skill;}
+    render();
+  });
+
   render();
 })();
 </script>

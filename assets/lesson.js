@@ -16,13 +16,19 @@
     if(s.type==="match") maxScore += (s.words||[]).length;
   });
 
-  // ---- 上一课 / 下一课（读 catalog 顺序）----
-  const flat = [];
-  (CAT?CAT.units:[]).forEach(u=>u.lessons.forEach(le=>flat.push(le)));
-  const idx = flat.findIndex(x=>x.id===L.id);
-  const prev = idx>0 ? flat[idx-1] : null;
-  const next = idx>=0 && idx<flat.length-1 ? flat[idx+1] : null;
-  const rel = u => "../../" + u;                 // 课页在 units/<u>/，根目录要退两级
+  // ---- 在 catalog 里定位本节所属的「课」，取同课的上一节/下一节 ----
+  const CN=["一","二","三","四","五","六","七","八","九","十","十一","十二"];
+  let course=null, gradeName="";
+  (CAT?CAT.grades:[]).forEach(g=>(g.lecture||[]).forEach(co=>{
+    if((co.sections||[]).some(s=>s.id===L.id)){course=co;gradeName=g.name;}
+  }));
+  const secs = course?(course.sections||[]):[];
+  const si = secs.findIndex(s=>s.id===L.id);
+  const curN = si>=0?secs[si].n:(L.n||1);
+  const prev = si>0 ? secs[si-1] : null;
+  const next = si>=0 && si<secs.length-1 ? secs[si+1] : null;
+  const courseLabel = course ? `${course.no} ${course.title}` : (L.unitTitle||"");
+  const rel = u => "../../" + u;                 // 课页在 units/<u>/，根目录退两级
   const navLink = (le,label)=> le && le.ready!==false
       ? `<a href="${rel(le.url)}">${label}</a>`
       : `<a class="disabled">${label}</a>`;
@@ -72,18 +78,18 @@
   function quiz(s){ return `<div class="card">${mcq(s.questions)}</div>`; }
 
   // ---- 组装页面 ----
-  document.title = `${L.title} · ${L.unitTitle||""}`;
+  document.title = `${courseLabel} 第${CN[curN-1]}节 · ${L.title}`;
   const body = `
   <div class="topbar">
     <div class="row">
-      <div class="brand">${esc(L.unitTitle||"")}<small>第${L.n}课 · ${esc(L.title)} ${L.subtitle?"· "+esc(L.subtitle):""}</small></div>
+      <div class="brand">${esc(courseLabel)}<small>第${CN[curN-1]}节 · ${esc(L.title)} ${L.subtitle?"· "+esc(L.subtitle):""}</small></div>
       <div class="score">⭐ <span id="score">0</span>/${maxScore}</div>
     </div>
     <div class="navbtns">
       <a href="../../index.html">🏠 主页</a>
-      <a href="../../index.html">📚 目录</a>
-      ${navLink(prev,"◀ 上一课")}
-      ${navLink(next,"下一课 ▶")}
+      <a href="../../index.html">🔍 目录/搜索</a>
+      ${navLink(prev,"◀ 上一节")}
+      ${navLink(next,"下一节 ▶")}
     </div>
   </div>
   <div class="wrap">
@@ -101,7 +107,7 @@
       <div id="submitFb" class="fb" style="margin-top:12px"></div>
     </div>
     <div class="done-box" id="done"><div class="star">🎉⭐</div><div>太棒了！你完成了这一课！</div><div class="n"><span id="finalScore">0</span> / ${maxScore}</div></div>
-    <p class="foot">${esc(L.unitTitle||"")} · 第${L.n}课<br>学生自测练习</p>
+    <p class="foot">${esc(gradeName)} · ${esc(courseLabel)} · 第${CN[curN-1]}节<br>学生自测练习</p>
   </div>`;
   document.body.innerHTML = body;
 
