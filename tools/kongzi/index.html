@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孔子 · 第1课：孔子是谁？</title>
+<style>
+  :root{
+    --blue:#1f6feb; --blue-d:#0b4fb0; --ink:#1a2230; --muted:#6b7686;
+    --ok:#1a7f4b; --ok-bg:#e6f6ec; --no:#c0392b; --no-bg:#fdecea;
+    --card:#ffffff; --line:#e3e8ef; --bg:#f4f7fb; --gold:#f5a623;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  .wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+  header{position:sticky;top:0;z-index:20;background:var(--blue);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  header .t{font-size:16px;font-weight:600}
+  header .t small{display:block;font-size:11px;font-weight:400;opacity:.85}
+  .score{background:rgba(255,255,255,.18);border-radius:20px;padding:5px 12px;font-size:14px;font-weight:600;white-space:nowrap}
+  h2{font-size:19px;margin:26px 0 4px;display:flex;align-items:center;gap:8px}
+  h2 .n{background:var(--blue);color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 12px 34px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 1px 3px rgba(20,40,80,.04)}
+  audio{width:100%;margin:4px 0 10px;height:40px}
+  .listen-tip{font-size:12px;color:var(--muted);margin-bottom:8px}
+  .q{margin:14px 0}
+  .q .ask{font-weight:600;margin-bottom:8px}
+  .q .ask .py{color:var(--muted);font-weight:400;font-size:13px}
+  .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:11px 14px;margin:7px 0;font-size:15px;cursor:pointer;transition:.15s;font-family:inherit;color:var(--ink)}
+  .opt:hover{border-color:var(--blue)}
+  .opt.correct{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:600}
+  .opt.wrong{background:var(--no-bg);border-color:var(--no);color:var(--no)}
+  .opt:disabled{cursor:default}
+  .fb{font-size:13px;margin-top:6px;font-weight:600;min-height:18px}
+  .fb.g{color:var(--ok)} .fb.b{color:var(--no)}
+  /* hook */
+  .choose{display:flex;gap:10px;flex-wrap:wrap}
+  .choose button{flex:1;min-width:130px;background:#fff;border:2px solid var(--line);border-radius:12px;padding:16px 10px;font-size:15px;cursor:pointer;font-family:inherit;color:var(--ink)}
+  .reveal{margin-top:14px;padding:14px;border-radius:12px;background:#fff8ec;border:1px solid #f0d9a8;display:none}
+  .reveal.show{display:block;animation:pop .3s}
+  @keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+  .big{font-size:30px;font-weight:700;color:var(--blue)}
+  /* flashcards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .flip{background:transparent;border:none;padding:0;height:110px;perspective:800px;cursor:pointer;font-family:inherit}
+  .flip .inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .flip.on .inner{transform:rotateY(180deg)}
+  .flip .side{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--line)}
+  .flip .front{background:#fff}
+  .flip .front .hz{font-size:30px;font-weight:700}
+  .flip .front .py{color:var(--muted);font-size:13px;margin-top:2px}
+  .flip .back{background:var(--blue);color:#fff;transform:rotateY(180deg);font-size:17px;padding:6px;text-align:center}
+  .flip .back .emo{font-size:26px;margin-bottom:2px}
+  .hint{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .col{display:flex;flex-direction:column;gap:9px}
+  .chip{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:12px;font-size:16px;cursor:pointer;text-align:center;font-family:inherit;color:var(--ink)}
+  .chip.sel{border-color:var(--blue);background:#eaf2ff}
+  .chip.done{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);cursor:default;font-weight:600}
+  .chip.miss{animation:shake .3s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  /* culture */
+  .facts{display:grid;grid-template-columns:1fr;gap:8px}
+  .fact{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .fact .k{font-size:22px;flex:none}
+  .fact b{color:var(--blue-d)}
+  /* speaking */
+  .frame{background:#eef4ff;border:1px dashed var(--blue);border-radius:12px;padding:14px;font-size:18px;text-align:center;margin-bottom:10px}
+  .bank{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .bank span{background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 14px;font-size:15px}
+  .eg{font-size:13px;color:var(--muted);margin-top:10px}
+  .done-box{background:linear-gradient(135deg,#1f6feb,#0b4fb0);color:#fff;border-radius:16px;padding:24px;text-align:center;margin:24px 0;display:none}
+  .done-box.show{display:block}
+  .done-box .star{font-size:40px}
+  .done-box .n{font-size:34px;font-weight:700}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
+  .py{font-family:"Segoe UI",sans-serif}
+</style>
+</head>
+<body>
+<header>
+  <div class="t">《学而不厌》第1课<small>孔子是谁？ Who was Confucius?</small></div>
+  <div class="score">⭐ <span id="score">0</span>/17</div>
+</header>
+<div class="wrap">
+
+  <!-- 1 HOOK -->
+  <h2><span class="n">1</span>猜一猜 Guess</h2>
+  <p class="sub">孔子长什么样？ What did Confucius look like?</p>
+  <div class="card">
+    <div class="choose">
+      <button onclick="hook(this,false)">🧓 又瘦又小的老人<br><small style="color:#6b7686">a small, thin old man</small></button>
+      <button onclick="hook(this,true)">💪 高大健壮的人<br><small style="color:#6b7686">a tall, strong man</small></button>
+    </div>
+    <div class="reveal" id="hookR">
+      <div>其实孔子身高大约 <span class="big">1.86 米</span> ！</div>
+      <div style="margin-top:6px">他长得<b>高大健壮</b>，当时的人叫他「<b>长人</b>」(cháng rén, "the tall man")。<br>是不是跟你想的不一样？ 😲</div>
+    </div>
+  </div>
+
+  <!-- 2 LISTEN 1 -->
+  <h2><span class="n">2</span>听力① Listening 1</h2>
+  <p class="sub">先听录音，再答题 Listen, then answer</p>
+  <div class="card">
+    <div class="listen-tip">🔊 可以反复听 · You can replay it</div>
+    <audio controls preload="none" src="audio/seg1.mp3"></audio>
+    <div class="q" data-a="1">
+      <div class="ask">① 小明以前以为孔子是什么样的人？ <span class="py">What did Xiaoming used to think?</span></div>
+      <button class="opt">又高又壮的人 a tall strong man</button>
+      <button class="opt">又瘦又小的老人 a small thin old man</button>
+      <button class="opt">年轻的学生 a young student</button>
+      <div class="fb"></div>
+    </div>
+    <div class="q" data-a="0">
+      <div class="ask">② 孔子的身高大约是多少？ <span class="py">How tall was Confucius?</span></div>
+      <button class="opt">大约 1.86 米</button>
+      <button class="opt">大约 1.60 米</button>
+      <button class="opt">大约 1.50 米</button>
+      <div class="fb"></div>
+    </div>
+    <div class="q" data-a="1">
+      <div class="ask">③ 当时的人叫孔子什么？ <span class="py">What did people call him?</span></div>
+      <button class="opt">老人 old man</button>
+      <button class="opt">长人 the tall man</button>
+      <button class="opt">老师 teacher</button>
+      <div class="fb"></div>
+    </div>
+  </div>
+
+  <!-- 3 VOCAB -->
+  <h2><span class="n">3</span>生词 New words</h2>
+  <p class="sub">点卡片翻面看意思 Tap a card to flip</p>
+  <div class="card">
+    <div class="grid" id="cards"></div>
+    <div class="hint">👆 点一下翻面 tap to flip</div>
+  </div>
+
+  <!-- 4 MATCH -->
+  <h2><span class="n">4</span>连一连 Match</h2>
+  <p class="sub">把汉字和英文配对 Match Chinese to English</p>
+  <div class="card">
+    <div class="match">
+      <div class="col" id="mLeft"></div>
+      <div class="col" id="mRight"></div>
+    </div>
+    <div class="fb" id="mFb" style="text-align:center;margin-top:10px"></div>
+  </div>
+
+  <!-- 5 LISTEN 2 -->
+  <h2><span class="n">5</span>听力② Listening 2</h2>
+  <p class="sub">孔子的小时候 Confucius as a child</p>
+  <div class="card">
+    <div class="listen-tip">🔊 可以反复听 · You can replay it</div>
+    <audio controls preload="none" src="audio/seg2.mp3"></audio>
+    <div class="q" data-a="1">
+      <div class="ask">① 孔子的家庭怎么样？ <span class="py">What was his family like?</span></div>
+      <button class="opt">很有钱 rich</button>
+      <button class="opt">很穷 poor</button>
+      <button class="opt">名门望族 noble family</button>
+      <div class="fb"></div>
+    </div>
+    <div class="q" data-a="1">
+      <div class="ask">② 孔子小时候做过什么工作？ <span class="py">What jobs did he do?</span></div>
+      <button class="opt">当老师 a teacher</button>
+      <button class="opt">管仓库、喂牲口 warehouse & feeding animals</button>
+      <button class="opt">当医生 a doctor</button>
+      <div class="fb"></div>
+    </div>
+    <div class="q" data-a="2">
+      <div class="ask">③ 孔子怎么学会「六艺」的？ <span class="py">How did he learn the "six arts"?</span></div>
+      <button class="opt">父亲教的 his father taught him</button>
+      <button class="opt">在学校学的 at school</button>
+      <button class="opt">靠自学 he taught himself</button>
+      <div class="fb"></div>
+    </div>
+  </div>
+
+  <!-- 6 CULTURE -->
+  <h2><span class="n">6</span>孔子小档案 Fact file</h2>
+  <p class="sub">认识真实的孔子 The real Confucius</p>
+  <div class="card">
+    <div class="facts">
+      <div class="fact"><span class="k">👤</span><div><b>孔子 Kǒngzǐ</b> — 英文叫 Confucius，中国最有名的老师。</div></div>
+      <div class="fact"><span class="k">⏳</span><div><b>约 2500 年前</b> 的人（春秋时期）。</div></div>
+      <div class="fact"><span class="k">📏</span><div>身高约 <b>1.86 米</b>，高大健壮，人称「长人」。</div></div>
+      <div class="fact"><span class="k">😢</span><div>身世很惨：<b>3 岁失去父亲，17 岁失去母亲</b>，家里很穷。</div></div>
+      <div class="fact"><span class="k">📚</span><div>靠 <b>自学</b> 成才，后来成为老师，被尊为「<b>圣人</b>」(shèngrén, a great sage)。</div></div>
+    </div>
+  </div>
+
+  <!-- 7 SPEAKING -->
+  <h2><span class="n">7</span>说一说 Speak</h2>
+  <p class="sub">用下面的句型说一句 Use the sentence frame</p>
+  <div class="card">
+    <div class="frame">我觉得孔子很 <b style="color:#c0392b">＿＿</b> ，<br>因为他 <b style="color:#c0392b">＿＿</b> 。</div>
+    <div class="bank"><span>聪明 clever</span><span>努力 hard-working</span><span>了不起 amazing</span></div>
+    <p class="eg">例：我觉得孔子很努力，因为他靠自学掌握了六艺。<br><span class="py">I think Confucius was hard-working, because he taught himself the six arts.</span></p>
+  </div>
+
+  <!-- 8 QUIZ -->
+  <h2><span class="n">8</span>小测验 Mini quiz</h2>
+  <p class="sub">看看你记住了多少 How much do you remember?</p>
+  <div class="card">
+    <div class="q" data-a="1">
+      <div class="ask">1. 「穷」是什么意思？</div>
+      <button class="opt">rich 有钱</button><button class="opt">poor 没钱</button><button class="opt">tall 高</button>
+      <div class="fb"></div>
+    </div>
+    <div class="q" data-a="0">
+      <div class="ask">2. 孔子长得高还是矮？</div>
+      <button class="opt">高 tall</button><button class="opt">矮 short</button>
+      <div class="fb"></div>
+    </div>
+    <div class="q" data-a="2">
+      <div class="ask">3. 「长人」是什么意思？</div>
+      <button class="opt">old man</button><button class="opt">teacher</button><button class="opt">the tall man 高个子</button>
+      <div class="fb"></div>
+    </div>
+    <div class="q" data-a="1">
+      <div class="ask">4. 孔子的家庭很有钱吗？</div>
+      <button class="opt">是的，很有钱</button><button class="opt">不是，很穷</button>
+      <div class="fb"></div>
+    </div>
+    <div class="q" data-a="0">
+      <div class="ask">5. 「聪明」的拼音是？</div>
+      <button class="opt">cōngming</button><button class="opt">cōngmíng（错）</button><button class="opt">chōngmíng</button>
+      <div class="fb"></div>
+    </div>
+  </div>
+
+  <div class="done-box" id="done">
+    <div class="star">🎉⭐</div>
+    <div>太棒了！你完成了第1课！</div>
+    <div class="n"><span id="finalScore">0</span> / 17</div>
+    <div id="finalMsg" style="margin-top:6px;font-size:14px"></div>
+  </div>
+
+  <p class="foot">《学而不厌》孔子听力单元 · 第1课 / 共4课<br>老师版素材 © VCE 中文备课 · 学生自测练习</p>
+</div>
+
+<script>
+const VOCAB=[
+  {hz:"高",py:"gāo",en:"tall",emo:"📏"},
+  {hz:"瘦",py:"shòu",en:"thin",emo:"🧍"},
+  {hz:"胖",py:"pàng",en:"fat",emo:"🧸"},
+  {hz:"老",py:"lǎo",en:"old",emo:"🧓"},
+  {hz:"穷",py:"qióng",en:"poor",emo:"💸"},
+  {hz:"聪明",py:"cōngming",en:"clever",emo:"💡"},
+  {hz:"健壮",py:"jiànzhuàng",en:"strong",emo:"💪"},
+  {hz:"自学",py:"zìxué",en:"self-taught",emo:"📖"},
+];
+let score=0; const scoreEl=document.getElementById('score');
+function addPoint(){score++;scoreEl.textContent=score;checkDone();}
+
+// MCQ
+document.querySelectorAll('.q').forEach(q=>{
+  const ans=+q.dataset.a, opts=[...q.querySelectorAll('.opt')], fb=q.querySelector('.fb');
+  opts.forEach((o,i)=>o.addEventListener('click',()=>{
+    if(q.dataset.done)return; q.dataset.done=1;
+    opts.forEach(x=>x.disabled=true);
+    if(i===ans){o.classList.add('correct');fb.textContent="✓ 对了！ Correct";fb.className="fb g";addPoint();}
+    else{o.classList.add('wrong');opts[ans].classList.add('correct');fb.textContent="✗ 正确答案已标出 See the green one";fb.className="fb b";}
+  }));
+});
+
+// Flashcards
+const cw=document.getElementById('cards');
+VOCAB.forEach(v=>{
+  const b=document.createElement('button');b.className='flip';
+  b.innerHTML=`<div class="inner"><div class="side front"><div class="hz">${v.hz}</div><div class="py">${v.py}</div></div><div class="side back"><div class="emo">${v.emo}</div>${v.en}</div></div>`;
+  b.onclick=()=>b.classList.toggle('on');
+  cw.appendChild(b);
+});
+
+// Matching (6 pairs)
+const MP=VOCAB.slice(0,6);
+let selL=null,selR=null,mDone=0;
+const L=document.getElementById('mLeft'),R=document.getElementById('mRight'),mFb=document.getElementById('mFb');
+const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+shuffle(MP).forEach(v=>{const c=document.createElement('button');c.className='chip';c.textContent=v.hz;c.dataset.id=v.hz;L.appendChild(c);});
+shuffle(MP).forEach(v=>{const c=document.createElement('button');c.className='chip';c.textContent=v.en;c.dataset.id=v.hz;R.appendChild(c);});
+function pick(side,el){
+  if(el.classList.contains('done'))return;
+  if(side==='L'){if(selL)selL.classList.remove('sel');selL=el;el.classList.add('sel');}
+  else{if(selR)selR.classList.remove('sel');selR=el;el.classList.add('sel');}
+  if(selL&&selR){
+    if(selL.dataset.id===selR.dataset.id){
+      selL.classList.add('done');selR.classList.add('done');
+      selL.classList.remove('sel');selR.classList.remove('sel');
+      selL=selR=null;mDone++;addPoint();
+      mFb.textContent=`配对成功 ${mDone}/6 ✓`;mFb.className="fb g";
+      if(mDone===6){mFb.textContent="全部配对成功！ All matched! 🎉";}
+    }else{
+      const a=selL,b=selR;a.classList.add('miss');b.classList.add('miss');
+      mFb.textContent="再试一次 Try again";mFb.className="fb b";
+      setTimeout(()=>{a.classList.remove('miss','sel');b.classList.remove('miss','sel');},400);
+      selL=selR=null;
+    }
+  }
+}
+[...L.children].forEach(c=>c.onclick=()=>pick('L',c));
+[...R.children].forEach(c=>c.onclick=()=>pick('R',c));
+
+// Hook
+function hook(btn,correct){
+  document.querySelectorAll('.choose button').forEach(b=>b.disabled=true);
+  document.getElementById('hookR').classList.add('show');
+  if(correct){btn.style.borderColor='#1a7f4b';btn.style.background='#e6f6ec';}
+}
+
+// Done check
+function checkDone(){
+  if(score>=17){
+    const d=document.getElementById('done');d.classList.add('show');
+    document.getElementById('finalScore').textContent=score;
+    document.getElementById('finalMsg').textContent="满分！你真了不起！ Perfect score!";
+  }
+}
+</script>
+</body>
+</html>
