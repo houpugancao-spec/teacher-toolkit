@@ -181,7 +181,7 @@
       const res=await fetch(SUPABASE_URL+"/rest/v1/kongzi_results",{
         method:"POST",
         headers:{"apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY,"Content-Type":"application/json","Prefer":"return=minimal"},
-        body:JSON.stringify({lesson:L.id,class_code:cls,seat_no:seat,score:score,max_score:maxScore,details:detail})
+        body:JSON.stringify({lesson:L.id,category:(L.category||"授课"),class_code:cls,seat_no:seat,score:score,max_score:maxScore,details:detail})
       });
       if(res.ok){fb.textContent="✓ 已提交！得分 "+score+"/"+maxScore+"　Submitted!";fb.className="fb g";btn.textContent="已提交 ✓";}
       else{const t=await res.text();fb.textContent="提交失败 Failed ("+res.status+")："+t.slice(0,140);fb.className="fb b";btn.disabled=false;}

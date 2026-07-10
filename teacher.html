@@ -40,7 +40,8 @@
 
   <div id="dashView" style="display:none">
     <div class="controls">
-      <select id="fLesson"><option value="">全部课节</option></select>
+      <select id="fCat"><option value="">全部类别</option></select>
+      <select id="fLesson"><option value="">全部项目</option></select>
       <select id="fClass"><option value="">全部班级</option></select>
       <input id="fSeat" placeholder="座号(可选)" style="width:100px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit">
       <button id="refreshBtn">🔄 刷新</button>
@@ -98,21 +99,30 @@
     const {data,error}=await sb.from('kongzi_results').select('*').order('created_at',{ascending:false});
     if(error){m.textContent="读取失败："+error.message+"（是否已加 select 权限策略？）";m.className="msg b";return;}
     ROWS=data||[];m.textContent="";
-    // 填充筛选下拉
-    fill($('fLesson'),[...new Set(ROWS.map(r=>r.lesson))].sort(),lname);
-    fill($('fClass'),[...new Set(ROWS.map(r=>r.class_code).filter(Boolean))].sort());
+    fillFilters();
     render();
   }
-  function fill(sel,vals,labelFn){
+  function fill(sel,vals,labelFn,ph){
     const cur=sel.value;
-    sel.innerHTML=`<option value="">${sel.id==='fLesson'?'全部课节':'全部班级'}</option>`+vals.map(v=>`<option value="${v}">${labelFn?labelFn(v):v}</option>`).join("");
-    sel.value=cur;
+    sel.innerHTML=`<option value="">${ph||'全部'}</option>`+vals.map(v=>`<option value="${v}">${labelFn?labelFn(v):v}</option>`).join("");
+    if(vals.indexOf(cur)>=0) sel.value=cur;
   }
+  function fillFilters(){
+    fill($('fCat'), [...new Set(ROWS.map(r=>r.category||'授课'))].sort(), null, '全部类别');
+    fillLessons();
+    fill($('fClass'), [...new Set(ROWS.map(r=>r.class_code).filter(Boolean))].sort(), null, '全部班级');
+  }
+  function fillLessons(){
+    const cat=$('fCat').value;
+    const ls=[...new Set(ROWS.filter(r=>!cat||(r.category||'授课')===cat).map(r=>r.lesson))].sort();
+    fill($('fLesson'), ls, lname, '全部项目');
+  }
+  $('fCat').onchange=()=>{fillLessons();render();};
   $('fLesson').onchange=render; $('fClass').onchange=render; $('fSeat').oninput=render;
 
   function filtered(){
-    const l=$('fLesson').value, c=$('fClass').value, s=$('fSeat').value.trim();
-    return ROWS.filter(r=>(!l||r.lesson===l)&&(!c||r.class_code===c)&&(!s||String(r.seat_no)===s));
+    const cat=$('fCat').value, l=$('fLesson').value, c=$('fClass').value, s=$('fSeat').value.trim();
+    return ROWS.filter(r=>(!cat||(r.category||'授课')===cat)&&(!l||r.lesson===l)&&(!c||r.class_code===c)&&(!s||String(r.seat_no)===s));
   }
   function render(){
     const rows=filtered();
@@ -124,12 +134,12 @@
     $('metrics').innerHTML=
       metric("总提交数",n)+metric("参与班级",classes)+metric("平均正确率",avg+"%");
     // 表格
-    let h=`<tr><th>时间(墨尔本)</th><th>班级</th><th>座号</th><th>课节</th><th>得分</th></tr>`;
+    let h=`<tr><th>时间(墨尔本)</th><th>类别</th><th>班级</th><th>座号</th><th>课节/项目</th><th>得分</th></tr>`;
     h+=rows.map(r=>{
       const t=new Date(r.created_at).toLocaleString('en-AU',{timeZone:'Australia/Melbourne',year:'2-digit',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
       const p=r.max_score?Math.round(r.score/r.max_score*100):0;
       const cls=p>=80?'hi':p>=50?'mid':'lo';
-      return `<tr><td>${t}</td><td>${r.class_code||''}</td><td>${r.seat_no||''}</td><td>${lname(r.lesson)}</td><td><span class="pct ${cls}">${r.score}/${r.max_score} · ${p}%</span></td></tr>`;
+      return `<tr><td>${t}</td><td>${r.category||'授课'}</td><td>${r.class_code||''}</td><td>${r.seat_no||''}</td><td>${lname(r.lesson)}</td><td><span class="pct ${cls}">${r.score}/${r.max_score} · ${p}%</span></td></tr>`;
     }).join("");
     $('tbl').innerHTML=h;
     renderAnalysis(rows);
@@ -150,8 +160,8 @@
 
   $('csvBtn').onclick=()=>{
     const rows=filtered();
-    const head=["时间UTC","班级","座号","课节id","课节","得分","满分","正确率%"];
-    const lines=rows.map(r=>[r.created_at,r.class_code||'',r.seat_no||'',r.lesson,lname(r.lesson),r.score,r.max_score,r.max_score?Math.round(r.score/r.max_score*100):''].map(x=>`"${String(x).replace(/"/g,'""')}"`).join(","));
+    const head=["时间UTC","类别","班级","座号","课节id","课节","得分","满分","正确率%"];
+    const lines=rows.map(r=>[r.created_at,r.category||'授课',r.class_code||'',r.seat_no||'',r.lesson,lname(r.lesson),r.score,r.max_score,r.max_score?Math.round(r.score/r.max_score*100):''].map(x=>`"${String(x).replace(/"/g,'""')}"`).join(","));
     const csv="﻿"+[head.join(","),...lines].join("\n");
     const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download="成绩_"+new Date().toISOString().slice(0,10)+".csv";a.click();
   };
