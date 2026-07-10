@@ -177,14 +177,34 @@
     const fb=document.getElementById("submitFb");
     if(!cls||!seat){fb.textContent="请先在最上面填班级和座号 Please fill class & seat first";fb.className="fb b";window.scrollTo({top:0,behavior:"smooth"});return;}
     const btn=document.getElementById("submitBtn");btn.disabled=true;fb.textContent="提交中… Submitting…";fb.className="fb";
+    const payload={lesson:L.id,category:(L.category||"授课"),class_code:cls,seat_no:seat,score:score,max_score:maxScore,details:detail};
     try{
-      const res=await fetch(SUPABASE_URL+"/rest/v1/kongzi_results",{
-        method:"POST",
-        headers:{"apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY,"Content-Type":"application/json","Prefer":"return=minimal"},
-        body:JSON.stringify({lesson:L.id,category:(L.category||"授课"),class_code:cls,seat_no:seat,score:score,max_score:maxScore,details:detail})
-      });
+      const res=await postResult(payload);
       if(res.ok){fb.textContent="✓ 已提交！得分 "+score+"/"+maxScore+"　Submitted!";fb.className="fb g";btn.textContent="已提交 ✓";}
       else{const t=await res.text();fb.textContent="提交失败 Failed ("+res.status+")："+t.slice(0,140);fb.className="fb b";btn.disabled=false;}
-    }catch(e){fb.textContent="网络错误 Network error："+e.message;fb.className="fb b";btn.disabled=false;}
+    }catch(e){
+      queueResult(payload);
+      fb.textContent="📴 离线已保存，联网后自动补交 Saved offline — will submit when back online";fb.className="fb g";btn.textContent="已保存 ✓";
+    }
   });
+
+  function postResult(p){
+    return fetch(SUPABASE_URL+"/rest/v1/kongzi_results",{
+      method:"POST",
+      headers:{"apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY,"Content-Type":"application/json","Prefer":"return=minimal"},
+      body:JSON.stringify(p)
+    });
+  }
+  function queueResult(p){const q=JSON.parse(localStorage.getItem("pendingResults")||"[]");q.push(p);localStorage.setItem("pendingResults",JSON.stringify(q));}
+  async function flushQueue(){
+    let q=JSON.parse(localStorage.getItem("pendingResults")||"[]"); if(!q.length)return;
+    const rest=[];
+    for(const p of q){ try{ const r=await postResult(p); if(!r.ok) rest.push(p); }catch(e){ rest.push(p); } }
+    localStorage.setItem("pendingResults",JSON.stringify(rest));
+  }
+
+  // 离线补交 + 注册 Service Worker（离线缓存）
+  flushQueue();
+  window.addEventListener("online", flushQueue);
+  if("serviceWorker" in navigator){ navigator.serviceWorker.register("../../sw.js").catch(function(){}); }
 })();
