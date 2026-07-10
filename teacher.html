@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老师成绩看板 · VCE 中文</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .login{max-width:360px;margin:30px auto}
+  .login input{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit;margin:8px 0}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+  .controls select,.controls button{padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;background:#fff;cursor:pointer}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:10px 0}
+  .metric{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .metric .lab{font-size:12px;color:var(--muted)}
+  .metric .val{font-size:24px;font-weight:700;color:var(--blue-d)}
+  table.res{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px;background:#fff;border-radius:10px;overflow:hidden}
+  table.res th,table.res td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line)}
+  table.res th{background:#eef4ff;color:var(--blue-d);font-weight:600;position:sticky;top:52px}
+  table.res tr:last-child td{border-bottom:none}
+  .pct{font-weight:600}
+  .pct.hi{color:var(--ok)} .pct.mid{color:#b8860b} .pct.lo{color:var(--no)}
+  .tblwrap{overflow-x:auto}
+  .msg{font-size:13px;margin-top:8px;min-height:18px}
+  .msg.b{color:var(--no)} .msg.g{color:var(--ok)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="row"><div class="brand">VCE 中文 · 老师成绩看板</div><div class="score" id="who" style="display:none"></div></div></div>
+<div class="wrap">
+
+  <div id="loginView" class="card login">
+    <div style="font-weight:600;margin-bottom:6px">🔐 老师登录</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:6px">仅老师可见，学生看不到。</div>
+    <input id="email" type="email" placeholder="邮箱 email" autocomplete="username">
+    <input id="pwd" type="password" placeholder="密码 password" autocomplete="current-password">
+    <button id="loginBtn" class="submit-btn" style="width:100%;margin-top:6px">登录 Log in</button>
+    <div id="loginMsg" class="msg"></div>
+  </div>
+
+  <div id="dashView" style="display:none">
+    <div class="controls">
+      <select id="fLesson"><option value="">全部课节</option></select>
+      <select id="fClass"><option value="">全部班级</option></select>
+      <button id="refreshBtn">🔄 刷新</button>
+      <button id="csvBtn">⬇ 导出CSV</button>
+      <button id="logoutBtn">退出</button>
+    </div>
+    <div class="metrics" id="metrics"></div>
+    <div class="tblwrap"><table class="res" id="tbl"></table></div>
+    <div id="dashMsg" class="msg"></div>
+  </div>
+
+</div>
+
+<script src="assets/catalog.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+(function(){
+  const SUPABASE_URL="https://xzexcfqrftllicoqaizs.supabase.co";
+  const SUPABASE_KEY="sb_publishable_ly64tG2XPMv8N-34Np5qkQ_2d8rNRU5";
+  const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+  const CN=["一","二","三","四","五","六","七","八","九","十"];
+
+  // lesson id → 好看的名字（读 catalog）
+  const LMAP={};
+  (window.CATALOG?CATALOG.grades:[]).forEach(g=>(g.lecture||[]).forEach(co=>(co.sections||[]).forEach(s=>{LMAP[s.id]=`${co.no}${co.title}·第${CN[s.n-1]}节`;})));
+  const lname=id=>LMAP[id]||id;
+
+  const $=id=>document.getElementById(id);
+  let ROWS=[];
+
+  async function init(){
+    const {data:{session}}=await sb.auth.getSession();
+    if(session) showDash(session); else showLogin();
+  }
+  function showLogin(){$('loginView').style.display='';$('dashView').style.display='none';$('who').style.display='none';}
+  function showDash(session){
+    $('loginView').style.display='none';$('dashView').style.display='';
+    $('who').style.display='';$('who').textContent=session.user.email;
+    load();
+  }
+
+  $('loginBtn').onclick=async()=>{
+    const email=$('email').value.trim(), password=$('pwd').value;
+    const m=$('loginMsg'); m.textContent="登录中…";m.className="msg";
+    const {data,error}=await sb.auth.signInWithPassword({email,password});
+    if(error){m.textContent="登录失败："+error.message;m.className="msg b";}
+    else{m.textContent="";showDash(data.session);}
+  };
+  $('logoutBtn').onclick=async()=>{await sb.auth.signOut();showLogin();};
+  $('refreshBtn').onclick=load;
+
+  async function load(){
+    const m=$('dashMsg');m.textContent="读取中…";m.className="msg";
+    const {data,error}=await sb.from('kongzi_results').select('*').order('created_at',{ascending:false});
+    if(error){m.textContent="读取失败："+error.message+"（是否已加 select 权限策略？）";m.className="msg b";return;}
+    ROWS=data||[];m.textContent="";
+    // 填充筛选下拉
+    fill($('fLesson'),[...new Set(ROWS.map(r=>r.lesson))].sort(),lname);
+    fill($('fClass'),[...new Set(ROWS.map(r=>r.class_code).filter(Boolean))].sort());
+    render();
+  }
+  function fill(sel,vals,labelFn){
+    const cur=sel.value;
+    sel.innerHTML=`<option value="">${sel.id==='fLesson'?'全部课节':'全部班级'}</option>`+vals.map(v=>`<option value="${v}">${labelFn?labelFn(v):v}</option>`).join("");
+    sel.value=cur;
+  }
+  $('fLesson').onchange=render; $('fClass').onchange=render;
+
+  function filtered(){
+    const l=$('fLesson').value, c=$('fClass').value;
+    return ROWS.filter(r=>(!l||r.lesson===l)&&(!c||r.class_code===c));
+  }
+  function render(){
+    const rows=filtered();
+    // 指标
+    const n=rows.length;
+    const classes=new Set(rows.map(r=>r.class_code).filter(Boolean)).size;
+    const pcts=rows.map(r=>r.max_score?r.score/r.max_score:0);
+    const avg=n?Math.round(pcts.reduce((a,b)=>a+b,0)/n*100):0;
+    $('metrics').innerHTML=
+      metric("总提交数",n)+metric("参与班级",classes)+metric("平均正确率",avg+"%");
+    // 表格
+    let h=`<tr><th>时间(墨尔本)</th><th>班级</th><th>座号</th><th>课节</th><th>得分</th></tr>`;
+    h+=rows.map(r=>{
+      const t=new Date(r.created_at).toLocaleString('en-AU',{timeZone:'Australia/Melbourne',year:'2-digit',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+      const p=r.max_score?Math.round(r.score/r.max_score*100):0;
+      const cls=p>=80?'hi':p>=50?'mid':'lo';
+      return `<tr><td>${t}</td><td>${r.class_code||''}</td><td>${r.seat_no||''}</td><td>${lname(r.lesson)}</td><td><span class="pct ${cls}">${r.score}/${r.max_score} · ${p}%</span></td></tr>`;
+    }).join("");
+    $('tbl').innerHTML=h;
+  }
+  const metric=(lab,val)=>`<div class="metric"><div class="lab">${lab}</div><div class="val">${val}</div></div>`;
+
+  $('csvBtn').onclick=()=>{
+    const rows=filtered();
+    const head=["时间UTC","班级","座号","课节id","课节","得分","满分","正确率%"];
+    const lines=rows.map(r=>[r.created_at,r.class_code||'',r.seat_no||'',r.lesson,lname(r.lesson),r.score,r.max_score,r.max_score?Math.round(r.score/r.max_score*100):''].map(x=>`"${String(x).replace(/"/g,'""')}"`).join(","));
+    const csv="﻿"+[head.join(","),...lines].join("\n");
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download="成绩_"+new Date().toISOString().slice(0,10)+".csv";a.click();
+  };
+
+  init();
+})();
+</script>
+</body>
+</html>
