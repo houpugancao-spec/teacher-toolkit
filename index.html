@@ -22,23 +22,26 @@
   const C=window.CATALOG;
   document.getElementById('brand').textContent=C.site;
   document.getElementById('siteTitle').textContent=C.site;
-  document.getElementById('tagline').textContent=C.tagline||"";
+  const tl=document.getElementById('tagline');
+  if(C.tagline){tl.textContent=C.tagline;}else{tl.style.display="none";}
   document.title=C.site;
-  let filterUnit="all", kw="";
+  let filterGrade="all", kw="";
 
-  // 筛选标签：全部 + 各单元
+  // 每课的实际年级：单课 grade 优先，否则跟单元
+  const egrade=(le,u)=> le.grade || u.grade || "";
+
+  // 筛选标签：全部 + 各年级
   const chips=document.getElementById('chips');
-  const mk=(id,label)=>{const b=document.createElement('button');b.className='chip-f'+(id==="all"?' on':'');b.textContent=label;b.dataset.u=id;b.onclick=()=>{filterUnit=id;[...chips.children].forEach(c=>c.classList.toggle('on',c.dataset.u===id));render();};chips.appendChild(b);};
+  const mk=(id,label)=>{const b=document.createElement('button');b.className='chip-f'+(id==="all"?' on':'');b.textContent=label;b.dataset.g=id;b.onclick=()=>{filterGrade=id;[...chips.children].forEach(c=>c.classList.toggle('on',c.dataset.g===id));render();};chips.appendChild(b);};
   mk("all","全部");
-  C.units.forEach(u=>mk(u.id,u.title));
+  (C.grades||[]).forEach(g=>mk(g,g));
 
   document.getElementById('search').addEventListener('input',e=>{kw=e.target.value.trim().toLowerCase();render();});
 
-  function match(le,u){
-    if(filterUnit!=="all"&&u.id!==filterUnit)return false;
+  function matchKw(le,u){
     if(!kw)return true;
-    const hay=(le.title+" "+(le.tags||[]).join(" ")+" "+u.title+" "+u.topic+" "+u.level).toLowerCase();
-    // 把查询拆成「拉丁词 + 单个中文字」，全部命中才算匹配
+    const hay=(le.title+" "+(le.tags||[]).join(" ")+" "+u.title+" "+u.topic+" "+egrade(le,u)).toLowerCase();
+    // 拆成「拉丁词 + 单个中文字」，全部命中才算匹配
     const terms=kw.match(/[a-z0-9]+|[一-鿿]/g)||[kw];
     return terms.every(t=>hay.includes(t));
   }
@@ -50,11 +53,16 @@
   }
   function render(){
     const box=document.getElementById('list'); let html="",any=false;
-    C.units.forEach(u=>{
-      const les=u.lessons.filter(le=>match(le,u));
-      if(!les.length)return; any=true;
-      html+=`<div class="unit-h">${u.title} <span class="tag">${u.level}</span> <span class="tag">${u.topic}</span></div>`;
-      html+=`<div class="cards">${les.map(le=>card(le,u)).join("")}</div>`;
+    (C.grades||[]).forEach(g=>{
+      if(filterGrade!=="all"&&filterGrade!==g)return;
+      let gHtml="",gHas=false;
+      C.units.forEach(u=>{
+        const les=u.lessons.filter(le=>egrade(le,u)===g && matchKw(le,u));
+        if(!les.length)return; gHas=true;
+        gHtml+=`<div class="unit-h">${u.title} <span class="tag">${u.topic}</span></div>`;
+        gHtml+=`<div class="cards">${les.map(le=>card(le,u)).join("")}</div>`;
+      });
+      if(gHas){any=true;html+=`<div class="grade-h">${g}</div>`+gHtml;}
     });
     box.innerHTML=any?html:`<div class="empty">没有找到相关内容 No results</div>`;
   }
