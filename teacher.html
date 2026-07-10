@@ -42,11 +42,13 @@
     <div class="controls">
       <select id="fLesson"><option value="">全部课节</option></select>
       <select id="fClass"><option value="">全部班级</option></select>
+      <input id="fSeat" placeholder="座号(可选)" style="width:100px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit">
       <button id="refreshBtn">🔄 刷新</button>
       <button id="csvBtn">⬇ 导出CSV</button>
       <button id="logoutBtn">退出</button>
     </div>
     <div class="metrics" id="metrics"></div>
+    <div id="analysis"></div>
     <div class="tblwrap"><table class="res" id="tbl"></table></div>
     <div id="dashMsg" class="msg"></div>
   </div>
@@ -106,11 +108,11 @@
     sel.innerHTML=`<option value="">${sel.id==='fLesson'?'全部课节':'全部班级'}</option>`+vals.map(v=>`<option value="${v}">${labelFn?labelFn(v):v}</option>`).join("");
     sel.value=cur;
   }
-  $('fLesson').onchange=render; $('fClass').onchange=render;
+  $('fLesson').onchange=render; $('fClass').onchange=render; $('fSeat').oninput=render;
 
   function filtered(){
-    const l=$('fLesson').value, c=$('fClass').value;
-    return ROWS.filter(r=>(!l||r.lesson===l)&&(!c||r.class_code===c));
+    const l=$('fLesson').value, c=$('fClass').value, s=$('fSeat').value.trim();
+    return ROWS.filter(r=>(!l||r.lesson===l)&&(!c||r.class_code===c)&&(!s||String(r.seat_no)===s));
   }
   function render(){
     const rows=filtered();
@@ -130,8 +132,21 @@
       return `<tr><td>${t}</td><td>${r.class_code||''}</td><td>${r.seat_no||''}</td><td>${lname(r.lesson)}</td><td><span class="pct ${cls}">${r.score}/${r.max_score} · ${p}%</span></td></tr>`;
     }).join("");
     $('tbl').innerHTML=h;
+    renderAnalysis(rows);
   }
   const metric=(lab,val)=>`<div class="metric"><div class="lab">${lab}</div><div class="val">${val}</div></div>`;
+
+  function renderAnalysis(rows){
+    const box=$('analysis');
+    if(!$('fLesson').value){box.innerHTML="<div class='msg' style='color:var(--muted);margin:8px 0'>💡 选上面的「课节」下拉，可看这一节每道题的正确率</div>";return;}
+    const agg={};
+    rows.forEach(r=>(r.details||[]).forEach(d=>{const k=d.q;(agg[k]=agg[k]||{ok:0,n:0}).n++;if(d.ok)agg[k].ok++;}));
+    const items=Object.keys(agg).map(k=>({q:k,ok:agg[k].ok,n:agg[k].n,pct:Math.round(agg[k].ok/agg[k].n*100)})).sort((a,b)=>a.pct-b.pct);
+    if(!items.length){box.innerHTML="<div class='msg' style='color:var(--muted);margin:8px 0'>这一节暂无题目明细（学生用升级后的页面做题才会有）</div>";return;}
+    box.innerHTML=`<div style="font-weight:600;margin:16px 0 4px">📊 每题正确率（低→高，红=最难，重点讲）</div>`+
+      `<div class="tblwrap"><table class="res"><tr><th>题目</th><th>正确率</th><th>答对/人数</th></tr>`+
+      items.map(it=>{const cls=it.pct>=80?'hi':it.pct>=50?'mid':'lo';return `<tr><td>${it.q}</td><td><span class="pct ${cls}">${it.pct}%</span></td><td>${it.ok}/${it.n}</td></tr>`;}).join("")+`</table></div>`;
+  }
 
   $('csvBtn').onclick=()=>{
     const rows=filtered();

@@ -11,6 +11,7 @@
 
   // ---- 计算满分 ----
   let score = 0, maxScore = 0;
+  const detail = [];   // 每道选择题的对错明细，用于老师看板的题目分析
   L.sections.forEach(s=>{
     if(s.type==="listen"||s.type==="quiz") maxScore += (s.questions||[]).length;
     if(s.type==="match") maxScore += (s.words||[]).length;
@@ -44,10 +45,11 @@
       listen:listen, vocab:vocab, match:match, culture:culture, speak:speak, quiz:quiz
     }[s.type]||(()=> ""))(s);
   }
-  function mcq(qs){
-    return qs.map(q=>{
+  function mcq(qs, prefix){
+    return qs.map((q,i)=>{
       const opts = q.options.map(o=>`<button class="opt">${esc(o)}</button>`).join("");
-      return `<div class="q" data-a="${q.answer}"><div class="ask">${esc(q.ask)}${q.py?` <span class="py">${esc(q.py)}</span>`:""}</div>${opts}<div class="fb"></div></div>`;
+      const label = `${prefix||""} ${i+1}`.trim();
+      return `<div class="q" data-a="${q.answer}" data-label="${esc(label)}"><div class="ask">${esc(q.ask)}${q.py?` <span class="py">${esc(q.py)}</span>`:""}</div>${opts}<div class="fb"></div></div>`;
     }).join("");
   }
   function hook(s){
@@ -58,7 +60,7 @@
   }
   function listen(s){
     return `<div class="card"><div class="listen-tip">🔊 可以反复听 · You can replay it</div>`+
-      `<audio controls preload="none" src="${esc(s.audio)}"></audio>${mcq(s.questions)}</div>`;
+      `<audio controls preload="none" src="${esc(s.audio)}"></audio>${mcq(s.questions, s.title)}</div>`;
   }
   function vocab(s){
     const c = s.words.map(v=>`<button class="flip"><div class="inner"><div class="side front"><div class="hz">${esc(v.hz)}</div><div class="py">${esc(v.py)}</div></div><div class="side back"><div class="emo">${esc(v.emo||"")}</div>${esc(v.en)}</div></div></button>`).join("");
@@ -75,7 +77,7 @@
     const b = (s.bank||[]).map(x=>`<span>${esc(x)}</span>`).join("");
     return `<div class="card"><div class="frame">${s.frame}</div><div class="bank">${b}</div>${s.eg?`<p class="eg">${s.eg}</p>`:""}</div>`;
   }
-  function quiz(s){ return `<div class="card">${mcq(s.questions)}</div>`; }
+  function quiz(s){ return `<div class="card">${mcq(s.questions, s.title)}</div>`; }
 
   // ---- 组装页面 ----
   document.title = `${courseLabel} 第${CN[curN-1]}节 · ${L.title}`;
@@ -118,10 +120,11 @@
 
   // ---- MCQ ----
   document.querySelectorAll(".q").forEach(q=>{
-    const ans=+q.dataset.a, opts=[...q.querySelectorAll(".opt")], fb=q.querySelector(".fb");
+    const ans=+q.dataset.a, opts=[...q.querySelectorAll(".opt")], fb=q.querySelector(".fb"), label=q.dataset.label||"";
     opts.forEach((o,i)=>o.addEventListener("click",()=>{
       if(q.dataset.done)return; q.dataset.done=1; opts.forEach(x=>x.disabled=true);
-      if(i===ans){o.classList.add("correct");fb.textContent="✓ 对了！ Correct";fb.className="fb g";addPoint();}
+      const ok=(i===ans); detail.push({q:label,ok:ok});
+      if(ok){o.classList.add("correct");fb.textContent="✓ 对了！ Correct";fb.className="fb g";addPoint();}
       else{o.classList.add("wrong");opts[ans].classList.add("correct");fb.textContent="✗ 正确答案已标出 See the green one";fb.className="fb b";}
     }));
   });
@@ -178,7 +181,7 @@
       const res=await fetch(SUPABASE_URL+"/rest/v1/kongzi_results",{
         method:"POST",
         headers:{"apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY,"Content-Type":"application/json","Prefer":"return=minimal"},
-        body:JSON.stringify({lesson:L.id,class_code:cls,seat_no:seat,score:score,max_score:maxScore})
+        body:JSON.stringify({lesson:L.id,class_code:cls,seat_no:seat,score:score,max_score:maxScore,details:detail})
       });
       if(res.ok){fb.textContent="✓ 已提交！得分 "+score+"/"+maxScore+"　Submitted!";fb.className="fb g";btn.textContent="已提交 ✓";}
       else{const t=await res.text();fb.textContent="提交失败 Failed ("+res.status+")："+t.slice(0,140);fb.className="fb b";btn.disabled=false;}
