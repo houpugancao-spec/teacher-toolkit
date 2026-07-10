@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中文听力练习</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="topbar"><div class="row"><div class="brand" id="brand">中文听力练习</div></div></div>
+<div class="wrap">
+  <div class="hero"><h1 id="siteTitle">中文听力练习</h1><p id="tagline"></p></div>
+  <input class="search" id="search" placeholder="🔍 搜索：课题 / 主题 / 关键词…">
+  <div class="chips" id="chips"></div>
+  <div id="list"></div>
+  <p class="foot">© VCE 中文备课 · 学生自测练习　|　老师在 Supabase 看成绩</p>
+</div>
+
+<script src="assets/catalog.js"></script>
+<script>
+(function(){
+  const C=window.CATALOG;
+  document.getElementById('brand').textContent=C.site;
+  document.getElementById('siteTitle').textContent=C.site;
+  document.getElementById('tagline').textContent=C.tagline||"";
+  document.title=C.site;
+  let filterUnit="all", kw="";
+
+  // 筛选标签：全部 + 各单元
+  const chips=document.getElementById('chips');
+  const mk=(id,label)=>{const b=document.createElement('button');b.className='chip-f'+(id==="all"?' on':'');b.textContent=label;b.dataset.u=id;b.onclick=()=>{filterUnit=id;[...chips.children].forEach(c=>c.classList.toggle('on',c.dataset.u===id));render();};chips.appendChild(b);};
+  mk("all","全部");
+  C.units.forEach(u=>mk(u.id,u.title));
+
+  document.getElementById('search').addEventListener('input',e=>{kw=e.target.value.trim().toLowerCase();render();});
+
+  function match(le,u){
+    if(filterUnit!=="all"&&u.id!==filterUnit)return false;
+    if(!kw)return true;
+    const hay=(le.title+" "+(le.tags||[]).join(" ")+" "+u.title+" "+u.topic+" "+u.level).toLowerCase();
+    return hay.includes(kw);
+  }
+  function card(le,u){
+    const tags=(le.tags||[]).map(t=>`<span>${t}</span>`).join("");
+    if(le.ready===false)
+      return `<div class="lcard soon"><div class="no">第${le.n}课 · <span class="badge">敬请期待 Coming soon</span></div><div class="tt">${le.title}</div><div class="tags">${tags}</div></div>`;
+    return `<a class="lcard" href="${le.url}"><div class="no">第${le.n}课</div><div class="tt">${le.title}</div><div class="tags">${tags}</div></a>`;
+  }
+  function render(){
+    const box=document.getElementById('list'); let html="",any=false;
+    C.units.forEach(u=>{
+      const les=u.lessons.filter(le=>match(le,u));
+      if(!les.length)return; any=true;
+      html+=`<div class="unit-h">${u.title} <span class="tag">${u.level}</span> <span class="tag">${u.topic}</span></div>`;
+      html+=`<div class="cards">${les.map(le=>card(le,u)).join("")}</div>`;
+    });
+    box.innerHTML=any?html:`<div class="empty">没有找到相关内容 No results</div>`;
+  }
+  render();
+})();
+</script>
+</body>
+</html>
