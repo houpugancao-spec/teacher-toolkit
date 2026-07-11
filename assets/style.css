@@ -112,7 +112,7 @@ audio{width:100%;margin:4px 0 10px;height:40px}
 .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
 
 /* ---- 分节页“第X节”标题 ---- */
-.seclabel{display:flex;align-items:center;gap:12px;font-size:26px;font-weight:800;color:var(--ink);margin:16px 0 12px;padding-bottom:12px;border-bottom:3px solid var(--blue)}
+.seclabel{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:800;color:var(--blue-d);margin:16px 0 14px;padding:14px 18px;background:linear-gradient(135deg,#eaf2ff,#dbe9ff);border:1px solid #cfe0ff;border-left:6px solid var(--blue);border-radius:12px;box-shadow:0 2px 8px rgba(31,111,235,.10)}
 .seclabel .sn{background:var(--blue);color:#fff;border-radius:10px;padding:5px 15px;font-size:18px;font-weight:700;flex:none;box-shadow:0 2px 6px rgba(31,111,235,.3)}
 
 /* ---- 课文 / 文字稿（reading）---- */
