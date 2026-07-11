@@ -4,7 +4,7 @@
   src:url('fonts/lxgw-kai.woff2') format('woff2');
   font-weight:normal;font-style:normal;font-display:swap;
 }
-.reading .rd-body, .seclabel, .flip .hz, .wpop-hz, .wpop-zh{
+.reading .rd-body, .seclabel, .flip .hz, .wpop-hz, .wpop-zh, .match [data-side="L"] .chip{
   font-family:'LXGW Kai','KaiTi','楷体','STKaiti',serif;
 }
 
