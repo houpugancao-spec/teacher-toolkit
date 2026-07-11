@@ -60,6 +60,33 @@ window.WORDS = {
   "知":       { py:"zhì",              zh:"这里通“智”，指智慧",           en:"here = wisdom (same as 智)", manual:true },
   "不懂装懂": { py:"bù dǒng zhuāng dǒng",zh:"不懂却假装懂",              en:"to pretend to know what one doesn't" },
   "勤奋好学": { py:"qínfèn hào xué",   zh:"努力又爱学习",                en:"diligent and eager to learn" },
-  "谦虚诚实": { py:"qiānxū chéngshí",  zh:"谦虚又诚实",                  en:"modest and honest" }
+  "谦虚诚实": { py:"qiānxū chéngshí",  zh:"谦虚又诚实",                  en:"modest and honest" },
+
+  // —— 分节生词卡读音（manual:不自动划线，只供各节生词卡 🔊）——
+  "高":   { py:"gāo",        en:"tall",        manual:true },
+  "瘦":   { py:"shòu",       en:"thin",        manual:true },
+  "胖":   { py:"pàng",       en:"fat",         manual:true },
+  "老":   { py:"lǎo",        en:"old",         manual:true },
+  "穷":   { py:"qióng",      en:"poor",        manual:true },
+  "聪明": { py:"cōngming",   en:"clever",      manual:true },
+  "健壮": { py:"jiànzhuàng", en:"strong",      manual:true },
+  "自学": { py:"zìxué",      en:"self-taught", manual:true },
+  "射箭": { py:"shèjiàn",    en:"archery",     manual:true },
+  "音乐": { py:"yīnyuè",     en:"music",       manual:true },
+  "古代": { py:"gǔdài",      en:"ancient",     manual:true },
+  "打仗": { py:"dǎzhàng",    en:"war / fight", manual:true },
+  "礼仪": { py:"lǐyí",       en:"manners",     manual:true },
+  "算术": { py:"suànshù",    en:"maths",       manual:true },
+  "思考": { py:"sīkǎo",      en:"to think",    manual:true },
+  "学习": { py:"xuéxí",      en:"to study",    manual:true },
+  "老师": { py:"lǎoshī",     en:"teacher",     manual:true },
+  "学生": { py:"xuéshēng",   en:"student",     manual:true },
+  "帮助": { py:"bāngzhù",    en:"to help",     manual:true },
+  "平等": { py:"píngděng",   en:"equal",       manual:true },
+  "长处": { py:"chángchù",   en:"strengths",   manual:true },
+  "太阳": { py:"tàiyáng",    en:"sun",         manual:true },
+  "早上": { py:"zǎoshang",   en:"morning",     manual:true },
+  "中午": { py:"zhōngwǔ",    en:"noon",        manual:true },
+  "诚实": { py:"chéngshí",   en:"honest",      manual:true }
 };
 Object.keys(window.WORDS).forEach(function(w){ window.WORDS[w].audio = "audio/words/"+w+".mp3"; });
