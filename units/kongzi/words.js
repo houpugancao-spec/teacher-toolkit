@@ -57,7 +57,7 @@ window.WORDS = {
   "争论":     { py:"zhēnglùn",         zh:"各说各的、辩论",              en:"to argue; to dispute" },
   "竟然":     { py:"jìngrán",          zh:"出乎意料地",                  en:"unexpectedly; to one's surprise" },
   "丢脸":     { py:"diūliǎn",          zh:"没面子、失面子",              en:"to lose face; embarrassing" },
-  "知":       { py:"zhì",              zh:"这里通“智”，指智慧",           en:"here = wisdom (same as 智)" },
+  "知":       { py:"zhì",              zh:"这里通“智”，指智慧",           en:"here = wisdom (same as 智)", manual:true },
   "不懂装懂": { py:"bù dǒng zhuāng dǒng",zh:"不懂却假装懂",              en:"to pretend to know what one doesn't" },
   "勤奋好学": { py:"qínfèn hào xué",   zh:"努力又爱学习",                en:"diligent and eager to learn" },
   "谦虚诚实": { py:"qiānxū chéngshí",  zh:"谦虚又诚实",                  en:"modest and honest" }

@@ -9,7 +9,8 @@
   const L = window.LESSON, CAT = window.CATALOG;
   const esc = s => (s==null?"":String(s));
   const WORDS = window.WORDS || {};
-  const wkeys = Object.keys(WORDS).sort((a,b)=>b.length-a.length); // 长词优先，避免只匹配到半个词
+  // 自动划线的词：长词优先；标了 manual:true 的词不自动划线，只在课文里用 [[词]] 手动标
+  const wkeys = Object.keys(WORDS).filter(w=>!WORDS[w].manual).sort((a,b)=>b.length-a.length);
 
   // ---- 计算满分 ----
   let score = 0, maxScore = 0;
@@ -49,12 +50,18 @@
     }[s.type]||(()=> ""))(s);
   }
   // 把文本里出现的重点词自动包成可点的下划线；长词优先，非贪婪扫描避免嵌套
+  function wd(w){ return `<u class="wd" data-w="${esc(w)}">${esc(w)}</u>`; }
   function linkify(text){
     let out="", i=0;
     while(i<text.length){
+      // 手动标注 [[词]]：只标这一处（用于 manual 词，如“是[[知]]也”）
+      if(text.startsWith("[[",i)){
+        const end=text.indexOf("]]",i+2);
+        if(end>=0){ out+=wd(text.slice(i+2,end)); i=end+2; continue; }
+      }
       let hit=null;
       for(let k=0;k<wkeys.length;k++){ if(text.startsWith(wkeys[k],i)){ hit=wkeys[k]; break; } }
-      if(hit){ out+=`<u class="wd" data-w="${esc(hit)}">${esc(hit)}</u>`; i+=hit.length; }
+      if(hit){ out+=wd(hit); i+=hit.length; }
       else { const ch=text[i]; out += ch==="<"?"&lt;":(ch===">"?"&gt;":(ch==="&"?"&amp;":ch)); i++; }
     }
     return out;
@@ -225,7 +232,7 @@
 
   // ---- 划线词弹卡 ----
   (function(){
-    if(!wkeys.length) return;
+    if(!Object.keys(WORDS).length) return;
     const pop=document.createElement("div"); pop.className="wpop";
     pop.innerHTML=`<div class="wpop-box"><button class="wpop-x" aria-label="close">×</button><div class="wpop-hz"></div><div class="wpop-py"></div><div class="wpop-zh"></div><div class="wpop-en"></div><button class="wpop-au">🔊 读一遍 Listen</button></div>`;
     document.body.appendChild(pop);
