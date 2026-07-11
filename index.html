@@ -96,7 +96,10 @@
     if(state.cat==="lecture"){
       if(!state.course){ const co=g.lecture||[]; listEl.innerHTML=co.length?grid(co.map(courseCard).join("")):empty(); return; }
       const course=g.lecture.find(x=>x.id===state.course);
-      listEl.innerHTML=grid((course.sections||[]).map(sectionCard).join("")); return;
+      const ov = course.overview
+        ? `<a class="lcard" href="${course.overview}"><div class="no">📖 课文总览</div><div class="tt">全文朗读 + 分节</div><div class="cnt">先从这里开始</div></a>`
+        : "";
+      listEl.innerHTML=grid(ov + (course.sections||[]).map(sectionCard).join("")); return;
     }
     if(state.cat==="practice"){
       if(!state.skill){ listEl.innerHTML=grid(C.practiceSkills.map(sk=>skillCard(g,sk)).join("")); return; }

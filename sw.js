@@ -1,7 +1,7 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v2";
+const CACHE = "vce-zhongwen-v4";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./manifest.json", "./icon.svg",
   "./assets/style.css", "./assets/catalog.js", "./assets/lesson.js",
@@ -9,7 +9,18 @@ const CORE = [
   "./units/kongzi/audio/seg1.mp3", "./units/kongzi/audio/seg2.mp3",
   "./units/kongzi/audio/seg3.mp3", "./units/kongzi/audio/seg4.mp3",
   "./units/kongzi/audio/seg5.mp3", "./units/kongzi/audio/seg6.mp3",
-  "./units/kongzi/audio/seg7.mp3", "./units/kongzi/audio/seg8.mp3"
+  "./units/kongzi/audio/seg7.mp3", "./units/kongzi/audio/seg8.mp3",
+  // 诸葛亮课
+  "./units/zhuge/index.html", "./units/zhuge/words.js",
+  "./units/zhuge/1.html", "./units/zhuge/2.html", "./units/zhuge/3.html", "./units/zhuge/4.html",
+  "./units/zhuge/5.html", "./units/zhuge/6.html", "./units/zhuge/7.html",
+  "./units/zhuge/audio/dialogue-full.mp3", "./units/zhuge/audio/reading-narrative.mp3",
+  "./units/zhuge/audio/beat1.mp3", "./units/zhuge/audio/beat2.mp3", "./units/zhuge/audio/beat3.mp3",
+  "./units/zhuge/audio/beat4.mp3", "./units/zhuge/audio/beat5.mp3", "./units/zhuge/audio/beat6.mp3",
+  "./units/zhuge/audio/beat7.mp3",
+  "./units/zhuge/img/beat1.png", "./units/zhuge/img/beat2.png", "./units/zhuge/img/beat3.png",
+  "./units/zhuge/img/beat4.png", "./units/zhuge/img/beat5.png", "./units/zhuge/img/beat6.png",
+  "./units/zhuge/img/beat7.png"
 ];
 
 self.addEventListener("install", e => {

@@ -110,3 +110,35 @@ audio{width:100%;margin:4px 0 10px;height:40px}
 .done-box .star{font-size:40px}
 .done-box .n{font-size:34px;font-weight:700}
 .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
+
+/* ---- 课文 / 文字稿（reading）---- */
+.reading .rd-img{width:100%;border-radius:12px;margin-bottom:12px;display:block}
+.reading .rd-body{font-size:17px;line-height:2}
+.reading .rd-p{margin:0 0 12px;text-indent:2em}
+.reading .dl{margin:0 0 10px}
+.reading .dl .who{color:var(--blue-d);margin-right:2px}
+.wd{cursor:pointer;text-decoration:none;border-bottom:2px solid #f0c674;padding:0 1px;transition:.15s}
+.wd:hover,.wd:active{background:#fff8e6;border-bottom-color:var(--gold)}
+/* 生词卡 🔊 */
+.flip{position:relative}
+.spk{position:absolute;top:6px;right:8px;font-size:15px;z-index:2;line-height:1;opacity:.75;cursor:pointer}
+.spk:hover{opacity:1}
+/* 划线词弹卡 */
+.wpop{position:fixed;inset:0;background:rgba(20,30,50,.45);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.wpop.show{display:flex;animation:pop .2s}
+.wpop-box{background:#fff;border-radius:16px;padding:22px 24px;max-width:340px;width:100%;text-align:center;position:relative;box-shadow:0 12px 40px rgba(0,0,0,.28)}
+.wpop-x{position:absolute;top:8px;right:12px;border:none;background:none;font-size:24px;color:var(--muted);cursor:pointer;line-height:1}
+.wpop-hz{font-size:32px;font-weight:700;color:var(--ink)}
+.wpop-py{color:var(--blue);font-size:16px;margin:2px 0 10px}
+.wpop-zh{font-size:16px;margin-bottom:4px}
+.wpop-en{color:var(--muted);font-size:14px;margin-bottom:16px}
+.wpop-au{background:var(--blue);color:#fff;border:none;border-radius:20px;padding:9px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+/* 分节导航 */
+.secnav{display:flex;flex-direction:column;gap:10px}
+.secitem{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;transition:.15s}
+a.secitem:hover{border-color:var(--blue);transform:translateY(-1px)}
+.secitem .sn{background:var(--blue);color:#fff;border-radius:8px;padding:3px 9px;font-size:13px;font-weight:600;flex:none}
+.secitem .st{flex:1;font-size:16px;font-weight:600}
+.secitem .go{color:var(--blue);font-weight:700}
+.secitem.soon{opacity:.55}
+.secitem .soonbadge{font-size:11px;color:var(--gold);font-weight:600}

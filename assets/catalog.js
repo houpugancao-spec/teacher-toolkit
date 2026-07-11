@@ -32,6 +32,26 @@ window.CATALOG = {
             { id:"kongzi-4", n:4, title:"两小儿辩日 & 真智慧", url:"units/kongzi/4.html",
               tags:["两小儿辩日","知之为知之","智慧","诚实","承认","复习"], ready:true }
           ]
+        },
+        {
+          id:"zhuge", no:"第十课", title:"诸葛亮", topic:"人物·文化",
+          overview:"units/zhuge/index.html",      // 课文总览页（全文朗读+分节导航）
+          sections:[
+            { id:"zhuge-1", n:1, title:"他是真人吗？开场", url:"units/zhuge/1.html",
+              tags:["诸葛亮","三国","厉害","历史人物"], ready:true },
+            { id:"zhuge-2", n:2, title:"卧龙出身", url:"units/zhuge/2.html",
+              tags:["卧龙","刘备","才华","富贵","种田读书"], ready:true },
+            { id:"zhuge-3", n:3, title:"三顾茅庐", url:"units/zhuge/3.html",
+              tags:["三顾茅庐","诚意","尽心尽力","辅佐","老板"], ready:true },
+            { id:"zhuge-4", n:4, title:"草船借箭（上）", url:"units/zhuge/4.html",
+              tags:["草船借箭","不慌不忙","扎满","大雾","草人"], ready:true },
+            { id:"zhuge-5", n:5, title:"草船借箭（下）", url:"units/zhuge/5.html",
+              tags:["应战","拼命","虚实","靠近","十万支箭","轻轻松松"], ready:true },
+            { id:"zhuge-6", n:6, title:"借箭成功 · 忠诚", url:"units/zhuge/6.html",
+              tags:["家喻户晓","忠诚","操劳","忠心报国"], ready:true },
+            { id:"zhuge-7", n:7, title:"智慧的象征", url:"units/zhuge/7.html",
+              tags:["象征","尊敬","智慧","臭皮匠","三个臭皮匠","动脑筋"], ready:true }
+          ]
         }
       ],
       practice:{ "口语":[], "听力":[], "阅读":[], "作文":[], "综合":[] },
