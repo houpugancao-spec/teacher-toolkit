@@ -1,7 +1,7 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v13";
+const CACHE = "vce-zhongwen-v14";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./manifest.json", "./icon.svg",
   "./assets/style.css", "./assets/catalog.js", "./assets/lesson.js",
@@ -45,11 +45,14 @@ self.addEventListener("fetch", e => {
   if (req.method !== "GET") return;                       // 成绩提交(POST)不拦，直连网络
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;             // 跨域(Supabase/CDN)不缓存，直连
-  e.respondWith(
-    caches.match(req).then(hit => hit || fetch(req).then(res => {
-      const copy = res.clone();
-      caches.open(CACHE).then(c => c.put(req, copy));       // 边用边缓存(以后新内容自动进缓存)
-      return res;
-    }).catch(() => hit))
-  );
+
+  // 网页/CSS/JS = 网络优先（联网永远最新，离线才用缓存）；音频/字体/图片 = 缓存优先（快+离线）
+  const netFirst = req.mode === "navigate" || /\.(html|css|js)$/.test(url.pathname);
+  const save = res => { const c = res.clone(); caches.open(CACHE).then(x => x.put(req, c)); return res; };
+
+  if (netFirst) {
+    e.respondWith(fetch(req).then(save).catch(() => caches.match(req)));
+  } else {
+    e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(save)));
+  }
 });
