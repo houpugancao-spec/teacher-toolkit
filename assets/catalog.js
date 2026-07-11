@@ -22,6 +22,7 @@ window.CATALOG = {
       lecture:[
         {
           id:"kongzi", no:"第九课", title:"孔子", topic:"人物·文化",
+          overview:"units/kongzi/index.html",      // 课文总览页（《学而不厌》全文朗读+划线词+分节）
           sections:[
             { id:"kongzi-1", n:1, title:"孔子是谁？", url:"units/kongzi/1.html",
               tags:["孔子","身高","长人","出身","自学","圣人","生词"], ready:true },
