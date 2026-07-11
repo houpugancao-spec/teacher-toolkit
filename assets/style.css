@@ -111,6 +111,10 @@ audio{width:100%;margin:4px 0 10px;height:40px}
 .done-box .n{font-size:34px;font-weight:700}
 .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
 
+/* ---- 分节页“第X节”标题 ---- */
+.seclabel{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;color:var(--ink);margin:18px 0 4px}
+.seclabel .sn{background:var(--blue);color:#fff;border-radius:8px;padding:3px 11px;font-size:15px;font-weight:600;flex:none}
+
 /* ---- 课文 / 文字稿（reading）---- */
 .reading .rd-img{width:100%;border-radius:12px;margin-bottom:12px;display:block}
 .reading .rd-body{font-size:17px;line-height:2}

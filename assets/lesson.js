@@ -69,7 +69,7 @@
   // 课文 / 文字稿：可选「全文朗读」+ 段落（对话段带角色名）+ 自动划线重点词
   function reading(s){
     const fig = s.img ? `<img class="rd-img" src="${esc(s.img)}" alt="" loading="lazy">` : "";
-    const audio = s.audio ? `<div class="listen-tip">🔊 ${esc(s.audioLabel||"全文朗读 · Listen to the whole text")}</div><audio controls preload="none" src="${esc(s.audio)}"></audio>` : "";
+    const audio = s.audio ? `<div class="listen-tip">🔊 ${esc(s.audioLabel||"全文朗读 · Listen to the whole text")}</div><audio controls controlsList="nodownload noplaybackrate" preload="metadata" oncontextmenu="return false" src="${esc(s.audio)}"></audio>` : "";
     const paras = (s.paras||[]).map(p=>{
       const role = (p&&p.role)!=null ? p.role : null;
       const t = typeof p==="string" ? p : (p.t||"");
@@ -105,7 +105,7 @@
   }
   function listen(s){
     return `<div class="card"><div class="listen-tip">🔊 可以反复听 · You can replay it</div>`+
-      `<audio controls preload="none" src="${esc(s.audio)}"></audio>${mcq(s.questions, s.title)}</div>`;
+      `<audio controls controlsList="nodownload noplaybackrate" preload="metadata" oncontextmenu="return false" src="${esc(s.audio)}"></audio>${mcq(s.questions, s.title)}</div>`;
   }
   function vocab(s){
     const c = s.words.map(v=>{
@@ -162,6 +162,7 @@
     <div class="navbtns">${navRow}</div>
   </div>
   <div class="wrap">
+    ${isOverview ? "" : `<div class="seclabel"><span class="sn">第${CN[curN-1]}节</span>${esc(L.title)}</div>`}
     ${idcard}
     ${L.sections.map(section).join("")}
     ${submitBox}
