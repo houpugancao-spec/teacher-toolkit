@@ -169,6 +169,6 @@
   init();
 })();
 </script>
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script>
+<script>if('serviceWorker' in navigator){var _hadCtrl=!!navigator.serviceWorker.controller;navigator.serviceWorker.register('sw.js').catch(function(){});var _reloaded=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(_reloaded||!_hadCtrl)return;_reloaded=true;location.reload();});}</script>
 </body>
 </html>

@@ -289,5 +289,5 @@
   // 离线补交 + 注册 Service Worker（离线缓存）
   flushQueue();
   window.addEventListener("online", flushQueue);
-  if("serviceWorker" in navigator){ navigator.serviceWorker.register("../../sw.js").catch(function(){}); }
+  if("serviceWorker" in navigator){ var _hadCtrl=!!navigator.serviceWorker.controller; navigator.serviceWorker.register("../../sw.js").catch(function(){}); var _reloaded=false; navigator.serviceWorker.addEventListener("controllerchange",function(){ if(_reloaded||!_hadCtrl)return; _reloaded=true; location.reload(); }); }
 })();
