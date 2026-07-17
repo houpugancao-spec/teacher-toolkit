@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孔子 · 第6节 名言</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+  /* 金句卡内的使用范例小样式（复用现有变量） */
+  .quote-eg{background:#f4f7fb;border:1px solid var(--line);border-radius:10px;padding:8px 11px;margin-top:8px;font-size:14px}
+  .quote-eg .lbl{font-size:11px;font-weight:700;color:var(--blue-d);letter-spacing:.04em}
+  .quote-eg .dl{margin:3px 0 0}
+  .quote-eg .dl b{color:var(--blue-d)}
+  .quote-bai{margin-top:4px}
+  .quote-en{color:var(--muted);font-size:13px;margin-top:2px;font-style:italic}
+  .quote-use{color:var(--muted);font-size:13px;margin-top:4px}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"kongzi-6", n:6, unit:"kongzi",
+  unitTitle:"《学而不厌》孔子听力单元",
+  title:"名言", subtitle:"Confucius's Sayings",
+  sections:[
+    // ① 金句卡 —— 四句名言五件套（先讲）
+    { type:"culture", title:"金句卡 · 孔子名言", sub:"作文、口语都用得上，先读懂再练 · Learn each saying before the quiz",
+      facts:[
+        {k:"📚", html:
+          '<b>学而不思则罔，思而不学则殆</b> <span class="spk" data-au="audio/words/学而不思则罔，思而不学则殆.mp3">🔊 读一遍</span>'+
+          '<br><span style="color:#6b7686">xué ér bù sī zé wǎng，sī ér bù xué zé dài</span>'+
+          '<br><span style="color:#c0392b">罔 wǎng＝迷惑　殆 dài＝困顿</span>'+
+          '<div class="quote-bai">只学习不思考，会迷惑；只思考不学习，会陷入困境。</div>'+
+          '<div class="quote-en">Learning without thinking leads to confusion; thinking without learning leads to trouble.</div>'+
+          '<div class="quote-use">🖊 用法：谈<b>学习方法</b>。</div>'+
+          '<div class="quote-eg"><span class="lbl">💬 这样用</span>'+
+          '<p class="dl"><b>A：</b>这些生词我背了好多遍还是记不住。</p>'+
+          '<p class="dl"><b>B：</b>光背不想当然记不住呀——<b>学而不思则罔</b>，你得想想它们怎么用。</p></div>'},
+        {k:"🤝", html:
+          '<b>三人行，必有我师焉。<br>择其善者而从之，其不善者而改之</b> <span class="spk" data-au="audio/words/三人行，必有我师焉。择其善者而从之，其不善者而改之.mp3">🔊 读一遍</span>'+
+          '<br><span style="color:#6b7686">sān rén xíng，bì yǒu wǒ shī yān。zé qí shàn zhě ér cóng zhī，qí bù shàn zhě ér gǎi zhī</span>'+
+          '<br><span style="color:#c0392b">焉＝在其中　择＝选择　善者＝长处</span>'+
+          '<div class="quote-bai">几个人同行，一定有能当我老师的。学他们的长处，改自己的短处。</div>'+
+          '<div class="quote-en">Among any three people, one can be my teacher — follow their strengths, correct my own faults.</div>'+
+          '<div class="quote-use">🖊 用法：谈<b>虚心求教、取长补短</b>。</div>'+
+          '<div class="quote-eg"><span class="lbl">💬 这样用</span>'+
+          '<p class="dl"><b>A：</b>我们组同学各有各的厉害，我有点自卑。</p>'+
+          '<p class="dl"><b>B：</b>别这么想——<b>三人行，必有我师</b>，学他们的长处就好啦！</p></div>'},
+        {k:"🧠", html:
+          '<b>知之为知之，不知为不知，是知也</b> <span class="spk" data-au="audio/words/知之为知之，不知为不知，是知也.mp3">🔊 读一遍</span>'+
+          '<br><span style="color:#6b7686">zhī zhī wéi zhī zhī，bù zhī wéi bù zhī，shì zhì yě</span>'+
+          '<br><span style="color:#c0392b">最后的「知」通「智」zhì＝智慧</span>'+
+          '<div class="quote-bai">知道就说知道，不知道就说不知道，这才是智慧。</div>'+
+          '<div class="quote-en">To know what you know, and admit what you don\'t — that is real wisdom.</div>'+
+          '<div class="quote-use">🖊 用法：谈<b>诚实、实事求是</b>。</div>'+
+          '<div class="quote-eg"><span class="lbl">💬 这样用</span>'+
+          '<p class="dl"><b>A：</b>老师问我懂不懂，我不懂又怕丢脸，就说懂了。</p>'+
+          '<p class="dl"><b>B：</b>不懂装懂更糟——<b>知之为知之，不知为不知</b>，承认不懂才聪明。</p></div>'},
+        {k:"🔥", html:
+          '<b>学而不厌</b> <span class="spk" data-au="audio/words/学而不厌.mp3">🔊 读一遍</span>'+
+          '<br><span style="color:#6b7686">xué ér bù yàn</span>'+
+          '<br><span style="color:#c0392b">厌＝满足</span>'+
+          '<div class="quote-bai">学习永不满足（孔子一生的座右铭）。</div>'+
+          '<div class="quote-en">Never tire of learning (Confucius\'s lifelong motto).</div>'+
+          '<div class="quote-use">🖊 用法：谈<b>勤奋好学</b>，可当<b>座右铭</b>。</div>'+
+          '<div class="quote-eg"><span class="lbl">💬 这样用</span>'+
+          '<p class="dl"><b>A：</b>你都考第一了，怎么还天天看书？</p>'+
+          '<p class="dl"><b>B：</b>学无止境嘛——孔子说<b>学而不厌</b>，学习是不会满足的。</p></div>'}
+      ] },
+    // ② 关键字 —— 词卡（拼音+中+英+🔊）
+    { type:"vocab", title:"关键字 · Key words", sub:"名言里最难的几个字，点卡片翻面 · Tap to flip",
+      words:[
+        {hz:"罔",py:"wǎng",zh:"迷惑、糊涂",en:"confused",emo:"😵", audio:"audio/words/罔.mp3"},
+        {hz:"殆",py:"dài",zh:"困顿、危险",en:"in peril",emo:"⚠️", audio:"audio/words/殆.mp3"},
+        {hz:"焉",py:"yān",zh:"文言助词：在其中",en:"therein (particle)",emo:"📜", audio:"audio/words/焉.mp3"},
+        {hz:"择",py:"zé",zh:"选择",en:"to choose",emo:"✋", audio:"audio/words/择.mp3"},
+        {hz:"善",py:"shàn",zh:"好的、长处",en:"good; strengths",emo:"👍", audio:"audio/words/善.mp3"}
+      ] },
+    // ③ 名句接龙 —— 选下一句（4 题，计分）
+    { type:"quiz", title:"名句接龙 · 选下一句 Complete the saying", sub:"选出正确的下半句 Choose the correct next line",
+      questions:[
+        { ask:"1. 学而不思则罔，＿＿＿＿", answer:1, options:["思而不学则安","思而不学则殆","学而不厌则罔"] },
+        { ask:"2. 三人行，＿＿＿＿", answer:0, options:["必有我师焉","必有我友焉","不如无师焉"] },
+        { ask:"3. 知之为知之，＿＿＿＿", answer:2, options:["不学为不学","知之为不知","不知为不知"] },
+        { ask:"4. 择其善者而从之，＿＿＿＿", answer:1, options:["其善者而改之","其不善者而改之","其不善者而从之"] }
+      ] },
+    // ④ 关键字连一连（5 对，计分）
+    { type:"match", title:"关键字 · 连一连 Match", sub:"把字和它的意思连起来 Match each word to its meaning",
+      words:[
+        {hz:"罔", en:"迷惑 confused"},
+        {hz:"殆", en:"困顿 in peril"},
+        {hz:"择", en:"选择 to choose"},
+        {hz:"焉", en:"在其中 therein"},
+        {hz:"善者", en:"长处 strengths"}
+      ] },
+    // ⑤ 名言用法 —— 选择（10 题，作文/口语应用）
+    { type:"quiz", title:"名言用法 · 选一选 Using the sayings", sub:"读懂意思，学会在作文口语里用 · Meaning & real use",
+      questions:[
+        { ask:"1. 「学而不思则罔」是什么意思？", answer:0, options:["只学习不思考会迷惑","只思考不学习会迷惑","又学又想才迷惑"] },
+        { ask:"2. 「殆」在名言里是什么意思？", answer:2, options:["满足","迷惑","困顿、危险"] },
+        { ask:"3. 复习时只背不理解，最该记住哪句？", answer:1, options:["学而不厌","学而不思则罔","有教无类"] },
+        { ask:"4. 想表达“每个人都有值得我学习的地方”，用哪句？", answer:0, options:["三人行，必有我师","知之为知之","学而不思则罔"] },
+        { ask:"5. 「三人行，必有我师」教我们怎么做？", answer:2, options:["只跟老师学","不用向别人学","学别人长处、改自己短处"] },
+        { ask:"6. 「知之为知之，不知为不知」讲的是什么？", answer:1, options:["要多读书","要诚实、实事求是","要谦虚有礼"] },
+        { ask:"7. 不懂却假装懂，违背了哪句名言？", answer:0, options:["知之为知之，不知为不知","学而不厌","三人行，必有我师"] },
+        { ask:"8. 「学而不厌」的意思是？", answer:1, options:["讨厌学习","学习永不满足","学一半就够了"] },
+        { ask:"9. 谁最适合把「学而不厌」当座右铭？", answer:2, options:["不爱读书的人","考完就不学的人","热爱学习、不断进步的人"] },
+        { ask:"10. 作文写“学习方法”，最适合引用哪句？", answer:0, options:["学而不思则罔，思而不学则殆","知之为知之，不知为不知","三人行，必有我师"] }
+      ] },
+    // ⑥ 说一说 —— 用名言造句（口语落地）
+    { type:"speak", title:"说一说 · 用名言造句 Make a sentence", sub:"挑一句名言，说一个自己的例子 · Pick a saying, give your own example",
+      frame:'我最喜欢 <b style="color:#c0392b">「＿＿＿＿」</b> 这句话，<br>因为 <b style="color:#c0392b">＿＿＿＿</b>。',
+      bank:["学而不思则罔","三人行，必有我师","知之为知之","学而不厌"],
+      eg:'例：我最喜欢「学而不厌」这句话，因为我希望自己永远保持好奇心、不停地学习。<br><span style="font-family:Segoe UI">My favourite saying is “never tire of learning”, because I want to stay curious and keep learning.</span>'
+    }
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

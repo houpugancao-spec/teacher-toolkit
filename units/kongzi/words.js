@@ -89,6 +89,8 @@ window.WORDS = {
   "中午": { py:"zhōngwǔ",    en:"noon",        manual:true },
   "诚实": { py:"chéngshí",   en:"honest",      manual:true },
   "类":   { py:"lèi",        zh:"类别、种类",   en:"kind; category", manual:true },
-  "装":   { py:"zhuāng",     zh:"假装",         en:"to pretend",     manual:true }
+  "装":   { py:"zhuāng",     zh:"假装",         en:"to pretend",     manual:true },
+  "择":   { py:"zé",         zh:"选择",         en:"to choose",      manual:true },
+  "善":   { py:"shàn",       zh:"好的；长处",   en:"good; strengths", manual:true }
 };
 Object.keys(window.WORDS).forEach(function(w){ window.WORDS[w].audio = "audio/words/"+w+".mp3"; });
