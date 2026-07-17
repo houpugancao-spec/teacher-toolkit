@@ -91,6 +91,7 @@ window.WORDS = {
   "类":   { py:"lèi",        zh:"类别、种类",   en:"kind; category", manual:true },
   "装":   { py:"zhuāng",     zh:"假装",         en:"to pretend",     manual:true },
   "择":   { py:"zé",         zh:"选择",         en:"to choose",      manual:true },
-  "善":   { py:"shàn",       zh:"好的；长处",   en:"good; strengths", manual:true }
+  "善":   { py:"shàn",       zh:"好的；长处",   en:"good; strengths", manual:true },
+  "实事求是": { py:"shí shì qiú shì", zh:"按照实际情况，诚实客观", en:"seek truth from facts; be realistic" }
 };
 Object.keys(window.WORDS).forEach(function(w){ window.WORDS[w].audio = "audio/words/"+w+".mp3"; });

@@ -35,7 +35,9 @@ window.CATALOG = {
             { id:"kongzi-5", n:5, title:"词汇练习", url:"units/kongzi/5.html",
               tags:["词汇","描写外貌","描写性格","近义词","反义词","四字词","选词填空"], ready:true },
             { id:"kongzi-6", n:6, title:"名言", url:"units/kongzi/6.html",
-              tags:["名言","论语","学而不思则罔","三人行必有我师","知之为知之","学而不厌","接龙","造句"], ready:true }
+              tags:["名言","论语","学而不思则罔","三人行必有我师","知之为知之","学而不厌","接龙","造句"], ready:true },
+            { id:"kongzi-7", n:7, title:"复述故事", url:"units/kongzi/7.html",
+              tags:["复述","概述","两小儿辩日","起因经过结果","顺序词","口语","实事求是"], ready:true }
           ]
         },
         {

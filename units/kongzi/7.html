@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孔子 · 第7节 复述故事</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+  .step-row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 2px}
+  .step-row .st{background:#eaf2ff;color:var(--blue-d);border:1px solid #cfe0ff;border-radius:20px;padding:4px 12px;font-size:14px;font-weight:600}
+  .conn{color:var(--muted);font-size:13px;margin-top:4px}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"kongzi-7", n:7, unit:"kongzi",
+  unitTitle:"《学而不厌》孔子听力单元",
+  title:"复述故事", subtitle:"Retell the Story",
+  sections:[
+    // ① 故事回顾（reading + 0.85 朗读，划线词可点）
+    { type:"reading", title:"故事回顾 ·《两小儿辩日》", sub:"先读一遍故事，有下划线的词可以点 · Read first, tap underlined words",
+      audio:"audio/retell-story.mp3", audioLabel:"故事朗读（慢速）· Listen to the story",
+      paras:[
+        "很久以前，有两个小孩在争论一个问题：太阳什么时候离我们最近？",
+        "一个小孩说：“早上的太阳大得像车盖，中午却只有盘子那么大。看起来越大就越近，所以早上最近！”",
+        "另一个小孩说：“早上凉飕飕，中午热烘烘。越近就越热，所以中午最近！”",
+        "两人争来争去，谁也说不服谁，就一起去请孔子评判。",
+        "没想到孔子想了想，老实地说：“这个问题，我也不知道。”",
+        "连聪明的孔子都承认自己不懂。因为在他看来，知道就说知道，不知道就说不知道，实事求是才是真正的智慧。"
+      ] },
+    // ② 概述小课堂（culture，先讲方法）
+    { type:"culture", title:"概述小课堂 · 三段式", sub:"复述一个故事，抓住这三步就行 · How to summarise a story",
+      facts:[
+        {k:"①", html:'<b>起因</b> Cause — 故事怎么开始的？<br><span style="color:#6b7686">两个小孩<b>争论</b>：太阳什么时候离人最近。</span>'},
+        {k:"②", html:'<b>经过</b> What happens — 中间发生了什么？<br><span style="color:#6b7686">各自说理由 → 争不出结果 → 去请孔子<b>评判</b>。</span>'},
+        {k:"③", html:'<b>结果</b> Result — 最后怎么样？<br><span style="color:#6b7686">孔子<b>承认</b>自己也不知道——<b>实事求是</b>才是智慧。</span>'},
+        {k:"🔗", html:'<b>用「顺序词」把三步连起来：</b><div class="step-row"><span class="st">首先 first</span><span class="st">接着 next</span><span class="st">然后 then</span><span class="st">最后 finally</span></div><span class="conn">例：<i>首先</i>两个小孩争论，<i>接着</i>去问孔子，<i>最后</i>孔子说不知道。</span>'}
+      ] },
+    // ③ 理清故事 · 排序（quiz，计分 4）
+    { type:"quiz", title:"理清故事 · 排排序 Put in order", sub:"想清楚每一步先后 · What happens at each step",
+      questions:[
+        { ask:"① 起因：故事一开始，两个小孩在做什么？", answer:1, options:["一起玩游戏","争论太阳什么时候离人最近","问孔子问题"] },
+        { ask:"② 经过：接着，两个小孩各自做了什么？", answer:0, options:["说出自己的理由","打了一架","回家了"] },
+        { ask:"③ 然后：争不出结果，他们去做什么？", answer:2, options:["查书","问老师","一起去请孔子评判"] },
+        { ask:"④ 结果：最后孔子怎么样？", answer:1, options:["说早上的孩子对","老实说自己也不知道","批评了两个小孩"] }
+      ] },
+    // ④ 读懂故事 · 选择（quiz，计分 8）
+    { type:"quiz", title:"读懂故事 · 选一选 Understand", sub:"读懂细节和道理 · Details & meaning",
+      questions:[
+        { ask:"1. 两个小孩在争论什么？", answer:2, options:["太阳有多大","太阳有多热","太阳什么时候离人最近"] },
+        { ask:"2. 第一个小孩为什么说“早上最近”？", answer:0, options:["早上太阳看起来大（像车盖）","早上比较冷","早上太阳很亮"] },
+        { ask:"3. 第二个小孩为什么说“中午最近”？", answer:1, options:["中午太阳大","中午热，越近越热","中午太阳高"] },
+        { ask:"4. 两人争不出结果，去请谁评判？", answer:1, options:["老师","孔子","父母"] },
+        { ask:"5. 孔子是怎么回答的？", answer:2, options:["说早上的孩子对","说中午的孩子对","老实说自己也不知道"] },
+        { ask:"6. 孔子为什么这样回答？", answer:0, options:["他真的不知道，不愿不懂装懂","他不想管","他忘记了"] },
+        { ask:"7. 这个故事体现了孔子什么特点？", answer:1, options:["聪明厉害","诚实、实事求是","严厉认真"] },
+        { ask:"8. 这个故事和哪句名言相呼应？", answer:0, options:["知之为知之，不知为不知","学而不厌","三人行，必有我师"] }
+      ] },
+    // ⑤ 顺序词 · 连一连（match，计分 4）
+    { type:"match", title:"顺序词 · 连一连 Sequence words", sub:"复述时用得上：把中文和英文连起来 · Match",
+      words:[
+        {hz:"首先", en:"first"},
+        {hz:"接着", en:"next"},
+        {hz:"然后", en:"then"},
+        {hz:"最后", en:"finally"}
+      ] },
+    // ⑥ 说一说 · 复述这个故事（speak）
+    { type:"speak", title:"说一说 · 复述《两小儿辩日》", sub:"用三段式，试着口头概述这个故事 · Retell it in 3 steps",
+      frame:'这个故事讲的是 <b style="color:#c0392b">两个小孩争论太阳什么时候离人最近</b>。<br>'+
+            '首先，<b style="color:#c0392b">＿＿＿＿</b>；接着，<b style="color:#c0392b">＿＿＿＿</b>；'+
+            '最后，<b style="color:#c0392b">＿＿＿＿</b>。<br>这说明孔子 <b style="color:#c0392b">＿＿</b>。',
+      bank:["争论 argue","理由 reason","评判 judge","承认 admit","实事求是 realistic","诚实 honest"],
+      eg:'例：首先两个小孩争论太阳什么时候离人近；接着他们各说各的理由，谁也不服谁，就去问孔子；最后孔子老实说自己也不知道。这说明孔子诚实、实事求是。'
+    },
+    // ⑦ 迁移 · 复述你读过的故事（speak）
+    { type:"speak", title:"说一说 · 复述你读过的故事 Your own story", sub:"换一个你读过的故事，用同样的三段式概述 · Use the same 3 steps",
+      frame:'我读过一个故事，叫《<b style="color:#c0392b">＿＿＿＿</b>》。<br>'+
+            '起因是 <b style="color:#c0392b">＿＿＿＿</b>，经过是 <b style="color:#c0392b">＿＿＿＿</b>，'+
+            '结果是 <b style="color:#c0392b">＿＿＿＿</b>。',
+      bank:["首先 first","接着 next","然后 then","最后 finally"],
+      eg:'例：我读过《龟兔赛跑》。起因是兔子笑乌龟跑得慢，就和它比赛；经过是兔子跑太快，中途睡着了；最后乌龟一步一步，反而先到终点。'
+    }
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>
