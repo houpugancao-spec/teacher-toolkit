@@ -112,8 +112,12 @@
       const au = v.audio || (WORDS[v.hz] && WORDS[v.hz].audio) || "";
       const py = v.py || (WORDS[v.hz] && WORDS[v.hz].py) || "";
       const en = v.en || (WORDS[v.hz] && WORDS[v.hz].en) || "";
+      const zh = v.zh || (WORDS[v.hz] && WORDS[v.hz].zh) || "";   // 中文释义（有才显示，向后兼容旧卡）
       const spk = au ? `<span class="spk" data-au="${esc(au)}">🔊</span>` : "";
-      return `<button class="flip"><div class="inner"><div class="side front">${spk}<div class="hz">${esc(v.hz)}</div><div class="py">${esc(py)}</div></div><div class="side back"><div class="emo">${esc(v.emo||"")}</div>${esc(en)}</div></div></button>`;
+      const back = `<div class="emo">${esc(v.emo||"")}</div>`+
+                   (zh?`<div class="bk-zh">${esc(zh)}</div>`:"")+
+                   `<div class="bk-en">${esc(en)}</div>`;
+      return `<button class="flip"><div class="inner"><div class="side front">${spk}<div class="hz">${esc(v.hz)}</div><div class="py">${esc(py)}</div></div><div class="side back">${back}</div></div></button>`;
     }).join("");
     return `<div class="card"><div class="grid">${c}</div><div class="hint">👆 点卡片翻面，点 🔊 听读音 · tap to flip, 🔊 to listen</div></div>`;
   }

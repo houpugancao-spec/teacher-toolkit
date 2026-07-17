@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孔子 · 第5节 词汇练习</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"kongzi-5", n:5, unit:"kongzi",
+  unitTitle:"《学而不厌》孔子听力单元",
+  title:"词汇练习", subtitle:"Vocabulary Practice",
+  sections:[
+    // ① 描写外貌 —— 翻卡（拼音+中文+英文）
+    { type:"vocab", title:"描写外貌的词 · Looks", sub:"点卡片翻面看意思 Tap a card to flip",
+      words:[
+        {hz:"高大",py:"gāodà",       zh:"又高又壮",          en:"tall and big",      emo:"📏", audio:"audio/words/高大.mp3"},
+        {hz:"健壮",py:"jiànzhuàng",  zh:"强壮有力",          en:"strong, sturdy",    emo:"💪", audio:"audio/words/健壮.mp3"},
+        {hz:"结实",py:"jiēshi",      zh:"身体强壮结实",      en:"sturdy, tough",     emo:"🧱", audio:"audio/words/结实.mp3"},
+        {hz:"瘦小",py:"shòuxiǎo",    zh:"又瘦又小",          en:"thin and small",    emo:"🧍", audio:"audio/words/瘦小.mp3"},
+        {hz:"文弱",py:"wénruò",      zh:"斯文、身体不强壮",  en:"gentle and frail",  emo:"📖", audio:"audio/words/文弱.mp3"},
+        {hz:"虚弱",py:"xūruò",       zh:"身体没有力气",      en:"weak, feeble",      emo:"🍃", audio:"audio/words/虚弱.mp3"}
+      ] },
+    // ② 描写性格 —— 翻卡
+    { type:"vocab", title:"描写性格的词 · Character", sub:"点卡片翻面看意思 Tap a card to flip",
+      words:[
+        {hz:"聪明",py:"cōngming",    zh:"脑子灵、有智慧",    en:"clever, smart",     emo:"💡", audio:"audio/words/聪明.mp3"},
+        {hz:"勤奋",py:"qínfèn",      zh:"努力、不偷懒",      en:"diligent, hard-working", emo:"🔥", audio:"audio/words/勤奋.mp3"},
+        {hz:"好学",py:"hàoxué",      zh:"喜欢学习",          en:"eager to learn",    emo:"📚", audio:"audio/words/好学.mp3"},
+        {hz:"谦逊",py:"qiānxùn",     zh:"谦虚、不骄傲",      en:"modest, humble",    emo:"🙏", audio:"audio/words/谦逊.mp3"},
+        {hz:"诚实",py:"chéngshí",    zh:"老实、不说谎",      en:"honest",            emo:"✅", audio:"audio/words/诚实.mp3"},
+        {hz:"骄傲",py:"jiāo'ào",     zh:"自以为了不起",      en:"arrogant, proud",   emo:"😤", audio:"audio/words/骄傲.mp3"}
+      ] },
+    // ③ 近义词 —— 连一连（计分 6）
+    { type:"match", title:"近义词 · 连一连 Synonyms", sub:"把词和意思相近的词连起来 Match each word to its synonym",
+      words:[
+        {hz:"健壮", en:"强壮"},
+        {hz:"谦逊", en:"谦虚"},
+        {hz:"聪明", en:"机灵"},
+        {hz:"贫困", en:"贫穷"},
+        {hz:"请教", en:"求教"},
+        {hz:"尊敬", en:"敬重"}
+      ] },
+    // ④ 四字词小课堂 —— 先讲后练
+    { type:"culture", title:"四字词小课堂 · 先学后练", sub:"这些词考试、作文都用得上 Learn these before the quiz",
+      facts:[
+        {k:"📖", html:'<b>学而不厌</b>　xué ér bù yàn <span class="spk" data-au="audio/words/学而不厌.mp3">🔊 读一遍</span><br><span style="color:#c0392b">「厌 yàn」= 满足</span>（不是“讨厌”！）<br>学习永远不满足。<br><small style="color:#6b7686">never tire of learning</small>'},
+        {k:"🌍", html:'<b>有教无类</b>　yǒu jiào wú lèi <span class="spk" data-au="audio/words/有教无类.mp3">🔊 读一遍</span><br><span style="color:#c0392b">「类 lèi」= 类别、种类</span><br>教书不分类别，不管什么人都能学。<br><small style="color:#6b7686">education for everyone, no matter who</small>'},
+        {k:"⚔️", html:'<b>文武双全</b>　wén wǔ shuāng quán <span class="spk" data-au="audio/words/文武双全.mp3">🔊 读一遍</span><br>文=学问，武=武艺，双全=两样都好。<br>又会读书、又会武艺。<br><small style="color:#6b7686">skilled in both study and martial arts</small>'},
+        {k:"🙈", html:'<b>不懂装懂</b>　bù dǒng zhuāng dǒng <span class="spk" data-au="audio/words/不懂装懂.mp3">🔊 读一遍</span><br><span style="color:#c0392b">「装 zhuāng」= 假装</span><br>不懂却假装懂。<br><small style="color:#6b7686">pretend to understand what you don\'t</small>'}
+      ] },
+    // ⑤ 反义词 —— 选择题（计分 8）
+    { type:"quiz", title:"反义词 · 选一选 Antonyms", sub:"选出意思相反的词 Choose the opposite",
+      questions:[
+        { ask:"1. 「高大」的反义词是？", answer:1, options:["强壮 strong","瘦小 thin & small","健康 healthy"] },
+        { ask:"2. 「健壮」的反义词是？", answer:2, options:["结实 sturdy","高大 tall","虚弱 weak"] },
+        { ask:"3. 「聪明」的反义词是？", answer:0, options:["愚笨 foolish","机灵 clever","勤奋 diligent"] },
+        { ask:"4. 「谦逊」的反义词是？", answer:1, options:["诚实 honest","骄傲 arrogant","好学 eager to learn"] },
+        { ask:"5. 「诚实」的反义词是？", answer:2, options:["谦虚 modest","勤奋 diligent","虚伪 hypocritical"] },
+        { ask:"6. 「勤奋」的反义词是？", answer:0, options:["懒惰 lazy","努力 hard-working","认真 careful"] },
+        { ask:"7. 「贫困」的反义词是？", answer:1, options:["贫穷 poor","富裕 rich","普通 ordinary"] },
+        { ask:"8. 「丢脸」的反义词是？", answer:2, options:["害怕 afraid","伤心 sad","光荣 honourable"] }
+      ] },
+    // ⑥ 选词填空 —— 会用才算会（计分 8，含四字词）
+    { type:"quiz", title:"选词填空 · 会用才算会 Fill in", sub:"把最合适的词填进句子 Choose the best word",
+      questions:[
+        { ask:"1. 孔子从不骄傲，为人很＿＿。", answer:0, options:["谦逊 modest","丢脸 lose face","竟然 unexpectedly"] },
+        { ask:"2. 他家里很穷，家境＿＿。", answer:1, options:["富裕 rich","贫困 poor","健壮 strong"] },
+        { ask:"3. 有不懂的问题，我们应该虚心向老师＿＿。", answer:2, options:["评判 judge","反省 reflect","请教 ask for advice"] },
+        { ask:"4. 孔子身高1.86米，长得高大＿＿。", answer:0, options:["健壮 sturdy","瘦小 thin","聪明 clever"] },
+        { ask:"5. 孔子一生热爱学习、从不满足，可以说是＿＿。", answer:1, options:["文武双全","学而不厌","不懂装懂"] },
+        { ask:"6. 孔子不分贵贱贫富都愿意教，这叫＿＿。", answer:2, options:["名门望族","三人行","有教无类"] },
+        { ask:"7. 明明不会却假装会，就是＿＿。", answer:0, options:["不懂装懂","勤奋好学","谦虚诚实"] },
+        { ask:"8. 他既会读书又会射箭打仗，真是＿＿。", answer:1, options:["自学成才","文武双全","学而不厌"] }
+      ] },
+    // ⑦ 说一说 —— 用词描写人（口语，为第八节介绍热身）
+    { type:"speak", title:"说一说 · 用词描写一个人 Describe someone", sub:"用今天学的词，说说你认识的一个人 Use today's words",
+      frame:'我认识一个人，他/她很 <b style="color:#c0392b">＿＿</b>，也很 <b style="color:#c0392b">＿＿</b>，<br>因为他/她 <b style="color:#c0392b">＿＿</b>。',
+      bank:["健壮 strong","聪明 clever","勤奋 diligent","谦逊 modest","诚实 honest"],
+      eg:'例：我认识一个人，他很聪明，也很勤奋，因为他每天都认真学习。<br><span style="font-family:Segoe UI">I know someone who is clever and diligent, because he studies hard every day.</span>'
+    }
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

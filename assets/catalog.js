@@ -31,7 +31,9 @@ window.CATALOG = {
             { id:"kongzi-3", n:3, title:"好学 & 有教无类", url:"units/kongzi/3.html",
               tags:["好学","有教无类","三人行","平等","反省","老师"], ready:true },
             { id:"kongzi-4", n:4, title:"两小儿辩日 & 真智慧", url:"units/kongzi/4.html",
-              tags:["两小儿辩日","知之为知之","智慧","诚实","承认","复习"], ready:true }
+              tags:["两小儿辩日","知之为知之","智慧","诚实","承认","复习"], ready:true },
+            { id:"kongzi-5", n:5, title:"词汇练习", url:"units/kongzi/5.html",
+              tags:["词汇","描写外貌","描写性格","近义词","反义词","四字词","选词填空"], ready:true }
           ]
         },
         {

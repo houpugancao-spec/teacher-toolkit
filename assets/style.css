@@ -4,7 +4,7 @@
   src:url('fonts/lxgw-kai.woff2') format('woff2');
   font-weight:normal;font-style:normal;font-display:swap;
 }
-.reading .rd-body, .seclabel, .flip .hz, .wpop-hz, .wpop-zh, .match [data-side="L"] .chip{
+.reading .rd-body, .seclabel, .flip .hz, .flip .bk-zh, .wpop-hz, .wpop-zh, .match .chip{
   font-family:'LXGW Kai','KaiTi','楷体','STKaiti',serif;
 }
 
@@ -93,8 +93,10 @@ audio{width:100%;margin:4px 0 10px;height:40px}
 .flip .front{background:#fff}
 .flip .front .hz{font-size:30px;font-weight:700}
 .flip .front .py{color:var(--muted);font-size:13px;margin-top:2px}
-.flip .back{background:var(--blue);color:#fff;transform:rotateY(180deg);font-size:17px;padding:6px;text-align:center}
-.flip .back .emo{font-size:26px;margin-bottom:2px}
+.flip .back{background:var(--blue);color:#fff;transform:rotateY(180deg);font-size:17px;padding:6px 8px;text-align:center}
+.flip .back .emo{font-size:24px;margin-bottom:1px;line-height:1}
+.flip .back .bk-zh{font-size:16px;font-weight:600;line-height:1.25}
+.flip .back .bk-en{font-size:12px;opacity:.85;margin-top:2px;line-height:1.2}
 .hint{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
 .match{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .col{display:flex;flex-direction:column;gap:9px}
@@ -137,6 +139,9 @@ audio{width:100%;margin:4px 0 10px;height:40px}
 .flip{position:relative}
 .spk{position:absolute;top:6px;right:8px;font-size:15px;z-index:2;line-height:1;opacity:.75;cursor:pointer}
 .spk:hover{opacity:1}
+/* 讲解卡（facts）里的 🔊 改为行内按钮样式，不用卡片角标定位 */
+.fact .spk{position:static;display:inline-block;font-size:14px;line-height:1.4;opacity:1;margin-left:4px;padding:1px 9px;border:1px solid var(--line);border-radius:20px;background:#eef4ff;color:var(--blue-d);vertical-align:middle}
+.fact .spk:hover{background:#dbe9ff}
 /* 划线词弹卡 */
 .wpop{position:fixed;inset:0;background:rgba(20,30,50,.45);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
 .wpop.show{display:flex;animation:pop .2s}
