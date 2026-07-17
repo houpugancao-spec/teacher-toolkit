@@ -37,7 +37,9 @@ window.CATALOG = {
             { id:"kongzi-6", n:6, title:"名言", url:"units/kongzi/6.html",
               tags:["名言","论语","学而不思则罔","三人行必有我师","知之为知之","学而不厌","接龙","造句"], ready:true },
             { id:"kongzi-7", n:7, title:"复述故事", url:"units/kongzi/7.html",
-              tags:["复述","概述","两小儿辩日","起因经过结果","顺序词","口语","实事求是"], ready:true }
+              tags:["复述","概述","两小儿辩日","起因经过结果","顺序词","口语","实事求是"], ready:true },
+            { id:"kongzi-8", n:8, title:"介绍孔子", url:"units/kongzi/8.html",
+              tags:["介绍人物","称呼","籍贯","身世","外貌","成就","性格","看法","介绍自己","口语"], ready:true }
           ]
         },
         {

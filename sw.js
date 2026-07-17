@@ -1,7 +1,7 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v18";
+const CACHE = "vce-zhongwen-v19";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./manifest.json", "./icon.svg",
   "./assets/icons/icon-192.png", "./assets/icons/icon-512.png",
@@ -10,8 +10,8 @@ const CORE = [
   "./assets/fonts/lxgw-kai.woff2",
   "./units/kongzi/index.html", "./units/kongzi/words.js",
   "./units/kongzi/audio/reading-article.mp3", "./units/kongzi/audio/reading-dialogue.mp3",
-  "./units/kongzi/1.html", "./units/kongzi/2.html", "./units/kongzi/3.html", "./units/kongzi/4.html", "./units/kongzi/5.html", "./units/kongzi/6.html", "./units/kongzi/7.html",
-  "./units/kongzi/audio/retell-story.mp3",
+  "./units/kongzi/1.html", "./units/kongzi/2.html", "./units/kongzi/3.html", "./units/kongzi/4.html", "./units/kongzi/5.html", "./units/kongzi/6.html", "./units/kongzi/7.html", "./units/kongzi/8.html",
+  "./units/kongzi/audio/retell-story.mp3", "./units/kongzi/audio/intro-confucius.mp3",
   "./units/kongzi/audio/seg1.mp3", "./units/kongzi/audio/seg2.mp3",
   "./units/kongzi/audio/seg3.mp3", "./units/kongzi/audio/seg4.mp3",
   "./units/kongzi/audio/seg5.mp3", "./units/kongzi/audio/seg6.mp3",

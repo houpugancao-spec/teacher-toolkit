@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孔子 · 第8节 介绍孔子</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+  .pt-row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 2px}
+  .pt-row .pt{background:#eaf2ff;color:var(--blue-d);border:1px solid #cfe0ff;border-radius:20px;padding:4px 12px;font-size:14px;font-weight:600}
+  .conn{color:var(--muted);font-size:13px;margin-top:4px}
+  .py-inline{color:#8a94a6;font-size:13px;font-weight:400}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"kongzi-8", n:8, unit:"kongzi",
+  unitTitle:"《学而不厌》孔子听力单元",
+  title:"介绍孔子", subtitle:"Introduce Confucius",
+  sections:[
+    // ① 介绍一个人 · 七要点（culture，先讲方法）
+    { type:"culture", title:"介绍一个人 · 七个要点", sub:"介绍任何一个人，抓住这七点就完整了 · How to introduce a person",
+      facts:[
+        {k:"①", html:'<b>称呼</b> <span class="py-inline">chēnghu</span> Name & title — 他叫什么？怎么尊称他？<br><span style="color:#6b7686">孔子，字<b>仲尼</b>，尊称“<b>至圣先师</b>”。</span>'},
+        {k:"②", html:'<b>时代 · 籍贯</b> <span class="py-inline">shídài · jíguàn</span> Era & hometown — 什么时代？哪里人？<br><span style="color:#6b7686"><b>春秋</b>时期，<b>鲁国陬邑</b>（今山东曲阜）人。</span>'},
+        {k:"③", html:'<b>身世</b> <span class="py-inline">shēnshì</span> Background — 出身、家庭、早年经历。<br><span style="color:#6b7686">三岁丧父，<b>家境贫困</b>，做过<b>管仓库</b>、<b>喂牲口</b>的活。</span>'},
+        {k:"④", html:'<b>外貌</b> <span class="py-inline">wàimào</span> Appearance — 长什么样？<br><span style="color:#6b7686">身高约一米八六，高大<b>健壮</b>，人称“<b>长人</b>”。</span>'},
+        {k:"⑤", html:'<b>身份 · 成就</b> <span class="py-inline">shēnfèn · chéngjiù</span> Role & achievements — 做什么的？做成了什么？<br><span style="color:#6b7686">伟大的老师；开创“<b>有教无类</b>”，弟子三千，言行成《<b>论语</b>》。</span>'},
+        {k:"⑥", html:'<b>性格</b> <span class="py-inline">xìnggé</span> Personality — 是个怎样的人？<br><span style="color:#6b7686"><b>勤奋好学</b>、<b>谦虚诚实</b>、<b>实事求是</b>。</span>'},
+        {k:"⑦", html:'<b>我的看法</b> <span class="py-inline">wǒ de kànfǎ</span> My view — 你怎么看他？为什么敬佩？<br><span style="color:#6b7686">用一句话说出你的评价，别只罗列事实。</span>'}
+      ] },
+    // ② 范文 · 介绍孔子（reading，划线词可点；无音频，供阅读示范）
+    { type:"reading", title:"范文 · 介绍孔子", sub:"读一遍这段示范，看看七个要点怎么连成一段话 · A model introduction",
+      audio:"audio/intro-confucius.mp3", audioLabel:"范文朗读（慢速）· Listen to the model",
+      paras:[
+        "我要介绍的这个人叫孔子，字仲尼，人们尊称他为“至圣先师”。",
+        "他生活在两千多年前的春秋时期，是鲁国陬邑人，也就是今天的山东曲阜。",
+        "孔子的身世很苦：三岁时父亲就去世了，家境贫困，他年轻时做过管仓库、喂牲口这些让人看不起的工作。据记载，他身高有一米八六左右，高大健壮，当时的人都叫他“长人”。",
+        "尽管出身贫寒，孔子从小勤奋好学，靠自学掌握了“六艺”。三十岁以后他开始收学生，开创了“有教无类”的教育思想，弟子有三千多人。他的言行被记录成《论语》，流传千古。",
+        "孔子为人谦虚诚实。有一次两个小孩争论问题来问他，他不知道就老实说不知道，因为在他看来，“知之为知之，不知为不知”才是真正的智慧。",
+        "在我看来，孔子最了不起的地方，是他一生学而不厌，又愿意把学问平等地教给每一个人。这正是我敬佩他的原因。"
+      ] },
+    // ③ 对号入座 · 选一选（quiz，计分 8）
+    { type:"quiz", title:"对号入座 · 选一选 Match the point", sub:"每个要点，孔子该怎么说？ · Fit each point to Confucius",
+      questions:[
+        { ask:"① 称呼：介绍孔子的“称呼”，可以怎么说？", answer:1, options:["他很聪明","他叫孔子，字仲尼，被尊称为“至圣先师”","他是山东人"] },
+        { ask:"② 时代：孔子生活在哪个时期？", answer:1, options:["唐朝","春秋时期","清朝"] },
+        { ask:"③ 籍贯：孔子的家乡（籍贯）在哪里？", answer:2, options:["陕西西安","河南洛阳","鲁国陬邑（今山东曲阜）"] },
+        { ask:"④ 身世：下面哪句在讲孔子的“身世”？", answer:0, options:["三岁丧父、家境贫困，做过管仓库喂牲口的工作","他开创了有教无类","他被尊为至圣先师"] },
+        { ask:"⑤ 外貌：关于孔子的“外貌”，正确的是？", answer:2, options:["又瘦又小的老人","中等身材、很普通","身高约一米八六，高大健壮，人称“长人”"] },
+        { ask:"⑥ 成就：孔子的“身份和成就”是什么？", answer:1, options:["一位有钱的商人","伟大的老师，开创有教无类、弟子三千，言行成《论语》","一位打仗的将军"] },
+        { ask:"⑦ 性格：哪一组词最能概括孔子的“性格”？", answer:0, options:["勤奋好学、谦虚诚实","骄傲、爱炫耀","懒惰、马虎"] },
+        { ask:"⑧ 看法：说“我的看法”时，下面哪句最合适？", answer:1, options:["孔子姓孔，名丘，字仲尼。","在我看来，孔子学而不厌又平等待人，很值得敬佩。","孔子有三千多个学生。"] }
+      ] },
+    // ④ 介绍的顺序 · 排排序（quiz，计分 4）
+    { type:"quiz", title:"介绍的顺序 · 排排序 Put in order", sub:"一段人物介绍，先说什么、后说什么？ · What comes first",
+      questions:[
+        { ask:"① 开头第一句，最好先说什么？", answer:1, options:["我对他的看法","他的称呼（叫什么、怎么称呼）","他的性格"] },
+        { ask:"② 说完称呼，接着适合介绍什么？", answer:0, options:["他的时代和籍贯（什么时候、哪里人）","他的成就","我的看法"] },
+        { ask:"③ 介绍完时代、身世、外貌，再介绍什么？", answer:2, options:["再说一次称呼","我的看法","他的身份和成就"] },
+        { ask:"④ 一段人物介绍，用什么收尾最好？", answer:1, options:["他的家乡","我的看法（我怎么看他）","他的外貌"] }
+      ] },
+    // ⑤ 要点 · 连一连（match，计分 6）
+    { type:"match", title:"要点 · 连一连 The seven points", sub:"把介绍要点的中文和英文连起来 · Match the terms",
+      words:[
+        {hz:"称呼", en:"name & title"},
+        {hz:"籍贯", en:"hometown"},
+        {hz:"身世", en:"background"},
+        {hz:"外貌", en:"appearance"},
+        {hz:"成就", en:"achievements"},
+        {hz:"性格", en:"personality"}
+      ] },
+    // ⑥ 说一说 · 介绍孔子（speak）
+    { type:"speak", title:"说一说 · 介绍孔子", sub:"用七个要点，试着口头介绍孔子 · Introduce Confucius aloud",
+      frame:'我要介绍的人是 <b style="color:#c0392b">＿＿</b>（称呼）。<br>'+
+            '他是 <b style="color:#c0392b">＿＿</b>时期 <b style="color:#c0392b">＿＿</b>人（时代·籍贯）。<br>'+
+            '他的身世 <b style="color:#c0392b">＿＿</b>，外貌 <b style="color:#c0392b">＿＿</b>。<br>'+
+            '他是一位 <b style="color:#c0392b">＿＿</b>，主要成就是 <b style="color:#c0392b">＿＿</b>（身份·成就）。<br>'+
+            '他为人 <b style="color:#c0392b">＿＿</b>（性格）。<br>'+
+            '在我看来，<b style="color:#c0392b">＿＿</b>（我的看法）。',
+      bank:["字仲尼 courtesy name","春秋 Spring-Autumn","鲁国 State of Lu","家境贫困 poor family","高大健壮 tall & strong","有教无类 education for all","《论语》 the Analects","勤奋好学 diligent","值得敬佩 admirable"],
+      eg:'例：我要介绍的人是孔子，字仲尼。他是春秋时期鲁国人。他小时候家境贫困，做过管仓库、喂牲口的活；身高却有一米八六，高大健壮。他是一位伟大的老师，开创了“有教无类”，弟子三千，言行成了《论语》。他为人勤奋好学、谦虚诚实。在我看来，他学而不厌又平等待人，非常值得敬佩。'
+    },
+    // ⑦ 迁移 · 介绍你敬佩的人 / 你自己（speak）
+    { type:"speak", title:"说一说 · 介绍你自己或你敬佩的人 Your turn", sub:"换一个人，用同样的七个要点介绍 · Same seven points, a different person",
+      frame:'现在换你——介绍<b style="color:#c0392b">你自己</b>，或<b style="color:#c0392b">一个你敬佩的人</b>。<br>'+
+            '称呼：<b style="color:#c0392b">＿＿</b>；来自 <b style="color:#c0392b">＿＿</b>（籍贯）。<br>'+
+            '身世/经历：<b style="color:#c0392b">＿＿</b>；外貌：<b style="color:#c0392b">＿＿</b>。<br>'+
+            '身份/成就：<b style="color:#c0392b">＿＿</b>；性格：<b style="color:#c0392b">＿＿</b>。<br>'+
+            '我的看法：<b style="color:#c0392b">＿＿</b>。',
+      bank:["称呼 name","籍贯 hometown","身世 background","外貌 appearance","成就 achievement","性格 personality","看法 my view"],
+      eg:'例：我要介绍我的奶奶。她今年七十岁，来自广东。她年轻时很辛苦，一个人把五个孩子养大；她个子不高，笑起来很和气。她做了一辈子小学老师，教过很多学生。她勤劳又善良。在我看来，她是我最敬佩的人。'
+    }
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>
