@@ -43,7 +43,12 @@ window.WORDS = {
   "忠诚":     { py:"zhōngchéng",      zh:"忠心、可靠",                en:"loyal; faithful" },
   "操劳":     { py:"cāoláo",          zh:"辛苦地工作",                en:"to toil; to work hard" },
   "尊敬":     { py:"zūnjìng",         zh:"敬重",                      en:"to respect" },
-  "象征":     { py:"xiàngzhēng",      zh:"代表某种意义的标志",         en:"symbol; to symbolize" }
+  "象征":     { py:"xiàngzhēng",      zh:"代表某种意义的标志",         en:"symbol; to symbolize" },
+
+  // —— 第八节·词汇练习新增描写词（manual:不自动划线，只供词卡）——
+  "机智":     { py:"jīzhì",           zh:"脑子快、有急智",            en:"quick-witted; resourceful", manual:true },
+  "沉着":     { py:"chénzhuó",        zh:"遇事镇定、不慌张",          en:"calm; composed",            manual:true },
+  "谦虚":     { py:"qiānxū",          zh:"不自满、不骄傲",            en:"modest; humble",            manual:true }
 };
 /* 每条补一个 audio 路径（读音文件生成后自动可用） */
 Object.keys(window.WORDS).forEach(function(w){ window.WORDS[w].audio = "audio/words/"+w+".mp3"; });

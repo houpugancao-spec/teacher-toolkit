@@ -59,7 +59,9 @@ window.CATALOG = {
             { id:"zhuge-6", n:6, title:"借箭成功 · 忠诚", url:"units/zhuge/6.html",
               tags:["家喻户晓","忠诚","操劳","忠心报国"], ready:true },
             { id:"zhuge-7", n:7, title:"智慧的象征", url:"units/zhuge/7.html",
-              tags:["象征","尊敬","智慧","臭皮匠","三个臭皮匠","动脑筋"], ready:true }
+              tags:["象征","尊敬","智慧","臭皮匠","三个臭皮匠","动脑筋"], ready:true },
+            { id:"zhuge-8", n:8, title:"词汇练习", url:"units/zhuge/8.html",
+              tags:["词汇","聪明才智","忠诚品格","足智多谋","近义词","反义词","成语","选词填空"], ready:true }
           ]
         }
       ],
