@@ -61,7 +61,9 @@ window.CATALOG = {
             { id:"zhuge-7", n:7, title:"智慧的象征", url:"units/zhuge/7.html",
               tags:["象征","尊敬","智慧","臭皮匠","三个臭皮匠","动脑筋"], ready:true },
             { id:"zhuge-8", n:8, title:"词汇练习", url:"units/zhuge/8.html",
-              tags:["词汇","聪明才智","忠诚品格","足智多谋","近义词","反义词","成语","选词填空"], ready:true }
+              tags:["词汇","聪明才智","忠诚品格","足智多谋","近义词","反义词","成语","选词填空"], ready:true },
+            { id:"zhuge-9", n:9, title:"名言", url:"units/zhuge/9.html",
+              tags:["名言","诫子书","淡泊明志","宁静致远","鞠躬尽瘁","三个臭皮匠","接龙","造句"], ready:true }
           ]
         }
       ],

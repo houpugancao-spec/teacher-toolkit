@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>诸葛亮 · 第9节 名言</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+  .quote-eg{background:#f4f7fb;border:1px solid var(--line);border-radius:10px;padding:8px 11px;margin-top:8px;font-size:14px}
+  .quote-eg .lbl{font-size:11px;font-weight:700;color:var(--blue-d);letter-spacing:.04em}
+  .quote-eg .dl{margin:3px 0 0}
+  .quote-eg .dl b{color:var(--blue-d)}
+  .quote-bai{margin-top:4px}
+  .quote-en{color:var(--muted);font-size:13px;margin-top:2px;font-style:italic}
+  .quote-use{color:var(--muted);font-size:13px;margin-top:4px}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"zhuge-9", n:9, unit:"zhuge",
+  unitTitle:"《智慧的化身——诸葛亮》",
+  title:"名言", subtitle:"Zhuge Liang's Sayings",
+  sections:[
+    // ① 金句卡 —— 三句名言五件套（先讲）
+    { type:"culture", title:"金句卡 · 诸葛亮名言", sub:"作文、口语都用得上，先读懂再练 · Learn each saying before the quiz",
+      facts:[
+        {k:"🍃", html:
+          '<b>非淡泊无以明志，非宁静以致远</b> <span class="spk" data-au="audio/words/非淡泊无以明志，非宁静以致远.mp3">🔊 读一遍</span>'+
+          '<br><span style="color:#6b7686">fēi dàn bó wú yǐ míng zhì，fēi níng jìng wú yǐ zhì yuǎn</span>'+
+          '<br><span style="color:#c0392b">淡泊＝不追求名利　明志＝明确志向　宁静＝内心平静　致远＝达到远大目标</span>'+
+          '<div class="quote-bai">不看轻名利就无法明确志向，内心不平静就无法实现远大理想。（出自诸葛亮《诫子书》）</div>'+
+          '<div class="quote-en">Without detachment from fame you cannot set clear goals; without inner calm you cannot reach far.</div>'+
+          '<div class="quote-use">🖊 用法：谈<b>静心、专注、立志</b>，常缩写为「<b>淡泊明志，宁静致远</b>」。</div>'+
+          '<div class="quote-eg"><span class="lbl">💬 这样用</span>'+
+          '<p class="dl"><b>A：</b>我一边刷手机一边写作业，总是静不下心。</p>'+
+          '<p class="dl"><b>B：</b>诸葛亮说<b>非宁静以致远</b>，先把手机放下，心静了才学得进去。</p></div>'},
+        {k:"🕯️", html:
+          '<b>鞠躬尽瘁，死而后已</b> <span class="spk" data-au="audio/words/鞠躬尽瘁，死而后已.mp3">🔊 读一遍</span>'+
+          '<br><span style="color:#6b7686">jū gōng jìn cuì，sǐ ér hòu yǐ</span>'+
+          '<br><span style="color:#c0392b">鞠躬＝恭敬地弯腰　尽瘁＝用尽心力　已＝停止</span>'+
+          '<div class="quote-bai">恭恭敬敬、竭尽全力地做事，一直到死才停下。（诸葛亮一生的写照）</div>'+
+          '<div class="quote-en">To give one\'s all in devoted service, until death.</div>'+
+          '<div class="quote-use">🖊 用法：谈<b>忠诚、尽责、奉献</b>。</div>'+
+          '<div class="quote-eg"><span class="lbl">💬 这样用</span>'+
+          '<p class="dl"><b>A：</b>诸葛亮明明很累了，为什么还坚持管那么多事？</p>'+
+          '<p class="dl"><b>B：</b>因为他<b>鞠躬尽瘁，死而后已</b>——为国家做事，用尽全力到最后一刻。</p></div>'},
+        {k:"🤝", html:
+          '<b>三个臭皮匠，顶个诸葛亮</b> <span class="spk" data-au="audio/words/三个臭皮匠，顶个诸葛亮.mp3">🔊 读一遍</span>'+
+          '<br><span style="color:#6b7686">sān gè chòu píjiàng，dǐng gè Zhūgě Liàng</span>'+
+          '<br><span style="color:#c0392b">臭皮匠＝地位低的手艺人、普通人　顶＝抵得上</span>'+
+          '<div class="quote-bai">三个普通人一起动脑筋，也能顶得上一个诸葛亮。（谚语）</div>'+
+          '<div class="quote-en">Three humble cobblers together can outwit Zhuge Liang — many heads are better than one.</div>'+
+          '<div class="quote-use">🖊 用法：谈<b>集体智慧、团结合作</b>。</div>'+
+          '<div class="quote-eg"><span class="lbl">💬 这样用</span>'+
+          '<p class="dl"><b>A：</b>这道题好难，我一个人怎么都想不出来。</p>'+
+          '<p class="dl"><b>B：</b><b>三个臭皮匠，顶个诸葛亮</b>，我们几个一起商量，肯定能想出办法！</p></div>'}
+      ] },
+    // ② 关键字 —— 词卡（拼音+中+英+🔊）
+    { type:"vocab", title:"关键字 · Key words", sub:"名言里最难的几个词，点卡片翻面 · Tap to flip",
+      words:[
+        {hz:"淡泊",  py:"dànbó",   zh:"不追求名利",       en:"indifferent to fame", emo:"🍃", audio:"audio/words/淡泊.mp3"},
+        {hz:"宁静",  py:"níngjìng",zh:"内心平静",         en:"calm, tranquil",      emo:"🧘", audio:"audio/words/宁静.mp3"},
+        {hz:"致远",  py:"zhìyuǎn", zh:"达到远大目标",     en:"reach far",           emo:"🎯", audio:"audio/words/致远.mp3"},
+        {hz:"鞠躬",  py:"jūgōng",  zh:"恭敬地弯腰",       en:"bow respectfully",    emo:"🙇", audio:"audio/words/鞠躬.mp3"},
+        {hz:"尽瘁",  py:"jìncuì",  zh:"用尽全部心力",     en:"exhaust one's energies", emo:"🕯️", audio:"audio/words/尽瘁.mp3"}
+      ] },
+    // ③ 名句接龙 —— 选下一句（4 题，计分）
+    { type:"quiz", title:"名句接龙 · 选下一句 Complete the saying", sub:"选出正确的下半句 Choose the correct next line",
+      questions:[
+        { ask:"1. 非淡泊无以明志，＿＿＿＿", answer:1, options:["非宁静以致胜","非宁静以致远","非努力以致远"] },
+        { ask:"2. 鞠躬尽瘁，＿＿＿＿", answer:0, options:["死而后已","勇往直前","忠心报国"] },
+        { ask:"3. 三个臭皮匠，＿＿＿＿", answer:2, options:["不如一个诸葛亮","比不上诸葛亮","顶个诸葛亮"] },
+        { ask:"4. 「淡泊明志」的下一句是＿＿＿＿", answer:1, options:["宁静致胜","宁静致远","专心致远"] }
+      ] },
+    // ④ 关键字连一连（5 对，计分）
+    { type:"match", title:"关键字 · 连一连 Match", sub:"把词和它的意思连起来 Match each word to its meaning",
+      words:[
+        {hz:"淡泊",     en:"不追求名利 indifferent to fame"},
+        {hz:"宁静",     en:"内心平静 calm"},
+        {hz:"致远",     en:"达到远大目标 reach far"},
+        {hz:"鞠躬尽瘁", en:"竭尽全力 give one's all"},
+        {hz:"臭皮匠",   en:"普通人 an ordinary person"}
+      ] },
+    // ⑤ 名言用法 —— 选择（10 题，作文/口语应用）
+    { type:"quiz", title:"名言用法 · 选一选 Using the sayings", sub:"读懂意思，学会在作文口语里用 · Meaning & real use",
+      questions:[
+        { ask:"1. 「非宁静以致远」告诉我们要怎样才能实现远大目标？", answer:0, options:["内心平静、专注","跑得快","朋友多"] },
+        { ask:"2. 「淡泊」是什么意思？", answer:1, options:["味道很淡","不追求名利","做事很慢"] },
+        { ask:"3. 「淡泊明志，宁静致远」这两句最适合送给谁？", answer:2, options:["爱睡懒觉的人","爱花钱的人","容易分心、想立志的人"] },
+        { ask:"4. 「鞠躬尽瘁，死而后已」讲的是什么精神？", answer:0, options:["尽责奉献、忠诚到底","聪明机智","谦虚有礼"] },
+        { ask:"5. 「尽瘁」的意思是？", answer:1, options:["生病了","用尽全部心力","很轻松"] },
+        { ask:"6. 诸葛亮一生为国操劳到死，最能用哪句话形容？", answer:2, options:["淡泊明志","三个臭皮匠顶个诸葛亮","鞠躬尽瘁，死而后已"] },
+        { ask:"7. 「三个臭皮匠，顶个诸葛亮」这里的「臭皮匠」指？", answer:0, options:["普通人","做鞋的坏人","很臭的人"] },
+        { ask:"8. 「三个臭皮匠，顶个诸葛亮」这句话鼓励我们？", answer:1, options:["一个人单干","大家一起动脑筋合作","不要相信别人"] },
+        { ask:"9. 小组一起讨论就把难题解决了，最适合说哪句？", answer:2, options:["淡泊明志","鞠躬尽瘁","三个臭皮匠，顶个诸葛亮"] },
+        { ask:"10. 作文写“专注与静心”，最适合引用哪句？", answer:0, options:["非淡泊无以明志，非宁静以致远","鞠躬尽瘁，死而后已","三个臭皮匠，顶个诸葛亮"] }
+      ] },
+    // ⑥ 说一说 —— 用名言造句（口语落地）
+    { type:"speak", title:"说一说 · 用名言造句 Make a sentence", sub:"挑一句名言，说一个自己的例子 · Pick a saying, give your own example",
+      frame:'我最喜欢 <b style="color:#c0392b">「＿＿＿＿」</b> 这句话，<br>因为 <b style="color:#c0392b">＿＿＿＿</b>。',
+      bank:["淡泊明志，宁静致远","鞠躬尽瘁，死而后已","三个臭皮匠，顶个诸葛亮"],
+      eg:'例：我最喜欢「宁静致远」这句话，因为我发现只有静下心来、不分心，才能一步步实现自己的目标。<br><span style="font-family:Segoe UI">My favourite saying is “inner calm takes you far”, because only by staying focused can I reach my goals.</span>'
+    }
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

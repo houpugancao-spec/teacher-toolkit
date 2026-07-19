@@ -48,7 +48,14 @@ window.WORDS = {
   // —— 第八节·词汇练习新增描写词（manual:不自动划线，只供词卡）——
   "机智":     { py:"jīzhì",           zh:"脑子快、有急智",            en:"quick-witted; resourceful", manual:true },
   "沉着":     { py:"chénzhuó",        zh:"遇事镇定、不慌张",          en:"calm; composed",            manual:true },
-  "谦虚":     { py:"qiānxū",          zh:"不自满、不骄傲",            en:"modest; humble",            manual:true }
+  "谦虚":     { py:"qiānxū",          zh:"不自满、不骄傲",            en:"modest; humble",            manual:true },
+
+  // —— 第九节·名言关键字（manual）——
+  "淡泊":     { py:"dànbó",           zh:"不追求名利",                en:"indifferent to fame & gain", manual:true },
+  "宁静":     { py:"níngjìng",        zh:"内心平静",                  en:"calm; tranquil",             manual:true },
+  "致远":     { py:"zhìyuǎn",         zh:"达到远大的目标",            en:"to reach far; achieve great goals", manual:true },
+  "鞠躬":     { py:"jūgōng",          zh:"弯下身子表示恭敬",          en:"to bow respectfully",        manual:true },
+  "尽瘁":     { py:"jìncuì",          zh:"用尽全部心力",              en:"to exhaust one's energies",  manual:true }
 };
 /* 每条补一个 audio 路径（读音文件生成后自动可用） */
 Object.keys(window.WORDS).forEach(function(w){ window.WORDS[w].audio = "audio/words/"+w+".mp3"; });
