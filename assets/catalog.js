@@ -65,7 +65,9 @@ window.CATALOG = {
             { id:"zhuge-9", n:9, title:"名言", url:"units/zhuge/9.html",
               tags:["名言","诫子书","淡泊明志","宁静致远","鞠躬尽瘁","三个臭皮匠","接龙","造句"], ready:true },
             { id:"zhuge-10", n:10, title:"复述故事", url:"units/zhuge/10.html",
-              tags:["复述","概述","草船借箭","起因经过结果","顺序词","口语","足智多谋"], ready:true }
+              tags:["复述","概述","草船借箭","起因经过结果","顺序词","口语","足智多谋"], ready:true },
+            { id:"zhuge-11", n:11, title:"介绍诸葛亮", url:"units/zhuge/11.html",
+              tags:["介绍人物","称呼","籍贯","身世","外貌","成就","性格","看法","介绍自己","口语"], ready:true }
           ]
         }
       ],
