@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>诸葛亮 · 第10节 复述故事</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+  .step-row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 2px}
+  .step-row .st{background:#eaf2ff;color:var(--blue-d);border:1px solid #cfe0ff;border-radius:20px;padding:4px 12px;font-size:14px;font-weight:600}
+  .conn{color:var(--muted);font-size:13px;margin-top:4px}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"zhuge-10", n:10, unit:"zhuge",
+  unitTitle:"《智慧的化身——诸葛亮》",
+  title:"复述故事", subtitle:"Retell the Story",
+  sections:[
+    // ① 故事回顾（reading + 0.85 朗读，划线词可点）
+    { type:"reading", title:"故事回顾 ·《草船借箭》", sub:"先读一遍故事，有下划线的词可以点 · Read first, tap underlined words",
+      audio:"audio/retell-arrows.mp3", audioLabel:"故事朗读（慢速）· Listen to the story",
+      paras:[
+        "有一次打仗，诸葛亮的军队里箭快用完了。",
+        "诸葛亮却不慌不忙，想出了一个好办法。他让士兵在二十只小船上扎满草人，趁着漫天大雾，把船开向敌人的营地。",
+        "天还没亮，又有大雾，敌人看不清虚实，不敢出来应战，只好拼命向小船放箭。箭一支一支，全都射在了草人身上。",
+        "等到天亮雾散，诸葛亮轻轻松松就“借”到了十万支箭，笑着开船回去了。",
+        "就这样，诸葛亮不用造一支箭，就向敌人“借”来了十万支。这就是家喻户晓的“草船借箭”，也让人看到他多么足智多谋、沉着冷静。"
+      ] },
+    // ② 概述小课堂（culture，先讲方法）
+    { type:"culture", title:"概述小课堂 · 三段式", sub:"复述一个故事，抓住这三步就行 · How to summarise a story",
+      facts:[
+        {k:"①", html:'<b>起因</b> Cause — 故事怎么开始的？<br><span style="color:#6b7686">打仗时，诸葛亮的军队<b>缺箭</b>。</span>'},
+        {k:"②", html:'<b>经过</b> What happens — 中间发生了什么？<br><span style="color:#6b7686">扎草人上船 → 趁<b>大雾</b>驶向敌军 → 敌人看不清<b>虚实</b>，<b>拼命</b>放箭 → 箭射满草人。</span>'},
+        {k:"③", html:'<b>结果</b> Result — 最后怎么样？<br><span style="color:#6b7686">天亮雾散，诸葛亮<b>轻轻松松</b>“借”到十万支箭——真是<b>足智多谋</b>。</span>'},
+        {k:"🔗", html:'<b>用「顺序词」把三步连起来：</b><div class="step-row"><span class="st">首先 first</span><span class="st">接着 next</span><span class="st">然后 then</span><span class="st">最后 finally</span></div><span class="conn">例：<i>首先</i>军中缺箭，<i>接着</i>诸葛亮用草船趁雾借箭，<i>最后</i>轻松借到十万支。</span>'}
+      ] },
+    // ③ 理清故事 · 排序（quiz，计分 4）
+    { type:"quiz", title:"理清故事 · 排排序 Put in order", sub:"想清楚每一步先后 · What happens at each step",
+      questions:[
+        { ask:"① 起因：故事一开始，出了什么问题？", answer:1, options:["士兵生病了","军队里的箭快用完了","小船坏了"] },
+        { ask:"② 经过：诸葛亮想出的办法是？", answer:2, options:["自己造很多箭","去别处买箭","在小船上扎满草人，趁大雾开向敌军"] },
+        { ask:"③ 然后：敌人看不清虚实，做了什么？", answer:0, options:["拼命向小船放箭","出来打仗","逃走了"] },
+        { ask:"④ 结果：天亮以后怎么样？", answer:1, options:["草船被烧了","轻轻松松“借”到十万支箭","诸葛亮被抓住了"] }
+      ] },
+    // ④ 读懂故事 · 选择（quiz，计分 8）
+    { type:"quiz", title:"读懂故事 · 选一选 Understand", sub:"读懂细节和道理 · Details & meaning",
+      questions:[
+        { ask:"1. 打仗时诸葛亮遇到什么困难？", answer:2, options:["没有士兵","没有船","军中缺箭"] },
+        { ask:"2. 诸葛亮让士兵在小船上放什么？", answer:0, options:["扎满草人","装满石头","坐满士兵"] },
+        { ask:"3. 他选在什么天气开船去敌军？", answer:1, options:["大晴天","漫天大雾","下大雪"] },
+        { ask:"4. 敌人为什么不出来应战？", answer:2, options:["害怕诸葛亮","船太多","天黑有雾，看不清虚实"] },
+        { ask:"5. 敌人放的箭最后射在了哪里？", answer:0, options:["草人身上","水里","自己船上"] },
+        { ask:"6. 诸葛亮一共“借”到了多少支箭？", answer:1, options:["一千支","十万支","一百支"] },
+        { ask:"7. “草船借箭”最能体现诸葛亮什么特点？", answer:2, options:["力气大","跑得快","足智多谋、沉着"] },
+        { ask:"8. 这个故事里，诸葛亮用的是什么取胜？", answer:0, options:["智慧和计谋","武力","运气"] }
+      ] },
+    // ⑤ 顺序词 · 连一连（match，计分 4）
+    { type:"match", title:"顺序词 · 连一连 Sequence words", sub:"复述时用得上：把中文和英文连起来 · Match",
+      words:[
+        {hz:"首先", en:"first"},
+        {hz:"接着", en:"next"},
+        {hz:"然后", en:"then"},
+        {hz:"最后", en:"finally"}
+      ] },
+    // ⑥ 说一说 · 复述这个故事（speak）
+    { type:"speak", title:"说一说 · 复述《草船借箭》", sub:"用三段式，试着口头概述这个故事 · Retell it in 3 steps",
+      frame:'这个故事讲的是 <b style="color:#c0392b">诸葛亮用草船向敌人“借”箭</b>。<br>'+
+            '首先，<b style="color:#c0392b">＿＿＿＿</b>；接着，<b style="color:#c0392b">＿＿＿＿</b>；'+
+            '最后，<b style="color:#c0392b">＿＿＿＿</b>。<br>这说明诸葛亮 <b style="color:#c0392b">＿＿</b>。',
+      bank:["缺箭 short of arrows","草人 straw figures","大雾 heavy fog","拼命放箭 shoot desperately","十万支箭 100,000 arrows","足智多谋 resourceful"],
+      eg:'例：首先军队里的箭快用完了；接着诸葛亮让士兵在小船上扎满草人，趁大雾开向敌军，敌人拼命放箭，箭全射在草人身上；最后天一亮，他轻轻松松就借到了十万支箭。这说明诸葛亮足智多谋、沉着冷静。'
+    },
+    // ⑦ 迁移 · 复述你读过的故事（speak）
+    { type:"speak", title:"说一说 · 复述你读过的故事 Your own story", sub:"换一个你读过的故事，用同样的三段式概述 · Use the same 3 steps",
+      frame:'我读过一个故事，叫《<b style="color:#c0392b">＿＿＿＿</b>》。<br>'+
+            '起因是 <b style="color:#c0392b">＿＿＿＿</b>，经过是 <b style="color:#c0392b">＿＿＿＿</b>，'+
+            '结果是 <b style="color:#c0392b">＿＿＿＿</b>。',
+      bank:["首先 first","接着 next","然后 then","最后 finally"],
+      eg:'例：我读过《龟兔赛跑》。起因是兔子笑乌龟跑得慢，就和它比赛；经过是兔子跑太快，中途睡着了；最后乌龟一步一步，反而先到终点。'
+    }
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>
