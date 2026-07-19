@@ -1,7 +1,7 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v23";
+const CACHE = "vce-zhongwen-v24";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./manifest.json", "./icon.svg",
   "./assets/icons/icon-192.png", "./assets/icons/icon-512.png",
@@ -26,7 +26,7 @@ const CORE = [
   "./units/zhuge/audio/beat7.mp3",
   "./units/zhuge/img/beat1.png", "./units/zhuge/img/beat2.png", "./units/zhuge/img/beat3.png",
   "./units/zhuge/img/beat4.png", "./units/zhuge/img/beat5.png", "./units/zhuge/img/beat6.png",
-  "./units/zhuge/img/beat7.png"
+  "./units/zhuge/img/beat7.png", "./units/zhuge/img/portrait-card.png"
 ];
 
 self.addEventListener("install", e => {

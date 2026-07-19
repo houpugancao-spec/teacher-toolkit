@@ -239,11 +239,14 @@
   (function(){
     if(!Object.keys(WORDS).length) return;
     const pop=document.createElement("div"); pop.className="wpop";
-    pop.innerHTML=`<div class="wpop-box"><button class="wpop-x" aria-label="close">×</button><div class="wpop-hz"></div><div class="wpop-py"></div><div class="wpop-zh"></div><div class="wpop-en"></div><button class="wpop-au">🔊 读一遍 Listen</button></div>`;
+    pop.innerHTML=`<div class="wpop-box"><button class="wpop-x" aria-label="close">×</button><div class="wpop-hz"></div><div class="wpop-py"></div><img class="wpop-img" alt="" style="display:none"><div class="wpop-zh"></div><div class="wpop-en"></div><div class="wpop-note" style="display:none"></div><button class="wpop-au">🔊 读一遍 Listen</button></div>`;
     document.body.appendChild(pop);
-    const $hz=pop.querySelector(".wpop-hz"),$py=pop.querySelector(".wpop-py"),$zh=pop.querySelector(".wpop-zh"),$en=pop.querySelector(".wpop-en"),$au=pop.querySelector(".wpop-au");
+    const $hz=pop.querySelector(".wpop-hz"),$py=pop.querySelector(".wpop-py"),$zh=pop.querySelector(".wpop-zh"),$en=pop.querySelector(".wpop-en"),$au=pop.querySelector(".wpop-au"),$img=pop.querySelector(".wpop-img"),$note=pop.querySelector(".wpop-note");
     let curAu="";
-    function open(w){ const d=WORDS[w]||{}; $hz.textContent=w; $py.textContent=d.py||""; $zh.textContent=d.zh||""; $en.textContent=d.en||""; curAu=d.audio||""; $au.style.display=curAu?"":"none"; pop.classList.add("show"); if(curAu) playAudio(curAu); }
+    function open(w){ const d=WORDS[w]||{}; $hz.textContent=w; $py.textContent=d.py||""; $zh.textContent=d.zh||""; $en.textContent=d.en||"";
+      if(d.img){ $img.src=d.img; $img.style.display=""; } else { $img.style.display="none"; $img.removeAttribute("src"); }
+      if(d.note){ $note.innerHTML=d.note; $note.style.display=""; } else { $note.style.display="none"; $note.innerHTML=""; }
+      curAu=d.audio||""; $au.style.display=curAu?"":"none"; pop.querySelector(".wpop-box").scrollTop=0; pop.classList.add("show"); if(curAu) playAudio(curAu); }
     function close(){ pop.classList.remove("show"); }
     document.addEventListener("click",function(e){
       const w=e.target.closest(".wd"); if(w){ open(w.dataset.w); return; }

@@ -145,7 +145,11 @@ audio{width:100%;margin:4px 0 10px;height:40px}
 /* 划线词弹卡 */
 .wpop{position:fixed;inset:0;background:rgba(20,30,50,.45);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
 .wpop.show{display:flex;animation:pop .2s}
-.wpop-box{background:#fff;border-radius:16px;padding:22px 24px;max-width:340px;width:100%;text-align:center;position:relative;box-shadow:0 12px 40px rgba(0,0,0,.28)}
+.wpop-box{background:#fff;border-radius:16px;padding:22px 24px;max-width:360px;width:100%;max-height:88vh;overflow-y:auto;text-align:center;position:relative;box-shadow:0 12px 40px rgba(0,0,0,.28)}
+.wpop-img{max-width:100%;max-height:44vh;border-radius:10px;margin:4px auto 12px;display:block;box-shadow:0 3px 12px rgba(0,0,0,.16)}
+.wpop-note{font-size:13.5px;line-height:1.65;color:var(--ink);background:#f4f7fb;border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin:2px 0 14px;text-align:left}
+.wpop-note b{color:var(--blue-d)}
+.wpop-note small{color:var(--muted);font-style:italic}
 .wpop-x{position:absolute;top:8px;right:12px;border:none;background:none;font-size:24px;color:var(--muted);cursor:pointer;line-height:1}
 .wpop-hz{font-size:32px;font-weight:700;color:var(--ink)}
 .wpop-py{color:var(--blue);font-size:16px;margin:2px 0 10px}

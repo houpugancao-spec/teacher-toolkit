@@ -7,7 +7,9 @@
    ============================================================ */
 window.WORDS = {
   "智慧":     { py:"zhìhuì",          zh:"聪明、有智慧",              en:"wisdom; intelligence" },
-  "诸葛亮":   { py:"Zhūgě Liàng",     zh:"三国时著名的军师",          en:"Zhuge Liang (famous strategist)" },
+  "诸葛亮":   { py:"Zhūgě Liàng",     zh:"三国时著名的军师",          en:"Zhuge Liang (famous strategist)",
+              img:"img/portrait-card.png",
+              note:'<b>为什么“羽扇纶巾”？</b> 他是靠智慧打仗的<b>军师</b>，不是靠武力的武将；羽扇纶巾是文人儒将的打扮，显得沉着冷静、儒雅从容——正呼应他“不慌不忙、足智多谋”。<br><small>Why the fan &amp; scarf? He won with wisdom, not force — the scholar-general look shows his calm, clever style.</small>' },
   "孔明":     { py:"Kǒngmíng",        zh:"诸葛亮的字",                en:"Kongming (his courtesy name)" },
   "卧龙":     { py:"Wòlóng",          zh:"诸葛亮的外号，“躺着的龙”",   en:"“Crouching Dragon” (his nickname)" },
   "刘备":     { py:"Liú Bèi",         zh:"三国英雄，请诸葛亮出山",     en:"Liu Bei (the hero who recruited him)" },
@@ -44,6 +46,14 @@ window.WORDS = {
   "操劳":     { py:"cāoláo",          zh:"辛苦地工作",                en:"to toil; to work hard" },
   "尊敬":     { py:"zūnjìng",         zh:"敬重",                      en:"to respect" },
   "象征":     { py:"xiàngzhēng",      zh:"代表某种意义的标志",         en:"symbol; to symbolize" },
+
+  // —— 第十一节·诸葛亮装扮（带图弹卡：点词看图+讲解）——
+  "纶巾":     { py:"guān jīn",        zh:"青色丝带做的软头巾（文人戴）", en:"a scholar's soft silk headscarf",
+              img:"img/portrait-card.png",
+              note:'图中诸葛亮<b>头上戴的</b>就是纶巾——青色丝带做的<b>软头巾</b>，古代读书人戴，不是硬官帽，显得斯文儒雅。因诸葛亮常戴，又叫“<b>诸葛巾</b>”。<br><small>The soft blue silk scholar’s scarf on his head — not a rigid official hat.</small><br>⚠️ 读音 <b>guān jīn</b>（不读 lún）。' },
+  "羽扇":     { py:"yǔ shàn",         zh:"用鸟羽毛做的扇子",           en:"a feather fan",
+              img:"img/portrait-card.png",
+              note:'图中诸葛亮<b>手里拿的</b>就是羽扇——用鸟的羽毛（多是鹅毛）做的扇子。轻轻一摇，显得<b>从容不迫、胸有成竹</b>。<br><small>The goose-feather fan in his hand — waving it looks calm and in control.</small>' },
 
   // —— 第八节·词汇练习新增描写词（manual:不自动划线，只供词卡）——
   "机智":     { py:"jīzhì",           zh:"脑子快、有急智",            en:"quick-witted; resourceful", manual:true },
