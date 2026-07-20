@@ -71,7 +71,10 @@ window.CATALOG = {
           ]
         }
       ],
-      practice:{ "口语":[], "听力":[], "阅读":[], "作文":[], "综合":[] },
+      practice:{ "口语":[], "听力":[], "阅读":[], "作文":[], "综合":[
+        { title:"练习一｜人物介绍", url:"units/renwu-practice/index.html",
+          tags:["人物介绍","外貌","孔子","孔子名言","诸葛亮","排序","填空","口语"], ready:true }
+      ] },
       homework:[], exam:[], other:[]
     },
     {
