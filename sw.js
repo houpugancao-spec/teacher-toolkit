@@ -1,7 +1,7 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v25";
+const CACHE = "vce-zhongwen-v26";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./manifest.json", "./icon.svg",
   "./assets/icons/icon-192.png", "./assets/icons/icon-512.png",
@@ -30,7 +30,6 @@ const CORE = [
   // 练习一 · 人物介绍
   "./units/renwu-practice/index.html", "./units/renwu-practice/1.html",
   "./units/renwu-practice/2.html", "./units/renwu-practice/3.html", "./units/renwu-practice/4.html",
-  "./units/renwu-practice/practice.css", "./units/renwu-practice/practice.js",
   "./units/renwu-practice/img/appearance-01.webp", "./units/renwu-practice/img/appearance-02.webp",
   "./units/renwu-practice/img/appearance-03.webp", "./units/renwu-practice/img/appearance-04.webp",
   "./units/renwu-practice/img/appearance-05.webp", "./units/renwu-practice/img/appearance-06.webp",
