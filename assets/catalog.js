@@ -72,8 +72,10 @@ window.CATALOG = {
         }
       ],
       practice:{ "口语":[
-        { title:"介绍人物", url:"units/renwu-practice/index.html",
-          tags:["人物介绍","外貌","孔子","孔子名言","诸葛亮","排序","填空","口语"], ready:true }
+        { title:"介绍人物-孔子", url:"units/renwu-practice/index.html",
+          tags:["人物介绍","外貌","孔子","孔子名言","排序","填空","口语"], ready:true },
+        { title:"介绍人物-诸葛亮", url:"units/renwu-zhuge-practice/index.html",
+          tags:["人物介绍","诸葛亮","孔明","草船借箭","名言","排序","填空","口语"], ready:true }
       ], "听力":[], "阅读":[], "作文":[], "综合":[] },
       homework:[], exam:[], other:[]
     },

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>介绍人物-诸葛亮 · 第三节 介绍与开口</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script>
+window.LESSON = {
+  id:"renwu-zhuge-practice-3", n:3, unit:"renwu-zhuge-practice", category:"口语",
+  unitTitle:"介绍人物-诸葛亮", title:"介绍与开口", subtitle:"Build & Speak",
+  sections:[
+    // ① 组装介绍 · 选词入座（quiz，整合前两节，计分 6）
+    { type:"quiz", title:"组装介绍 · 选词入座 Build the introduction", sub:"给这段介绍选出最合适的词，把前两节学的用上 · Complete the introduction",
+      questions:[
+        { ask:"① 我要介绍的人是诸葛亮，他生活在＿＿时期。", answer:0, options:["三国","春秋","唐朝"] },
+        { ask:"② 传统印象里，他头戴纶巾、手拿羽扇，＿＿。（外貌神态）", answer:0, options:["风度翩翩","垂头丧气","普普通通"] },
+        { ask:"③ 他是三国最有名的军师，留下了「＿＿」的故事。", answer:1, options:["有教无类","草船借箭","三人行必有我师"] },
+        { ask:"④ 遇到大事，他总是＿＿。（神态）", answer:2, options:["手忙脚乱","骄傲自满","沉着冷静"] },
+        { ask:"⑤ 他一生忠诚，为国操劳到最后，正是「＿＿」。（名言）", answer:1, options:["三个臭皮匠，顶个诸葛亮","鞠躬尽瘁，死而后已","家喻户晓"] },
+        { ask:"⑥ ＿＿，诸葛亮既聪明又忠诚，非常值得敬佩。（收尾看法）", answer:0, options:["在我看来","听人说","据说"] }
+      ] },
+    // ② 连句成段 · 排顺序（quiz，结构，计分 4）
+    { type:"quiz", title:"连句成段 · 先说什么 Put in order", sub:"一段人物介绍，先说什么、后说什么？ · What comes first",
+      questions:[
+        { ask:"① 介绍诸葛亮，开头第一句最好先说？", answer:1, options:["我对他的看法","他的称呼（叫什么、怎么称呼）","他的性格"] },
+        { ask:"② 说完称呼，接着适合介绍？", answer:0, options:["他的时代和身世","他的成就","我的看法"] },
+        { ask:"③ 介绍完身世、外貌，再介绍？", answer:1, options:["再说一次名字","他的身份和成就","他的家乡天气"] },
+        { ask:"④ 一段人物介绍，用什么收尾最好？", answer:1, options:["他的外貌","我的看法（我怎么看他）","他的家乡"] }
+      ] },
+    // ③ 分段说（speak，动口，一段段来）
+    { type:"speak", title:"分段说 · 一段一段来 Say it part by part", sub:"照句型，一段一段地说出来 · Say each part with the frame",
+      frame:'<b>称呼：</b>我要介绍的人是 <b style="color:#c0392b">＿＿</b>，字 <b style="color:#c0392b">＿＿</b>，人称"<b style="color:#c0392b">＿＿</b>"。<br>'+
+            '<b>背景：</b>他是 <b style="color:#c0392b">＿＿</b>时期的人，年轻时 <b style="color:#c0392b">＿＿</b>。<br>'+
+            '<b>外貌神态：</b>他头戴纶巾、手拿羽扇，<b style="color:#c0392b">＿＿</b>、<b style="color:#c0392b">＿＿</b>。',
+      bank:["诸葛亮","孔明","卧龙","三国","种田读书","风度翩翩","气定神闲"],
+      eg:'例：我要介绍的人是诸葛亮，字孔明，人称"卧龙"。他是三国时期的人，年轻时在乡下种田读书。他头戴纶巾、手拿羽扇，风度翩翩、气定神闲。'
+    },
+    // ④ 完整介绍（speak，收尾，要求嵌神态词+名言）
+    { type:"speak", title:"完整介绍 · 说给同学听 Full introduction", sub:"把几段连成一段完整介绍，说给同学听 · Put it all together and speak",
+      frame:'把上面几段连起来，完整介绍诸葛亮。<br>'+
+            '<b>要求：</b>至少用上 <b style="color:#c0392b">1 个神态词</b>（沉着冷静／气定神闲…）<br>和 <b style="color:#c0392b">1 句名言</b>（鞠躬尽瘁，死而后已…）。',
+      bank:["气定神闲","沉着冷静","足智多谋","草船借箭","鞠躬尽瘁，死而后已","三个臭皮匠，顶个诸葛亮"],
+      eg:'例：我要介绍的人是诸葛亮，字孔明，人称"卧龙"。他是三国时期最有名的军师，头戴纶巾、手拿羽扇，气定神闲。他足智多谋，留下了"草船借箭"的传奇；一生忠诚，正是"鞠躬尽瘁，死而后已"。在我看来，他既聪明又忠诚，非常值得敬佩。'
+    },
+    // ⑤ 迁移 · 介绍你自己或你敬佩的人（speak）
+    { type:"speak", title:"迁移 · 介绍你自己或你敬佩的人 Your turn", sub:"换一个人，用同样的方法介绍 · Same method, a different person",
+      frame:'换一个人——介绍<b style="color:#c0392b">你自己</b>，或一个<b style="color:#c0392b">你敬佩的人</b>。<br>'+
+            '称呼：<b style="color:#c0392b">＿＿</b>；外貌/神态：<b style="color:#c0392b">＿＿</b>；<br>'+
+            '身份/成就：<b style="color:#c0392b">＿＿</b>；我的看法：<b style="color:#c0392b">＿＿</b>。',
+      bank:["称呼 name","外貌 appearance","神态 manner","成就 achievement","看法 my view"],
+      eg:'例：我要介绍我的妈妈。她面带微笑，做事沉着冷静。她是一名护士，工作尽心尽力。在我看来，她是我最敬佩的人。'
+    },
+    // ⑥ 三节导航
+    { type:"sectionnav", title:"三节练习 · All sections", items:[
+      {title:"样貌与神态", url:"1.html"},{title:"名言与成语", url:"2.html"},{title:"介绍与开口", url:"3.html"}
+    ] }
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>
