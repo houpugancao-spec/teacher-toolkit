@@ -1,7 +1,7 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v28";
+const CACHE = "vce-zhongwen-v29";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./manifest.json", "./icon.svg",
   "./assets/icons/icon-192.png", "./assets/icons/icon-512.png",
@@ -41,7 +41,13 @@ const CORE = [
   // 练习二 · 介绍人物-诸葛亮
   "./units/renwu-zhuge-practice/index.html", "./units/renwu-zhuge-practice/1.html",
   "./units/renwu-zhuge-practice/2.html", "./units/renwu-zhuge-practice/3.html",
-  "./units/renwu-zhuge-practice/img/zhuge-hero.webp", "./units/renwu-zhuge-practice/img/zhuge-example.webp"
+  "./units/renwu-zhuge-practice/img/zhuge-hero.webp", "./units/renwu-zhuge-practice/img/zhuge-example.webp",
+  "./units/renwu-zhuge-practice/audio/words/纶巾.mp3", "./units/renwu-zhuge-practice/audio/words/羽扇.mp3",
+  "./units/renwu-zhuge-practice/audio/words/身材高大.mp3", "./units/renwu-zhuge-practice/audio/words/风度翩翩.mp3",
+  "./units/renwu-zhuge-practice/audio/words/面带微笑.mp3", "./units/renwu-zhuge-practice/audio/words/目光坚定.mp3",
+  "./units/renwu-zhuge-practice/audio/words/沉着冷静.mp3", "./units/renwu-zhuge-practice/audio/words/不慌不忙.mp3",
+  "./units/renwu-zhuge-practice/audio/words/从容不迫.mp3", "./units/renwu-zhuge-practice/audio/words/气定神闲.mp3",
+  "./units/renwu-zhuge-practice/audio/words/胸有成竹.mp3", "./units/renwu-zhuge-practice/audio/words/聚精会神.mp3"
 ];
 
 self.addEventListener("install", e => {
