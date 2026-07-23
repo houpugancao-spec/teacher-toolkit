@@ -23,6 +23,26 @@
   .tblwrap{overflow-x:auto}
   .msg{font-size:13px;margin-top:8px;min-height:18px}
   .msg.b{color:var(--no)} .msg.g{color:var(--ok)}
+  /* —— 交作业统计：标签页 + 两个视图 —— */
+  .tabs{display:flex;gap:6px;margin:4px 0 12px;flex-wrap:wrap}
+  .tab{padding:8px 14px;border:1px solid var(--line);border-radius:20px;background:#fff;font-size:14px;font-family:inherit;cursor:pointer;color:var(--muted)}
+  .tab.on{background:var(--blue-d);color:#fff;border-color:var(--blue-d)}
+  .warn{font-size:13px;margin:2px 0 8px;padding:8px 12px;border-radius:8px;background:#fff8e6;border:1px solid #f0d68a;color:#8a6d1a;min-height:0}
+  .warn:empty{display:none}
+  .card.list{padding:0;overflow:hidden}
+  .grp{font-weight:600;margin:0;padding:9px 12px;color:var(--blue-d);font-size:13px;background:#eef4ff;border-bottom:1px solid var(--line)}
+  .chk{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--line);font-size:14px}
+  .chk:last-child{border-bottom:none}
+  .chk.miss{background:#fff5f5}
+  .chk .st{font-weight:600;white-space:nowrap}
+  .chk.miss .st{color:var(--no)}
+  .chk.ok .st{color:var(--ok)}
+  .seats{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .seat{min-width:40px;text-align:center;padding:7px 8px;border-radius:8px;font-size:13px;font-weight:600;border:1px solid var(--line)}
+  .seat.ok{background:#e9f8ef;color:var(--ok);border-color:#bfe6cd}
+  .seat.miss{background:#fdecec;color:var(--no);border-color:#f2c2c2}
+  .misslist{margin-top:12px;font-size:15px;font-weight:600}
+  .misslist .no{color:var(--no)}
 </style>
 </head>
 <body>
@@ -39,24 +59,58 @@
   </div>
 
   <div id="dashView" style="display:none">
-    <div class="controls">
-      <select id="fCat"><option value="">全部类别</option></select>
-      <select id="fLesson"><option value="">全部项目</option></select>
-      <select id="fClass"><option value="">全部班级</option></select>
-      <input id="fSeat" placeholder="座号(可选)" style="width:100px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit">
-      <button id="refreshBtn">🔄 刷新</button>
-      <button id="csvBtn">⬇ 导出CSV</button>
-      <button id="logoutBtn">退出</button>
+    <div class="tabs">
+      <button class="tab on" data-view="detail">📋 成绩明细</button>
+      <button class="tab" data-view="byStudent">🧑 交作业 · 按学生</button>
+      <button class="tab" data-view="byExercise">📝 交作业 · 按练习</button>
+      <button id="logoutBtn" style="margin-left:auto;padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;background:#fff;cursor:pointer">退出</button>
     </div>
-    <div class="metrics" id="metrics"></div>
-    <div id="analysis"></div>
-    <div class="tblwrap"><table class="res" id="tbl"></table></div>
-    <div id="dashMsg" class="msg"></div>
+    <div id="orphanWarn" class="warn"></div>
+
+    <!-- 视图①：成绩明细（原看板）-->
+    <div id="viewDetail">
+      <div class="controls">
+        <select id="fCat"><option value="">全部类别</option></select>
+        <select id="fLesson"><option value="">全部项目</option></select>
+        <select id="fClass"><option value="">全部班级</option></select>
+        <input id="fSeat" placeholder="座号(可选)" style="width:100px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit">
+        <button id="refreshBtn">🔄 刷新</button>
+        <button id="csvBtn">⬇ 导出CSV</button>
+      </div>
+      <div class="metrics" id="metrics"></div>
+      <div id="analysis"></div>
+      <div class="tblwrap"><table class="res" id="tbl"></table></div>
+      <div id="dashMsg" class="msg"></div>
+    </div>
+
+    <!-- 视图②：按学生 —— 这名学生哪些没交 -->
+    <div id="viewByStudent" style="display:none">
+      <div class="controls">
+        <select id="sClass"></select>
+        <select id="sSeat"></select>
+        <button id="sRefresh">🔄 刷新</button>
+      </div>
+      <div class="metrics" id="sMetrics"></div>
+      <div id="sList"></div>
+    </div>
+
+    <!-- 视图③：按练习 —— 这一节谁没交 -->
+    <div id="viewByExercise" style="display:none">
+      <div class="controls">
+        <select id="eLesson"></select>
+        <select id="eClass"></select>
+        <button id="eRefresh">🔄 刷新</button>
+        <button id="eCsv">⬇ 导出CSV</button>
+      </div>
+      <div class="metrics" id="eMetrics"></div>
+      <div id="eGrid"></div>
+    </div>
   </div>
 
 </div>
 
 <script src="assets/catalog.js"></script>
+<script src="assets/report-config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
 (function(){
@@ -101,6 +155,7 @@
     ROWS=data||[];m.textContent="";
     fillFilters();
     render();
+    buildReport();
   }
   function fill(sel,vals,labelFn,ph){
     const cur=sel.value;
@@ -157,6 +212,106 @@
       `<div class="tblwrap"><table class="res"><tr><th>题目</th><th>正确率</th><th>答对/人数</th></tr>`+
       items.map(it=>{const cls=it.pct>=80?'hi':it.pct>=50?'mid':'lo';return `<tr><td>${it.q}</td><td><span class="pct ${cls}">${it.pct}%</span></td><td>${it.ok}/${it.n}</td></tr>`;}).join("")+`</table></div>`;
   }
+
+  /* ===== 交作业统计：按学生 / 按练习 ===== */
+  const RC = window.REPORT_CONFIG || {roster:{}, assignments:[]};
+  const NORM = s => String(s==null?'':s).trim().toUpperCase();
+  const seatNum = s => { const n=parseInt(String(s==null?'':s).trim(),10); return isNaN(n)?null:n; };
+  const rosterKey = c => Object.keys(RC.roster).find(k=>NORM(k)===NORM(c));   // 大小写容错
+  const assignName = id => { const a=RC.assignments.find(x=>x.id===id); return a?a.name:lname(id); };
+  let SUBMITTED = new Map();   // `${班级大写}|${座号}|${课节}` → 最新一条
+
+  function buildReport(){
+    SUBMITTED = new Map();
+    ROWS.forEach(r=>{
+      const c=NORM(r.class_code), s=seatNum(r.seat_no); if(s==null) return;
+      const key=c+'|'+s+'|'+r.lesson, prev=SUBMITTED.get(key);
+      if(!prev || new Date(r.created_at)>new Date(prev.created_at)) SUBMITTED.set(key,r);
+    });
+    fillReportControls(); renderOrphan(); renderStudent(); renderExercise();
+  }
+  function fillReportControls(){
+    const classes=Object.keys(RC.roster);
+    fill($('sClass'), classes, null, '选班级');
+    fill($('eClass'), classes, null, '选班级');
+    fill($('eLesson'), RC.assignments.map(a=>a.id), assignName, '选练习/课节');
+    fillSeat();
+  }
+  function fillSeat(){
+    const cls=$('sClass').value, seats=cls?(RC.roster[cls]||[]):[];
+    fill($('sSeat'), seats.map(String), null, '选座号');
+  }
+
+  // 花名册外提交（访客/老师测试，或学生填错班号）——温和提示
+  function renderOrphan(){
+    const box=$('orphanWarn'); if(!box) return;
+    const seen=new Set(), bad=[];
+    ROWS.forEach(r=>{
+      const c=NORM(r.class_code), s=seatNum(r.seat_no), key=c+'|'+s;
+      if(seen.has(key)) return; seen.add(key);
+      const rk=rosterKey(c);
+      if(!(rk && (RC.roster[rk]||[]).includes(s))) bad.push((r.class_code||'?')+'-'+(r.seat_no||'?'));
+    });
+    box.innerHTML = bad.length
+      ? `⚠️ ${bad.length} 个提交身份在花名册外（访客/老师测试，或学生填错班号）：${bad.slice(0,20).map(x=>`<b>${x}</b>`).join('、')}${bad.length>20?' …':''}`
+      : '';
+  }
+
+  // 视图②：按学生 —— 这名学生哪些没交
+  $('sClass').onchange=()=>{ fillSeat(); renderStudent(); };
+  $('sSeat').onchange=renderStudent;
+  $('sRefresh').onclick=load;
+  function renderStudent(){
+    const cls=$('sClass').value, seat=seatNum($('sSeat').value), box=$('sList');
+    if(!cls || seat==null){ $('sMetrics').innerHTML=''; box.innerHTML="<div class='msg' style='color:var(--muted)'>选班级 + 座号，看这名学生每一节交了没</div>"; return; }
+    const C=NORM(cls);
+    const items=RC.assignments.map(a=>({a, row:SUBMITTED.get(C+'|'+seat+'|'+a.id)}));
+    const done=items.filter(x=>x.row).length, total=items.length;
+    $('sMetrics').innerHTML=metric("该交",total)+metric("已交",done)+metric("未交",total-done);
+    let h='', grp='';
+    items.forEach(({a,row})=>{
+      if(a.group!==grp){ grp=a.group; h+=`<div class="grp">${grp}</div>`; }
+      if(row){ const t=new Date(row.created_at).toLocaleDateString('en-AU',{timeZone:'Australia/Melbourne',month:'2-digit',day:'2-digit'});
+        h+=`<div class="chk ok"><span>${a.name}</span><span class="st">✅ ${row.score}/${row.max_score} · ${t}</span></div>`;
+      } else { h+=`<div class="chk miss"><span>${a.name}</span><span class="st">❌ 未交</span></div>`; }
+    });
+    box.innerHTML=`<div class="card list">${h}</div>`;
+  }
+
+  // 视图③：按练习 —— 这一节谁没交
+  $('eLesson').onchange=renderExercise;
+  $('eClass').onchange=renderExercise;
+  $('eRefresh').onclick=load;
+  function renderExercise(){
+    const lesson=$('eLesson').value, cls=$('eClass').value, box=$('eGrid');
+    if(!lesson || !cls){ $('eMetrics').innerHTML=''; box.innerHTML="<div class='msg' style='color:var(--muted)'>选练习 + 班级，看这一节谁没交</div>"; return; }
+    const C=NORM(cls), seats=RC.roster[cls]||[], miss=[];
+    seats.forEach(s=>{ if(!SUBMITTED.get(C+'|'+s+'|'+lesson)) miss.push(s); });
+    $('eMetrics').innerHTML=metric("应交",seats.length)+metric("已交",seats.length-miss.length)+metric("未交",miss.length);
+    const chips=seats.map(s=>{ const ok=!!SUBMITTED.get(C+'|'+s+'|'+lesson); return `<span class="seat ${ok?'ok':'miss'}">${ok?'✓':'✗'}${s}</span>`; }).join("");
+    const missTxt=miss.length?`<div class="misslist">缺 <span class="no">${miss.length}</span> 人：座号 <span class="no">${miss.join('、')}</span></div>`:`<div class="misslist" style="color:var(--ok)">🎉 全班都交了！</div>`;
+    box.innerHTML=`<div class="card"><div style="font-weight:600;margin-bottom:6px">${assignName(lesson)} · ${esc0(cls)} 班</div><div class="seats">${chips}</div>${missTxt}</div>`;
+  }
+  const esc0 = s => String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  $('eCsv').onclick=()=>{
+    const lesson=$('eLesson').value, cls=$('eClass').value; if(!lesson||!cls) return;
+    const C=NORM(cls), seats=RC.roster[cls]||[];
+    const head=["班级","座号","状态","课节"];
+    const lines=seats.map(s=>{ const ok=!!SUBMITTED.get(C+'|'+s+'|'+lesson); return [cls,s,ok?'已交':'未交',assignName(lesson)].map(x=>`"${String(x).replace(/"/g,'""')}"`).join(","); });
+    const csv="﻿"+[head.join(","),...lines].join("\n");
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=`交作业_${cls}_${lesson}.csv`;a.click();
+  };
+
+  // 标签页切换
+  document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on')); t.classList.add('on');
+    const v=t.dataset.view;
+    $('viewDetail').style.display     = v==='detail'     ? '' : 'none';
+    $('viewByStudent').style.display  = v==='byStudent'  ? '' : 'none';
+    $('viewByExercise').style.display = v==='byExercise' ? '' : 'none';
+    if(v==='byStudent') renderStudent();
+    if(v==='byExercise') renderExercise();
+  });
 
   $('csvBtn').onclick=()=>{
     const rows=filtered();

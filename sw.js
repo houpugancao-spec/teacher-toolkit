@@ -1,12 +1,12 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v30";
+const CACHE = "vce-zhongwen-v31";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./manifest.json", "./icon.svg",
   "./assets/icons/icon-192.png", "./assets/icons/icon-512.png",
   "./assets/icons/icon-maskable-512.png", "./assets/icons/apple-touch-icon.png",
-  "./assets/style.css", "./assets/catalog.js", "./assets/lesson.js",
+  "./assets/style.css", "./assets/catalog.js", "./assets/lesson.js", "./assets/report-config.js",
   "./assets/fonts/lxgw-kai.woff2",
   "./units/kongzi/index.html", "./units/kongzi/words.js",
   "./units/kongzi/audio/reading-article.mp3", "./units/kongzi/audio/reading-dialogue.mp3",

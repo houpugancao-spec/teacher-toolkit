@@ -7,6 +7,7 @@
   const SUPABASE_URL = "https://xzexcfqrftllicoqaizs.supabase.co";
   const SUPABASE_KEY = "sb_publishable_ly64tG2XPMv8N-34Np5qkQ_2d8rNRU5";
   const L = window.LESSON, CAT = window.CATALOG;
+  const SELF_SRC = (document.currentScript && document.currentScript.src) || "";  // 抓住自己路径（body 重写前）
   const esc = s => (s==null?"":String(s));
   const WORDS = window.WORDS || {};
   // 自动划线的词：长词优先；标了 manual:true 的词不自动划线，只在课文里用 [[词]] 手动标
@@ -144,13 +145,7 @@
   const scoreBox = scored ? `<div class="score">⭐ <span id="score">0</span>/${maxScore}</div>` : "";
   const navRow = `<a href="../../index.html">🏠 主页</a><a href="../../index.html">🔍 目录/搜索</a>`+
     (isOverview ? "" : `${navLink(prev,"◀ 上一节")}${navLink(next,"下一节 ▶")}`);
-  const idcard = scored ? `<div class="card idcard">
-      <div style="font-weight:600;margin-bottom:8px">开始前 · 填一下（老师用，<u>不要写名字</u>）</div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <input id="classCode" placeholder="班级代号 class（例 9A）">
-        <input id="seatNo" placeholder="座号 seat no.（例 12）">
-      </div>
-    </div>` : "";
+  const idcard = scored ? `<div class="card idcard" id="idcard"></div>` : "";
   const submitBox = scored ? `<div class="card" style="text-align:center">
       <div style="font-weight:600;margin-bottom:10px">做完了？把成绩交给老师 👇<br><small style="color:#6b7686;font-weight:400">Finished? Send your score to the teacher</small></div>
       <button id="submitBtn" class="submit-btn">提交成绩 Submit</button>
@@ -173,6 +168,75 @@
     <p class="foot">${esc(gradeName)} · ${esc(courseLabel)}${isOverview?"":" · 第"+CN[curN-1]+"节"}<br>学生自测练习</p>
   </div>`;
   document.body.innerHTML = body;
+
+  // ===== 学生身份：本地记住（花名册下拉；「其它」→自由填，老师/访客用）=====
+  const ID_KEY = "vce_identity";
+  const loadId  = () => { try { return JSON.parse(localStorage.getItem(ID_KEY) || "null"); } catch(e){ return null; } };
+  const saveId  = (cls, seat) => localStorage.setItem(ID_KEY, JSON.stringify({ cls: cls, seat: String(seat) }));
+  const clearId = () => localStorage.removeItem(ID_KEY);
+  const _selCss  = "padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit;background:#fff";
+  const _linkCss = "background:none;border:none;color:var(--blue-d);font-size:13px;cursor:pointer;text-decoration:underline;font-family:inherit";
+
+  function renderId(mode){
+    const box = document.getElementById("idcard"); if(!box) return;
+    const id = loadId();
+    if(id && id.cls && id.seat){                       // 已记住 → 收起成一行
+      box.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div style="font-weight:600">📇 你是 <span style="color:var(--blue-d)">${esc(id.cls)} · ${esc(String(id.seat))}号</span></div>
+        <button id="idChange" style="${_linkCss}">不是你？换人</button></div>`;
+      document.getElementById("idChange").onclick = () => { clearId(); ensureRoster(() => renderId("pick")); };
+      return;
+    }
+    const roster  = (window.REPORT_CONFIG || {}).roster || {};
+    const classes = Object.keys(roster);
+    if(mode === "free" || !classes.length){            // 自由填（老师/访客/花名册没加载出来的兜底）
+      box.innerHTML = `<div style="font-weight:600;margin-bottom:8px">填一下（老师用，<u>不要写名字</u>）</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <input id="classCode" placeholder="班级/身份（例 WH、老师）" style="${_selCss}">
+          <input id="seatNo" placeholder="座号 seat（例 7）" style="${_selCss}">
+          ${classes.length ? `<button id="idBack" style="${_linkCss}">↩ 从班级列表选</button>` : ""}
+        </div>`;
+      const bk = document.getElementById("idBack"); if(bk) bk.onclick = () => renderId("pick");
+      return;
+    }
+    // 下拉：从花名册选（含「其它」逃生口）
+    box.innerHTML = `<div style="font-weight:600;margin-bottom:8px">第一次：选一下你的班级和座号（以后自动记住，不用再选）</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <select id="classCode" style="${_selCss}"><option value="">班级 class</option>${classes.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("")}<option value="__other__">其它 Other…</option></select>
+        <select id="seatNo" style="${_selCss}"><option value="">座号 seat</option></select>
+      </div>`;
+    const cs = document.getElementById("classCode"), ss = document.getElementById("seatNo");
+    cs.onchange = () => {
+      if(cs.value === "__other__"){ renderId("free"); return; }
+      const seats = roster[cs.value] || [];
+      ss.innerHTML = `<option value="">座号 seat</option>` + seats.map(s=>`<option value="${s}">${s}</option>`).join("");
+    };
+  }
+
+  function getIdentity(){
+    const stored = loadId();
+    if(stored && stored.cls && stored.seat) return { cls: stored.cls, seat: String(stored.seat) };
+    const cEl = document.getElementById("classCode"), sEl = document.getElementById("seatNo");
+    const cls = cEl ? String(cEl.value).trim() : "", seat = sEl ? String(sEl.value).trim() : "";
+    if(cls && cls !== "__other__" && seat){ saveId(cls, seat); return { cls, seat }; }
+    return null;
+  }
+
+  // 按需加载花名册（report-config.js），加载好再回调；离线取不到就走自由填兜底
+  function ensureRoster(cb){
+    if((window.REPORT_CONFIG || {}).roster){ cb(); return; }
+    const box = document.getElementById("idcard"); if(box) box.innerHTML = `<div style="color:var(--muted)">加载中… Loading</div>`;
+    const base = SELF_SRC ? SELF_SRC.replace(/lesson\.js.*$/, "") : "../../assets/";
+    const s = document.createElement("script");
+    s.src = base + "report-config.js";
+    s.onload = cb; s.onerror = () => renderId("free");
+    document.head.appendChild(s);
+  }
+  (function initId(){
+    if(!scored) return;
+    if(loadId()){ renderId("pick"); return; }        // 已记住 → 直接显示「你是…」，不必加载花名册
+    ensureRoster(() => renderId("pick"));            // 首次 → 确保花名册再显示下拉
+  })();
 
   // ---- 计分 ----
   const scoreEl = document.getElementById("score");
@@ -262,12 +326,12 @@
   // ---- 提交成绩 ----
   const _submitBtn = document.getElementById("submitBtn");
   if(_submitBtn) _submitBtn.addEventListener("click",async()=>{
-    const cls=document.getElementById("classCode").value.trim();
-    const seat=document.getElementById("seatNo").value.trim();
     const fb=document.getElementById("submitFb");
-    if(!cls||!seat){fb.textContent="请先在最上面填班级和座号 Please fill class & seat first";fb.className="fb b";window.scrollTo({top:0,behavior:"smooth"});return;}
-    const btn=document.getElementById("submitBtn");btn.disabled=true;fb.textContent="提交中… Submitting…";fb.className="fb";
-    const payload={lesson:L.id,category:(L.category||"授课"),class_code:cls,seat_no:seat,score:score,max_score:maxScore,details:detail};
+    const who=getIdentity();
+    if(!who){fb.textContent="请先在最上面选/填班级和座号 Please set class & seat first";fb.className="fb b";window.scrollTo({top:0,behavior:"smooth"});return;}
+    renderId("pick");   // 已存身份 → 顶部收起成「你是 …」一行
+    const btn=_submitBtn;btn.disabled=true;fb.textContent="提交中… Submitting…";fb.className="fb";
+    const payload={lesson:L.id,category:(L.category||"授课"),class_code:who.cls,seat_no:who.seat,score:score,max_score:maxScore,details:detail};
     try{
       const res=await postResult(payload);
       if(res.ok){fb.textContent="✓ 已提交！得分 "+score+"/"+maxScore+"　Submitted!";fb.className="fb g";btn.textContent="已提交 ✓";}
