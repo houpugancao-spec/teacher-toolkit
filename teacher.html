@@ -66,6 +66,7 @@
       <button id="logoutBtn" style="margin-left:auto;padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;background:#fff;cursor:pointer">退出</button>
     </div>
     <div id="orphanWarn" class="warn"></div>
+    <div id="yearNote" style="font-size:12px;color:var(--muted);margin:-2px 0 8px"></div>
 
     <!-- 视图①：成绩明细（原看板）-->
     <div id="viewDetail">
@@ -73,7 +74,7 @@
         <select id="fCat"><option value="">全部类别</option></select>
         <select id="fLesson"><option value="">全部项目</option></select>
         <select id="fClass"><option value="">全部班级</option></select>
-        <input id="fSeat" placeholder="座号(可选)" style="width:100px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit">
+        <select id="fSeat"><option value="">全部座号</option></select>
         <button id="refreshBtn">🔄 刷新</button>
         <button id="csvBtn">⬇ 导出CSV</button>
       </div>
@@ -152,7 +153,10 @@
     const m=$('dashMsg');m.textContent="读取中…";m.className="msg";
     const {data,error}=await sb.from('kongzi_results').select('*').order('created_at',{ascending:false});
     if(error){m.textContent="读取失败："+error.message+"（是否已加 select 权限策略？）";m.className="msg b";return;}
-    ROWS=data||[];m.textContent="";
+    const cut=(window.REPORT_CONFIG||{}).schoolYearStart;
+    ROWS=(data||[]).filter(r=>!cut || new Date(r.created_at)>=new Date(cut));
+    m.textContent="";
+    $('yearNote').textContent = cut ? `📅 只显示 ${cut} 起的提交（共 ${ROWS.length} 条）· 明年重置改 report-config.js 的 schoolYearStart` : '';
     fillFilters();
     render();
     buildReport();
@@ -166,6 +170,13 @@
     fill($('fCat'), [...new Set(ROWS.map(r=>r.category||'授课'))].sort(), null, '全部类别');
     fillLessons();
     fill($('fClass'), [...new Set(ROWS.map(r=>r.class_code).filter(Boolean))].sort(), null, '全部班级');
+    fillSeats();
+  }
+  function fillSeats(){
+    const c=$('fClass').value;
+    const seats=[...new Set(ROWS.filter(r=>!c||r.class_code===c).map(r=>r.seat_no).filter(x=>x!=null&&x!==''))]
+      .sort((a,b)=>(parseInt(a,10)||0)-(parseInt(b,10)||0)).map(String);
+    fill($('fSeat'), seats, null, '全部座号');
   }
   function fillLessons(){
     const cat=$('fCat').value;
@@ -173,7 +184,7 @@
     fill($('fLesson'), ls, lname, '全部项目');
   }
   $('fCat').onchange=()=>{fillLessons();render();};
-  $('fLesson').onchange=render; $('fClass').onchange=render; $('fSeat').oninput=render;
+  $('fLesson').onchange=render; $('fClass').onchange=()=>{fillSeats();render();}; $('fSeat').onchange=render;
 
   function filtered(){
     const cat=$('fCat').value, l=$('fLesson').value, c=$('fClass').value, s=$('fSeat').value.trim();

@@ -7,17 +7,26 @@
    ② assignments 该交清单：所有「带提交按钮」的课节，顺序即报表显示顺序
    ------------------------------------------------------------
    维护提示：
-   · 加/减学生 → 改 roster 里对应班级的座号数组
+   · 加/减学生 → 改 roster 里对应班级
    · 加新班级 → roster 里加一行，键用大写（学生填 wh/Wh 都会自动转大写匹配）
+   · 花名册三种写法随便用（会自动展开成座号数组）：
+       "WH": 15                    → 座号 1..15
+       "TP": {n:18, skip:[1,8]}    → 座号 1..18 去掉 1、8
+       "9C": [1,2,3,5,8]           → 就这几个座号（转班留空时用）
+   · 明年重置 → 只改下面 schoolYearStart 的日期，重新发布即可
+     （看板只统计这天起的提交，旧数据自动隐身，不用进 Supabase 删）
    · 上线了新的「带提交按钮」课节 → assignments 里补一条 {id,group,name}
      （id 必须等于该页 window.LESSON.id，跟数据库 lesson 字段对得上）
    ============================================================ */
 window.REPORT_CONFIG = {
 
-  // ① 花名册：班级代号 → 座号数组
+  // 学年起始日：看板只统计这天（含）之后的提交。明年重置就改这里
+  schoolYearStart: "2026-01-01",
+
+  // ① 花名册：班级代号 → 座号（数字/对象/数组三种写法都行，见上方维护提示）
   roster: {
-    "WH": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],          // 15 人，座号 1–15
-    "TP": [2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],    // 16 人，座号 1–18 去掉 1、8
+    "WH": 15,                    // 15 人，座号 1–15
+    "TP": { n: 18, skip: [1, 8] }, // 16 人，座号 1–18 去掉 1、8
   },
 
   // ② 该交清单：24 项（带提交按钮的课节）
@@ -56,3 +65,18 @@ window.REPORT_CONFIG = {
   ],
 
 };
+
+/* 把 roster 的三种写法统一展开成座号数组 —— 消费方（lesson.js / teacher.html）只需读数组 */
+(function(){
+  const seatsOf = v => {
+    if (Array.isArray(v)) return v.slice();
+    if (typeof v === "number") return Array.from({ length: v }, (_, i) => i + 1);
+    if (v && typeof v === "object") {
+      const to = v.n || v.to || 0, from = v.from || 1, skip = new Set(v.skip || []);
+      const a = []; for (let i = from; i <= to; i++) if (!skip.has(i)) a.push(i); return a;
+    }
+    return [];
+  };
+  const r = (window.REPORT_CONFIG || {}).roster || {};
+  Object.keys(r).forEach(k => { r[k] = seatsOf(r[k]); });
+})();
