@@ -79,7 +79,9 @@ window.CATALOG = {
       ], "听力":[], "阅读":[], "作文":[], "综合":[] },
       homework:[], exam:[], other:[
         { title:"足部", url:"units/other/foot/index.html",
-          tags:["足部","汉字","词卡","拼音","读音","例句"], ready:true }
+          tags:["足部","汉字","词卡","拼音","读音","例句"], ready:true },
+        { title:"止部", url:"units/other/stop/index.html",
+          tags:["止部","汉字","词卡","拼音","读音","例句"], ready:true }
       ]
     },
     {

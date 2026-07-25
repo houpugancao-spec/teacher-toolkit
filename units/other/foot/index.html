@@ -123,6 +123,8 @@
     font-weight:700;
     letter-spacing:.08em;
   }
+  .meaning-label.en-label{font-family:Arial,sans-serif}
+
   .meaning-zh{
     margin-top:5px;
     font-family:'KaiTi','楷体','STKaiti',serif;
@@ -195,7 +197,7 @@
   <header class="prototype-head">
     <div>
       <h1 class="prototype-title">其它 · 足部词卡</h1>
-      <p class="prototype-sub">26 cards · 0.85× audio</p>
+      <p class="prototype-sub">40 cards · 0.85× audio</p>
     </div>
     <a href="../../../index.html">返回首页</a>
   </header>
@@ -211,32 +213,46 @@
 <script>
 (() => {
   const words = [
-    {hz:"趾", py:"zhǐ", zh:"脚或爪前端的部分。", en:"toe", eg:"我的脚趾有点儿疼。"},
-    {hz:"脚趾", py:"jiǎo zhǐ", zh:"脚前端的五个小部分。", en:"toe", eg:"我的脚趾有点儿疼。"},
-    {hz:"跟", py:"gēn", zh:"和；同。", en:"with; and", eg:"我跟妈妈去超市。"},
-    {hz:"跟着", py:"gēn zhe", zh:"在后面一起走或一起做。", en:"to follow; to go along with", eg:"请跟着老师读。"},
-    {hz:"跟上", py:"gēn shàng", zh:"赶上并保持同样的速度或进度。", en:"to catch up; to keep up", eg:"快一点儿，跟上大家。"},
-    {hz:"疑", py:"yí", zh:"不相信；不确定。", en:"doubt; question", eg:"有疑问就问老师。"},
-    {hz:"疑问", py:"yí wèn", zh:"不明白或不确定的问题。", en:"question; doubt", eg:"我对这个答案有疑问。"},
-    {hz:"怀疑", py:"huái yí", zh:"不相信或不确定。", en:"to doubt; to suspect", eg:"我怀疑自己拿错了书。"},
-    {hz:"路", py:"lù", zh:"供人或车辆行走的地方。", en:"road; way", eg:"这条路很宽。"},
-    {hz:"道路", py:"dào lù", zh:"供人和车辆通行的路。", en:"road", eg:"下雨后，道路很滑。"},
-    {hz:"马路", py:"mǎ lù", zh:"城市里供车辆和行人通行的路。", en:"road; street", eg:"过马路要看红绿灯。"},
-    {hz:"条条大路通罗马", py:"tiáo tiáo dà lù tōng luó mǎ", zh:"达到目的的方法不只一种。", en:"All roads lead to Rome.", eg:"这道题有很多做法，真是条条大路通罗马。"},
-    {hz:"跳", py:"tiào", zh:"双脚用力，使身体离开地面。", en:"to jump", eg:"小猫跳上了椅子。"},
-    {hz:"跳舞", py:"tiào wǔ", zh:"随着音乐舞动身体。", en:"to dance", eg:"她喜欢跟朋友一起跳舞。"},
-    {hz:"跑", py:"pǎo", zh:"双脚快速向前移动。", en:"to run", eg:"别跑，慢慢走。"},
-    {hz:"奔跑", py:"bēn pǎo", zh:"快速地跑。", en:"to run; to dash", eg:"孩子们在草地上奔跑。"},
-    {hz:"跑得飞快", py:"pǎo de fēi kuài", zh:"跑得非常快。", en:"to run very fast", eg:"他听到铃声后跑得飞快。"},
-    {hz:"跃", py:"yuè", zh:"跳起；向前跳。", en:"to leap", eg:"小鱼跃出水面。"},
-    {hz:"跳跃", py:"tiào yuè", zh:"用脚使身体离开地面。", en:"to jump; to leap", eg:"小朋友在操场上跳跃。"},
-    {hz:"踢", py:"tī", zh:"用脚快速碰东西。", en:"to kick", eg:"请不要踢门。"},
-    {hz:"踢球", py:"tī qiú", zh:"用脚踢球的运动。", en:"to play football; to kick a ball", eg:"放学后我们一起踢球。"},
-    {hz:"跌", py:"diē", zh:"摔下；下降。", en:"to fall; to drop", eg:"走路小心，别跌倒。"},
-    {hz:"跌倒", py:"diē dǎo", zh:"站不稳而倒在地上。", en:"to fall down", eg:"地上很滑，小心跌倒。"},
-    {hz:"下跌", py:"xià diē", zh:"数量或价格下降。", en:"to fall; to decline", eg:"最近菜价开始下跌。"},
-    {hz:"距", py:"jù", zh:"相隔。", en:"to be a distance from", eg:"学校距我家两公里。"},
-    {hz:"距离", py:"jù lí", zh:"两个地方或事物之间相隔的空间。", en:"distance", eg:"我家距离学校很近。"}
+    {hz:"足",py:"zú",zh:"身体最下面用来站立和行走的部分。",en:"foot",eg:"我每天走路去学校。"},
+    {hz:"足球",py:"zú qiú",zh:"一种主要用脚踢球的运动；也指这种球。",en:"football; soccer",eg:"我周末和朋友踢足球。"},
+    {hz:"趾",py:"zhǐ",zh:"脚或爪前端的部分。",en:"toe",eg:"我的脚趾有点儿疼。"},
+    {hz:"脚趾",py:"jiǎo zhǐ",zh:"脚前端的五个小部分。",en:"toe",eg:"我的脚趾有点儿疼。"},
+    {hz:"趾甲",py:"zhǐ jiǎ",zh:"脚趾前端的指甲。",en:"toenail",eg:"运动时要保护好趾甲。"},
+    {hz:"跟",py:"gēn",zh:"和；同。",en:"with; and",eg:"我跟妈妈去超市。"},
+    {hz:"跟着",py:"gēn zhe",zh:"在后面一起走或一起做。",en:"to follow; to go along with",eg:"请跟着老师读。",review:"着 zhe（轻声）"},
+    {hz:"跟上",py:"gēn shàng",zh:"赶上并保持同样的速度或进度。",en:"to catch up; to keep up",eg:"快一点儿，跟上大家。"},
+    {hz:"跟随",py:"gēn suí",zh:"跟着别人或事物一起行动。",en:"to follow",eg:"请跟随老师进入教室。"},
+    {hz:"疑",py:"yí",zh:"不相信；不确定。",en:"doubt; question",eg:"有疑问就问老师。"},
+    {hz:"疑问",py:"yí wèn",zh:"不明白或不确定的问题。",en:"question; doubt",eg:"我对这个答案有疑问。"},
+    {hz:"怀疑",py:"huái yí",zh:"不相信或不确定。",en:"to doubt; to suspect",eg:"我怀疑自己拿错了书。"},
+    {hz:"可疑",py:"kě yí",zh:"让人觉得不正常或不可信。",en:"suspicious",eg:"门口有一个可疑的包。"},
+    {hz:"路",py:"lù",zh:"供人或车辆行走的地方。",en:"road; way",eg:"这条路很宽。"},
+    {hz:"道路",py:"dào lù",zh:"供人和车辆通行的路。",en:"road",eg:"下雨后，道路很滑。"},
+    {hz:"马路",py:"mǎ lù",zh:"城市里供车辆和行人通行的路。",en:"road; street",eg:"过马路要看红绿灯。"},
+    {hz:"路口",py:"lù kǒu",zh:"两条或多条道路交会的地方。",en:"intersection; road junction",eg:"过路口要看红绿灯。"},
+    {hz:"条条大路通罗马",py:"tiáo tiáo dà lù tōng luó mǎ",zh:"达到目的的方法不只一种。",en:"All roads lead to Rome.",eg:"这道题有很多做法，真是条条大路通罗马。"},
+    {hz:"跳",py:"tiào",zh:"双脚用力，使身体离开地面。",en:"to jump",eg:"小猫跳上了椅子。"},
+    {hz:"跳舞",py:"tiào wǔ",zh:"随着音乐舞动身体。",en:"to dance",eg:"她喜欢跟朋友一起跳舞。"},
+    {hz:"跳高",py:"tiào gāo",zh:"跳过一定高度的体育项目。",en:"high jump",eg:"他参加学校的跳高比赛。"},
+    {hz:"跑",py:"pǎo",zh:"双脚快速向前移动。",en:"to run",eg:"别跑，慢慢走。"},
+    {hz:"奔跑",py:"bēn pǎo",zh:"快速地向前跑。",en:"to run; to dash",eg:"孩子们在操场上奔跑。",review:"奔 bēn"},
+    {hz:"跑得飞快",py:"pǎo de fēi kuài",zh:"跑得非常快。",en:"to run very fast",eg:"他听到铃声后跑得飞快。",review:"得 de（轻声）"},
+    {hz:"跑步",py:"pǎo bù",zh:"用较快的速度向前移动。",en:"to run; to jog",eg:"我每天早上跑步。"},
+    {hz:"跃",py:"yuè",zh:"跳起；向前跳。",en:"to leap",eg:"小鱼跃出水面。"},
+    {hz:"跳跃",py:"tiào yuè",zh:"用脚使身体离开地面。",en:"to jump; to leap",eg:"小朋友在操场上跳跃。"},
+    {hz:"飞跃",py:"fēi yuè",zh:"跳过；也指快速进步。",en:"to leap; to make rapid progress",eg:"他的中文成绩有了飞跃。"},
+    {hz:"踢",py:"tī",zh:"用脚快速碰东西。",en:"to kick",eg:"请不要踢门。"},
+    {hz:"踢球",py:"tī qiú",zh:"用脚踢球的运动。",en:"to play football; to kick a ball",eg:"放学后我们一起踢球。"},
+    {hz:"踢足球",py:"tī zú qiú",zh:"参加用脚踢球的运动。",en:"to play football; to play soccer",eg:"放学后我们在操场踢足球。"},
+    {hz:"跌",py:"diē",zh:"摔下；下降。",en:"to fall; to drop",eg:"走路小心，别跌倒。"},
+    {hz:"跌倒",py:"diē dǎo",zh:"站不稳而倒在地上。",en:"to fall down",eg:"地上很滑，小心跌倒。"},
+    {hz:"下跌",py:"xià diē",zh:"数量或价格下降。",en:"to fall; to decline",eg:"最近菜价开始下跌。"},
+    {hz:"跌落",py:"diē luò",zh:"从高处掉下来。",en:"to fall; to drop",eg:"一个苹果从桌上跌落下来。"},
+    {hz:"距",py:"jù",zh:"相隔。",en:"to be a distance from",eg:"学校距我家两公里。"},
+    {hz:"距离",py:"jù lí",zh:"两个地方或事物之间相隔的空间。",en:"distance",eg:"我家距离学校很近。"},
+    {hz:"相距",py:"xiāng jù",zh:"两个地方或事物之间有一段距离。",en:"to be apart; to be separated by",eg:"我家和学校相距两公里。",review:"相 xiāng"},
+    {hz:"见",py:"jiàn",zh:"看到；见面。",en:"to see; to meet",eg:"我们明天见。",review:"见 jiàn"},
+    {hz:"看见",py:"kàn jiàn",zh:"通过眼睛发现人或事物。",en:"to see",eg:"我看见老师走进教室。",review:"看 kàn；见 jiàn"}
   ];
 
   const cards = document.querySelector("#cards");
@@ -258,9 +274,16 @@
     return "";
   }
 
+  function reviewHtml(text){
+    return esc(text).replace(
+      /([A-Za-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]+)/g,
+      '<span class="review-py">$1</span>'
+    );
+  }
+
   cards.innerHTML = words.map(word => {
     const review = word.review
-      ? `<div class="review-badge">待人工听审 · <span class="review-py">${esc(word.review)}</span></div>`
+      ? `<div class="review-badge">待人工听审 · ${reviewHtml(word.review)}</div>`
       : "";
     return `<div class="flip prototype-card" role="button" tabindex="0"
                  aria-label="${esc(word.hz)}词卡，点击翻面" aria-pressed="false">
@@ -275,7 +298,7 @@
         <div class="side back">
           <div class="meaning-label">中文解释</div>
           <div class="meaning-zh">${esc(word.zh)}</div>
-          <div class="meaning-label" style="margin-top:14px">ENGLISH</div>
+          <div class="meaning-label en-label" style="margin-top:14px">ENGLISH</div>
           <div class="meaning-en">${esc(word.en)}</div>
           <div class="example-block">
             <div class="example-label">例句</div>

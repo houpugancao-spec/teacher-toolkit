@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>其它 · 止部词卡</title>
+<link rel="icon" href="../../../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/style.css">
+<style>
+  .prototype-wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:18px 16px 72px;
+    font-family:'KaiTi','楷体','STKaiti',serif;
+  }
+  .sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+  }
+  .prototype-head{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:14px;margin-bottom:20px;
+  }
+  .prototype-head a{color:var(--blue-d);font-size:15px;font-weight:600}
+  .prototype-title{margin:0;font-size:26px;line-height:1.25}
+  .prototype-sub{margin:4px 0 0;color:var(--muted);font:15px/1.45 Arial,sans-serif}
+  .prototype-stage{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:18px;padding:8px 0 4px;
+  }
+  .prototype-card{width:100%;height:390px;outline:none}
+  .prototype-card:focus-visible .side{box-shadow:0 0 0 4px rgba(31,111,235,.24)}
+  .prototype-card .side{
+    border-radius:22px;border:2px solid var(--line);
+    box-shadow:0 12px 30px rgba(26,34,48,.12);padding:28px;
+  }
+  .prototype-card .front{background:#fff}
+  .prototype-card .front .hz{
+    font-family:'KaiTi','楷体','STKaiti',serif;
+    font-size:92px;font-weight:400;line-height:1.08;color:var(--ink);
+    text-align:center;
+  }
+  .prototype-card .front .hz.len-1{font-size:108px}
+  .prototype-card .front .hz.len-3{font-size:70px}
+  .prototype-card .front .hz.len-4{font-size:58px}
+  .prototype-card .front .hz.len-long{font-size:36px}
+  .prototype-card .front .py{
+    margin-top:18px;color:#0758c9;font:29px/1.25 Arial,sans-serif;
+    text-align:center;max-width:100%;
+  }
+  .prototype-card .front .hz.len-4~.py{font-size:23px}
+  .prototype-card .front .hz.len-long~.py{font-size:21px}
+  .prototype-card .spk{
+    position:absolute;right:18px;top:18px;width:58px;height:58px;
+    border-radius:50%;border:1px solid #bad3fb;background:#eef5ff;
+    font-size:27px;cursor:pointer;
+  }
+  .prototype-card .spk:hover{background:#deebff}
+  .prototype-card .back{
+    background:#fff;display:flex;flex-direction:column;align-items:stretch;
+    justify-content:flex-start;text-align:left;
+  }
+  .meaning-label,.example-label{
+    color:var(--muted);font-family:'KaiTi','楷体','STKaiti',serif;
+    font-size:16px;font-weight:700;letter-spacing:.05em;
+  }
+  .meaning-label.en-label{font-family:Arial,sans-serif}
+
+  .meaning-zh{
+    margin-top:7px;font-family:'KaiTi','楷体','STKaiti',serif;
+    font-size:27px;line-height:1.45;color:var(--ink);
+  }
+  .meaning-en{
+    margin-top:6px;color:#0758c9;font:21px/1.35 Arial,sans-serif;
+  }
+  .example-block{margin-top:auto;padding-top:17px;border-top:1px solid var(--line)}
+  .example-zh{
+    margin-top:7px;font-family:'KaiTi','楷体','STKaiti',serif;
+    font-size:25px;line-height:1.45;color:var(--ink);
+  }
+  .review-badge{
+    margin-top:18px;padding:6px 11px;border:1px solid #e9a11b;
+    border-radius:999px;color:#8a5700;background:#fff8e6;
+    font-family:'KaiTi','楷体','STKaiti',serif;font-size:15px;line-height:1.2;
+  }
+  .review-py{font-family:Arial,sans-serif}
+  .prototype-hint,.audio-status{
+    margin:18px 0 0;text-align:center;color:var(--muted);
+    font-family:'KaiTi','楷体','STKaiti',serif;font-size:16px;
+  }
+  .audio-status{min-height:24px;color:#0758c9}
+  @media(max-width:600px){
+    .prototype-wrap{padding:14px 12px 56px}
+    .prototype-head{align-items:flex-start}
+    .prototype-title{font-size:23px}
+    .prototype-stage{grid-template-columns:1fr;gap:16px}
+    .prototype-card{height:370px}
+    .prototype-card .side{padding:24px}
+    .prototype-card .front .hz{font-size:84px}
+    .prototype-card .front .hz.len-1{font-size:100px}
+    .prototype-card .front .hz.len-3{font-size:64px}
+    .prototype-card .front .hz.len-4{font-size:54px}
+    .prototype-card .front .hz.len-long{font-size:34px}
+    .prototype-card .front .py{font-size:27px}
+    .prototype-card .front .hz.len-4~.py{font-size:22px}
+    .prototype-card .front .hz.len-long~.py{font-size:20px}
+    .meaning-zh{font-size:25px}
+    .meaning-en{font-size:20px}
+    .example-zh{font-size:23px}
+  }
+</style>
+</head>
+<body>
+<main class="prototype-wrap">
+  <header class="prototype-head">
+    <div>
+      <h1 class="prototype-title">其它 · 止部词卡</h1>
+      <p class="prototype-sub">103 cards · 0.85× audio</p>
+    </div>
+    <a href="../../../index.html">返回首页</a>
+  </header>
+  <section aria-labelledby="card-title">
+    <h2 id="card-title" class="sr-only">止部词卡</h2>
+    <div id="cards" class="prototype-stage"></div>
+    <p class="prototype-hint">点击卡片翻面；点击 🔊 听读音</p>
+    <p class="audio-status" aria-live="polite"></p>
+  </section>
+</main>
+
+<script>
+(() => {
+  const words = [
+    {"hz":"止","py":"zhǐ","zh":"停下；不再继续。","en":"to stop; to halt","eg":"红灯亮了，请止步。"},
+    {"hz":"行人止步","py":"xíng rén zhǐ bù","zh":"告诉走路的人不要继续前进。","en":"Pedestrians must stop; no entry","eg":"前面正在施工，请行人止步。"},
+    {"hz":"停止","py":"tíng zhǐ","zh":"不再继续。","en":"to stop; to cease","eg":"雨已经停止了。"},
+    {"hz":"阻止","py":"zǔ zhǐ","zh":"使别人不能继续做某事。","en":"to prevent; to stop","eg":"妈妈阻止孩子跑到马路上。"},
+    {"hz":"出","py":"chū","zh":"从里面到外面。","en":"to go out; to come out","eg":"我现在要出门。"},
+    {"hz":"出发","py":"chū fā","zh":"离开原来的地方，开始行程。","en":"to set off; to depart","eg":"我们七点出发去学校。","review":"发 fā"},
+    {"hz":"出门","py":"chū mén","zh":"离开家到外面去。","en":"to go out; to leave home","eg":"出门前别忘了带钥匙。"},
+    {"hz":"出国","py":"chū guó","zh":"到外国去。","en":"to go abroad","eg":"她明年要出国留学。"},
+    {"hz":"出息","py":"chū xi","zh":"有能力、有成就或有前途。","en":"promise; prospects","eg":"他努力学习，长大一定有出息。","review":"息 xi（轻声）"},
+    {"hz":"走","py":"zǒu","zh":"用脚向前移动；离开。","en":"to walk; to leave","eg":"我们走回家吧。"},
+    {"hz":"走路","py":"zǒu lù","zh":"用脚行走。","en":"to walk","eg":"我每天走路上学。"},
+    {"hz":"走出","py":"zǒu chū","zh":"从里面走到外面。","en":"to walk out of","eg":"他走出了教室。"},
+    {"hz":"行走","py":"xíng zǒu","zh":"走路。","en":"to walk; to travel on foot","eg":"雨天在路上行走要小心。"},
+    {"hz":"奔","py":"bēn","zh":"快速地跑。","en":"to run; to dash","eg":"他向车站奔去。","review":"奔 bēn"},
+    {"hz":"奔跑","py":"bēn pǎo","zh":"快速地向前跑。","en":"to run; to dash","eg":"孩子们在操场上奔跑。","review":"奔 bēn"},
+    {"hz":"飞奔","py":"fēi bēn","zh":"非常快地跑。","en":"to dash; to sprint","eg":"小狗飞奔过来。"},
+    {"hz":"狂奔","py":"kuáng bēn","zh":"拼命快速地跑。","en":"to run wildly; to sprint","eg":"他听到铃声后一路狂奔。"},
+    {"hz":"步","py":"bù","zh":"脚步；行走。","en":"step; pace","eg":"请向前走一步。"},
+    {"hz":"跑步","py":"pǎo bù","zh":"用较快的速度向前移动。","en":"to run; to jog","eg":"我每天早上跑步。"},
+    {"hz":"步行街","py":"bù xíng jiē","zh":"主要供人步行的街道。","en":"pedestrian street","eg":"周末步行街上很热闹。"},
+    {"hz":"散步","py":"sàn bù","zh":"轻松地走一走。","en":"to take a walk","eg":"我们晚饭后去散步。"},
+    {"hz":"正","py":"zhèng","zh":"符合标准；不偏。","en":"correct; right; straight","eg":"这张照片挂得很正。","review":"正 zhèng"},
+    {"hz":"正在","py":"zhèng zài","zh":"表示动作或事情现在进行。","en":"to be doing; in progress","eg":"我正在做作业。","review":"在 zài（四声）"},
+    {"hz":"正确","py":"zhèng què","zh":"没有错误。","en":"correct; right","eg":"你的答案是正确的。"},
+    {"hz":"正方形","py":"zhèng fāng xíng","zh":"四条边一样长、四个角都是直角的图形。","en":"square","eg":"这个盒子的正面是正方形。"},
+    {"hz":"正面影响","py":"zhèng miàn yǐng xiǎng","zh":"好的、积极的影响。","en":"positive impact","eg":"运动对健康有正面影响。"},
+    {"hz":"各","py":"gè","zh":"每一个。","en":"each; every","eg":"大家各拿一本书。"},
+    {"hz":"各种","py":"gè zhǒng","zh":"许多不同的种类。","en":"various kinds of; all kinds of","eg":"商店里有各种水果。","review":"种 zhǒng"},
+    {"hz":"各位同学","py":"gè wèi tóng xué","zh":"对所有同学的称呼。","en":"all students; everyone","eg":"各位同学，请打开课本。"},
+    {"hz":"各种各样","py":"gè zhǒng gè yàng","zh":"种类很多，各不相同。","en":"all kinds of; various","eg":"市场里有各种各样的水果。"},
+    {"hz":"客","py":"kè","zh":"来访的人；顾客。","en":"guest; customer","eg":"家里今天有客。"},
+    {"hz":"客厅","py":"kè tīng","zh":"家里接待客人和休息的房间。","en":"living room","eg":"客人正在客厅里喝茶。"},
+    {"hz":"做客","py":"zuò kè","zh":"到别人家拜访。","en":"to visit as a guest","eg":"周末我去朋友家做客。"},
+    {"hz":"客人","py":"kè rén","zh":"被邀请来的人；顾客。","en":"guest; customer","eg":"客人已经到了。"},
+    {"hz":"不客气","py":"bú kè qi","zh":"回答感谢时的礼貌用语。","en":"You're welcome; don't mention it","eg":"“谢谢你！”“不客气！”","review":"不 bú；气 qi（轻声）"},
+    {"hz":"此","py":"cǐ","zh":"这个；这里。","en":"this; here","eg":"这件事到此为止。"},
+    {"hz":"因此","py":"yīn cǐ","zh":"因为这个原因。","en":"therefore; as a result","eg":"今天下雨，因此比赛取消了。"},
+    {"hz":"此时此刻","py":"cǐ shí cǐ kè","zh":"就在现在这个时候。","en":"at this very moment","eg":"此时此刻，我只想休息。"},
+    {"hz":"些","py":"xiē","zh":"表示不确定的数量。","en":"some; a few","eg":"我想买些水果。"},
+    {"hz":"这些","py":"zhè xiē","zh":"离说话人较近的多个事物。","en":"these","eg":"这些书都是我的。"},
+    {"hz":"那些","py":"nà xiē","zh":"离说话人较远的多个事物。","en":"those","eg":"那些孩子在踢球。"},
+    {"hz":"一些","py":"yì xiē","zh":"数量不多的一部分。","en":"some; a few","eg":"我有一些问题想问。"},
+    {"hz":"市","py":"shì","zh":"城市的简称；也可指市场。","en":"city; market","eg":"我住在墨尔本市。"},
+    {"hz":"城市","py":"chéng shì","zh":"人口和建筑较集中的地方。","en":"city","eg":"墨尔本是一座美丽的城市。"},
+    {"hz":"市长","py":"shì zhǎng","zh":"一个城市的主要负责人。","en":"mayor","eg":"市长参加了活动。","review":"长 zhǎng"},
+    {"hz":"集市","py":"jí shì","zh":"定期买卖东西的市场。","en":"market; fair","eg":"周末我们去集市买菜。"},
+    {"hz":"历","py":"lì","zh":"经过；也和时间、过去有关。","en":"to go through; history","eg":"请把日期写在日历上。"},
+    {"hz":"历史","py":"lì shǐ","zh":"过去发生的事情。","en":"history","eg":"我喜欢学习中国历史。"},
+    {"hz":"经历","py":"jīng lì","zh":"亲身遇到过；亲身遇到的事情。","en":"to experience; experience","eg":"这次旅行是一次难忘的经历。"},
+    {"hz":"历历在目","py":"lì lì zài mù","zh":"过去的事情清楚地出现在眼前。","en":"to remain vivid in one's mind","eg":"第一天上学的情景还历历在目。"},
+    {"hz":"企","py":"qǐ","zh":"常用在“企业、企图”等词中。","en":"used in words about enterprise or attempt","eg":"这家企业很有名。"},
+    {"hz":"企图","py":"qǐ tú","zh":"打算做某事，多指不好的事。","en":"to attempt; to intend","eg":"他企图偷偷离开教室。"},
+    {"hz":"企鹅","py":"qǐ é","zh":"一种不会飞、善于游泳的鸟。","en":"penguin","eg":"企鹅走路很可爱。"},
+    {"hz":"企业","py":"qǐ yè","zh":"从事生产或服务的组织。","en":"business; enterprise","eg":"这家企业有很多员工。"},
+    {"hz":"发","py":"fā / fà","zh":"第一声：送出；第四声（在“头发”中常读轻声）：毛发。","en":"fā: to send; fà/fa: hair","eg":"我先发短信，再整理头发。","review":"发 fā；头发 fa"},
+    {"hz":"发现","py":"fā xiàn","zh":"看到或知道以前不知道的事情。","en":"to discover; to find","eg":"我发现桌上有一本书。","review":"发 fā"},
+    {"hz":"头发","py":"tóu fa","zh":"头上的毛发。","en":"hair","eg":"她的头发很长。","review":"发 fa（轻声）"},
+    {"hz":"发短信","py":"fā duǎn xìn","zh":"用手机发送文字信息。","en":"to send a text message","eg":"到家后给我发短信。"},
+    {"hz":"发工资","py":"fā gōng zī","zh":"把工资付给员工。","en":"to pay wages or salary","eg":"公司每月十五日发工资。"},
+    {"hz":"发作业","py":"fā zuò yè","zh":"把作业交给学生。","en":"to hand out homework","eg":"老师下课前发作业。"},
+    {"hz":"先","py":"xiān","zh":"时间或顺序在前。","en":"first; before","eg":"你先坐，我去倒水。"},
+    {"hz":"先生","py":"xiān sheng","zh":"对成年男子的礼貌称呼。","en":"Mr.; sir; gentleman","eg":"王先生是我的老师。","review":"生 sheng（轻声）"},
+    {"hz":"先辈","py":"xiān bèi","zh":"生活在前一代、值得尊敬的人。","en":"forebears; predecessors","eg":"我们要学习先辈的精神。"},
+    {"hz":"首先","py":"shǒu xiān","zh":"第一；最先。","en":"first of all; firstly","eg":"首先，请写上名字。"},
+    {"hz":"乘","py":"chéng","zh":"坐交通工具；做乘法。","en":"to ride; to multiply","eg":"我每天乘公交车上学。","review":"乘 chéng"},
+    {"hz":"乘车","py":"chéng chē","zh":"坐车。","en":"to travel by vehicle","eg":"老人乘车时要注意安全。"},
+    {"hz":"乘客","py":"chéng kè","zh":"坐车、船或飞机的人。","en":"passenger","eg":"乘客请系好安全带。"},
+    {"hz":"乘法","py":"chéng fǎ","zh":"数学中的一种运算。","en":"multiplication","eg":"我们今天学习乘法。"},
+    {"hz":"乘风破浪","py":"chéng fēng pò làng","zh":"不怕困难，勇敢向前。","en":"to brave difficulties; to forge ahead","eg":"只要努力，我们就能乘风破浪。"},
+    {"hz":"登","py":"dēng","zh":"向上；记录。","en":"to climb; to board; to register","eg":"他登上了山顶。"},
+    {"hz":"登山","py":"dēng shān","zh":"爬山。","en":"to climb a mountain; to hike","eg":"周末我们一起去登山。"},
+    {"hz":"登机","py":"dēng jī","zh":"上飞机。","en":"to board a plane","eg":"请提前到登机口等候。"},
+    {"hz":"登记","py":"dēng jì","zh":"把信息记录下来。","en":"to register","eg":"到校后请先登记信息。"},
+    {"hz":"登场","py":"dēng chǎng","zh":"出现在舞台或活动中。","en":"to appear; to enter the stage","eg":"主角终于登场了。"},
+    {"hz":"前","py":"qián","zh":"正面方向；较早的时间。","en":"front; before","eg":"请向前走两步。"},
+    {"hz":"前面","py":"qián miàn","zh":"前方的位置。","en":"in front; ahead","eg":"学校就在前面。"},
+    {"hz":"前方","py":"qián fāng","zh":"前面的方向或地方。","en":"ahead; in front","eg":"前方正在修路。"},
+    {"hz":"起","py":"qǐ","zh":"从坐卧变为站立；开始。","en":"to rise; to start","eg":"听到铃声，大家都起身了。"},
+    {"hz":"起床","py":"qǐ chuáng","zh":"从床上起来。","en":"to get up","eg":"我每天七点起床。"},
+    {"hz":"起来","py":"qǐ lái","zh":"从坐、卧等状态变为站立。","en":"to get up; to stand up","eg":"请大家站起来。","review":"来 lái"},
+    {"hz":"起跑线","py":"qǐ pǎo xiàn","zh":"赛跑开始的线。","en":"starting line","eg":"运动员站在起跑线上。"},
+    {"hz":"赶","py":"gǎn","zh":"加快速度追上；及时到达。","en":"to hurry; to catch up","eg":"我得赶公交车。"},
+    {"hz":"赶快","py":"gǎn kuài","zh":"抓紧时间，马上行动。","en":"to hurry; quickly","eg":"快迟到了，赶快走吧。"},
+    {"hz":"追赶","py":"zhuī gǎn","zh":"在后面赶上。","en":"to chase; to run after","eg":"小狗在追赶皮球。"},
+    {"hz":"赶紧","py":"gǎn jǐn","zh":"抓紧时间，马上行动。","en":"to hurry; quickly","eg":"快下雨了，我们赶紧回家。"},
+    {"hz":"赶不上","py":"gǎn bu shàng","zh":"来不及追上或到达。","en":"cannot catch; to miss","eg":"再不走就赶不上火车了。","review":"不 bu（轻声）"},
+    {"hz":"超","py":"chāo","zh":"超过。","en":"to exceed; to surpass","eg":"今天气温超过三十度。"},
+    {"hz":"超市","py":"chāo shì","zh":"出售多种日常用品的商店。","en":"supermarket","eg":"妈妈去超市买菜。"},
+    {"hz":"超车","py":"chāo chē","zh":"从旁边超过前面的车。","en":"to overtake","eg":"这里不能超车。"},
+    {"hz":"超越","py":"chāo yuè","zh":"超过；胜过。","en":"to surpass; to go beyond","eg":"他不断练习，终于超越了自己。"},
+    {"hz":"越","py":"yuè","zh":"超过；表示程度随情况变化。","en":"to exceed; the more...","eg":"天气越来越冷了。"},
+    {"hz":"越过","py":"yuè guò","zh":"跨过或经过某个地方。","en":"to cross; to get over","eg":"我们越过小桥回家。","review":"过 guò"},
+    {"hz":"越来越好","py":"yuè lái yuè hǎo","zh":"一次比一次好。","en":"getting better and better","eg":"她的中文说得越来越好。"},
+    {"hz":"趣","py":"qù","zh":"兴趣；意味。","en":"interest; fun","eg":"这个故事很有趣。"},
+    {"hz":"兴趣","py":"xìng qù","zh":"喜欢并愿意了解某事的感觉。","en":"interest","eg":"我对音乐很有兴趣。"},
+    {"hz":"有趣","py":"yǒu qù","zh":"能让人感到好玩。","en":"interesting; fun","eg":"这本书很有趣。"},
+    {"hz":"复","py":"fù","zh":"再；重复。","en":"again; to repeat","eg":"老师把重点重复了一遍。"},
+    {"hz":"回复","py":"huí fù","zh":"回答；回信。","en":"to reply; to respond","eg":"看到消息后请回复我。"},
+    {"hz":"复习","py":"fù xí","zh":"再次学习学过的内容。","en":"to review; to revise","eg":"考试前我要认真复习。"},
+    {"hz":"卫","py":"wèi","zh":"保护；防守。","en":"to guard; to defend","eg":"我们要保卫自己的家园。"},
+    {"hz":"保卫国家","py":"bǎo wèi guó jiā","zh":"保护国家安全。","en":"to defend the country","eg":"军人负责保卫国家。"},
+    {"hz":"征","py":"zhēng","zh":"公开寻找或收取。","en":"to seek; to call for; to levy","eg":"学校正在征集活动建议。"},
+    {"hz":"征求意见","py":"zhēng qiú yì jiàn","zh":"请别人提出看法和建议。","en":"to ask for opinions","eg":"做决定前，我们先征求大家的意见。"}
+  ];
+
+  const cards = document.querySelector("#cards");
+  const status = document.querySelector(".audio-status");
+  let audio = null;
+
+  function esc(text){
+    return String(text).replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[c]));
+  }
+  function lengthClass(text){
+    const n=[...text].length;
+    if(n===1)return"len-1";
+    if(n===3)return"len-3";
+    if(n===4)return"len-4";
+    if(n>=5)return"len-long";
+    return"";
+  }
+  function reviewHtml(text){
+    return esc(text).replace(
+      /([A-Za-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]+)/g,
+      '<span class="review-py">$1</span>'
+    );
+  }
+
+  cards.innerHTML=words.map(word=>{
+    const review=word.review
+      ? `<div class="review-badge">待人工听审 · ${reviewHtml(word.review)}</div>`
+      : "";
+    return `<div class="flip prototype-card" role="button" tabindex="0"
+                 aria-label="${esc(word.hz)}词卡，点击翻面" aria-pressed="false">
+      <div class="inner">
+        <div class="side front">
+          <button class="spk" type="button" aria-label="播放${esc(word.hz)}的读音"
+                  data-au="audio/${esc(word.hz)}.mp3" data-hz="${esc(word.hz)}">🔊</button>
+          <div class="hz ${lengthClass(word.hz)}">${esc(word.hz)}</div>
+          <div class="py">${esc(word.py)}</div>
+          ${review}
+        </div>
+        <div class="side back">
+          <div class="meaning-label">中文解释</div>
+          <div class="meaning-zh">${esc(word.zh)}</div>
+          <div class="meaning-label en-label" style="margin-top:14px">ENGLISH</div>
+          <div class="meaning-en">${esc(word.en)}</div>
+          <div class="example-block">
+            <div class="example-label">例句</div>
+            <div class="example-zh">${esc(word.eg)}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+
+  function flipCard(card){
+    const isOn=card.classList.toggle("on");
+    card.setAttribute("aria-pressed",String(isOn));
+  }
+  function playWord(event,speaker){
+    event.stopPropagation();
+    if(audio){audio.pause();audio.currentTime=0}
+    audio=new Audio(speaker.dataset.au);
+    status.textContent=`正在播放：${speaker.dataset.hz}`;
+    audio.addEventListener("ended",()=>{status.textContent=""},{once:true});
+    audio.addEventListener("error",()=>{
+      status.textContent="音频暂时无法播放，请稍后再试。";
+    },{once:true});
+    audio.play().catch(()=>{status.textContent="请再次点击小喇叭播放读音。"});
+  }
+
+  cards.addEventListener("click",event=>{
+    const speaker=event.target.closest(".spk");
+    if(speaker){playWord(event,speaker);return}
+    const card=event.target.closest(".prototype-card");
+    if(card)flipCard(card);
+  });
+  cards.addEventListener("keydown",event=>{
+    if(event.target.closest(".spk"))return;
+    if(event.key==="Enter"||event.key===" "){
+      event.preventDefault();
+      const card=event.target.closest(".prototype-card");
+      if(card)flipCard(card);
+    }
+  });
+})();
+</script>
+</body>
+</html>
