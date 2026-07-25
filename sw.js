@@ -1,7 +1,7 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v32";
+const CACHE = "vce-zhongwen-v33";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./manifest.json", "./icon.svg",
   "./assets/icons/icon-192.png", "./assets/icons/icon-512.png",
@@ -47,7 +47,22 @@ const CORE = [
   "./units/renwu-zhuge-practice/audio/words/面带微笑.mp3", "./units/renwu-zhuge-practice/audio/words/目光坚定.mp3",
   "./units/renwu-zhuge-practice/audio/words/沉着冷静.mp3", "./units/renwu-zhuge-practice/audio/words/不慌不忙.mp3",
   "./units/renwu-zhuge-practice/audio/words/从容不迫.mp3", "./units/renwu-zhuge-practice/audio/words/气定神闲.mp3",
-  "./units/renwu-zhuge-practice/audio/words/胸有成竹.mp3", "./units/renwu-zhuge-practice/audio/words/聚精会神.mp3"
+  "./units/renwu-zhuge-practice/audio/words/胸有成竹.mp3", "./units/renwu-zhuge-practice/audio/words/聚精会神.mp3",
+  // 其它 · 足部词卡
+  "./units/other/foot/index.html",
+  "./units/other/foot/audio/趾.mp3", "./units/other/foot/audio/脚趾.mp3",
+  "./units/other/foot/audio/跟.mp3", "./units/other/foot/audio/跟着.mp3",
+  "./units/other/foot/audio/跟上.mp3", "./units/other/foot/audio/疑.mp3",
+  "./units/other/foot/audio/疑问.mp3", "./units/other/foot/audio/怀疑.mp3",
+  "./units/other/foot/audio/路.mp3", "./units/other/foot/audio/道路.mp3",
+  "./units/other/foot/audio/马路.mp3", "./units/other/foot/audio/条条大路通罗马.mp3",
+  "./units/other/foot/audio/跳.mp3", "./units/other/foot/audio/跳舞.mp3",
+  "./units/other/foot/audio/跑.mp3", "./units/other/foot/audio/奔跑.mp3",
+  "./units/other/foot/audio/跑得飞快.mp3", "./units/other/foot/audio/跃.mp3",
+  "./units/other/foot/audio/跳跃.mp3", "./units/other/foot/audio/踢.mp3",
+  "./units/other/foot/audio/踢球.mp3", "./units/other/foot/audio/跌.mp3",
+  "./units/other/foot/audio/跌倒.mp3", "./units/other/foot/audio/下跌.mp3",
+  "./units/other/foot/audio/距.mp3", "./units/other/foot/audio/距离.mp3"
 ];
 
 self.addEventListener("install", e => {

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>其它 · 足部词卡</title>
+<link rel="icon" href="../../../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../../assets/style.css">
+<style>
+  .prototype-wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:18px 16px 72px;
+    font-family:'KaiTi','楷体','STKaiti',serif;
+  }
+  .sr-only{
+    position:absolute;
+    width:1px;
+    height:1px;
+    padding:0;
+    margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+  }
+  .prototype-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:20px;
+  }
+  .prototype-head a{
+    color:var(--blue-d);
+    font-size:15px;
+    font-weight:600;
+  }
+  .prototype-title{
+    margin:0;
+    font-size:26px;
+    line-height:1.25;
+  }
+  .prototype-sub{
+    margin:4px 0 0;
+    color:var(--muted);
+    font:15px/1.45 Arial,sans-serif;
+  }
+  .prototype-stage{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:18px;
+    padding:8px 0 4px;
+  }
+  .prototype-card{
+    width:100%;
+    height:390px;
+    outline:none;
+  }
+  .prototype-card:focus-visible .side{
+    box-shadow:0 0 0 4px rgba(31,111,235,.24);
+  }
+  .prototype-card .side{
+    border-radius:22px;
+    border:2px solid var(--line);
+    box-shadow:0 12px 30px rgba(26,34,48,.12);
+    padding:28px;
+  }
+  .prototype-card .front{
+    background:#fff;
+  }
+  .prototype-card .front .hz{
+    font-family:'KaiTi','楷体','STKaiti',serif;
+    font-size:92px;
+    font-weight:400;
+    line-height:1.08;
+    color:var(--ink);
+  }
+  .prototype-card .front .hz.len-1{font-size:108px}
+  .prototype-card .front .hz.len-3{font-size:70px}
+  .prototype-card .front .hz.len-4{font-size:58px}
+  .prototype-card .front .hz.len-long{font-size:36px}
+  .prototype-card .front .py{
+    margin-top:14px;
+    color:var(--blue-d);
+    font:28px/1.25 Arial,sans-serif;
+    letter-spacing:.02em;
+  }
+  .prototype-card .spk{
+    top:18px;
+    right:20px;
+    width:58px;
+    height:58px;
+    border:1px solid #c9d8f0;
+    border-radius:50%;
+    background:#eef4ff;
+    color:var(--blue-d);
+    font-size:30px;
+    line-height:1;
+    opacity:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .prototype-card .spk:hover,
+  .prototype-card .spk:focus-visible{
+    background:#dbe9ff;
+    outline:none;
+  }
+  .prototype-card .back{
+    background:#fff;
+    color:var(--ink);
+    transform:rotateY(180deg);
+    justify-content:flex-start;
+    align-items:stretch;
+    text-align:left;
+  }
+  .meaning-label,
+  .example-label{
+    font-family:'KaiTi','楷体','STKaiti',serif;
+    color:var(--muted);
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:.08em;
+  }
+  .meaning-zh{
+    margin-top:5px;
+    font-family:'KaiTi','楷体','STKaiti',serif;
+    font-size:27px;
+    line-height:1.35;
+  }
+  .meaning-en{
+    margin-top:10px;
+    color:var(--blue-d);
+    font:21px/1.3 Arial,sans-serif;
+  }
+  .example-block{
+    margin-top:auto;
+    border-top:1px solid var(--line);
+    padding-top:18px;
+  }
+  .example-zh{
+    margin-top:6px;
+    font-family:'KaiTi','楷体','STKaiti',serif;
+    font-size:25px;
+    line-height:1.5;
+    color:#111;
+  }
+  .review-badge{
+    margin-top:16px;
+    padding:6px 12px;
+    border:1px solid #e6b84f;
+    border-radius:18px;
+    background:#fff8df;
+    color:#7a5400;
+    font-size:15px;
+    line-height:1.3;
+  }
+  .review-badge .review-py{
+    font-family:Arial,sans-serif;
+  }
+  .prototype-hint{
+    margin:14px 0 0;
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .audio-status{
+    min-height:24px;
+    margin:8px 0 0;
+    text-align:center;
+    color:var(--blue-d);
+    font-size:14px;
+  }
+  @media (max-width:520px){
+    .prototype-wrap{padding:14px 12px 56px}
+    .prototype-title{font-size:23px}
+    .prototype-stage{grid-template-columns:1fr;gap:14px}
+    .prototype-card{height:370px}
+    .prototype-card .side{padding:24px 22px}
+    .prototype-card .front .hz{font-size:84px}
+    .prototype-card .front .hz.len-1{font-size:100px}
+    .prototype-card .front .hz.len-3{font-size:64px}
+    .prototype-card .front .hz.len-4{font-size:54px}
+    .prototype-card .front .hz.len-long{font-size:34px}
+    .prototype-card .front .py{font-size:25px}
+    .meaning-zh{font-size:25px}
+    .meaning-en{font-size:20px}
+    .example-zh{font-size:23px}
+  }
+</style>
+</head>
+<body>
+<main class="prototype-wrap">
+  <header class="prototype-head">
+    <div>
+      <h1 class="prototype-title">其它 · 足部词卡</h1>
+      <p class="prototype-sub">26 cards · 0.85× audio</p>
+    </div>
+    <a href="../../../index.html">返回首页</a>
+  </header>
+
+  <section aria-labelledby="cardTitle">
+    <h2 id="cardTitle" class="sr-only">足部词卡</h2>
+    <div class="prototype-stage" id="cards"></div>
+    <p class="prototype-hint">点击卡片翻面；点击 🔊 听读音</p>
+    <p class="audio-status" aria-live="polite"></p>
+  </section>
+</main>
+
+<script>
+(() => {
+  const words = [
+    {hz:"趾", py:"zhǐ", zh:"脚或爪前端的部分。", en:"toe", eg:"我的脚趾有点儿疼。"},
+    {hz:"脚趾", py:"jiǎo zhǐ", zh:"脚前端的五个小部分。", en:"toe", eg:"我的脚趾有点儿疼。"},
+    {hz:"跟", py:"gēn", zh:"和；同。", en:"with; and", eg:"我跟妈妈去超市。"},
+    {hz:"跟着", py:"gēn zhe", zh:"在后面一起走或一起做。", en:"to follow; to go along with", eg:"请跟着老师读。"},
+    {hz:"跟上", py:"gēn shàng", zh:"赶上并保持同样的速度或进度。", en:"to catch up; to keep up", eg:"快一点儿，跟上大家。"},
+    {hz:"疑", py:"yí", zh:"不相信；不确定。", en:"doubt; question", eg:"有疑问就问老师。"},
+    {hz:"疑问", py:"yí wèn", zh:"不明白或不确定的问题。", en:"question; doubt", eg:"我对这个答案有疑问。"},
+    {hz:"怀疑", py:"huái yí", zh:"不相信或不确定。", en:"to doubt; to suspect", eg:"我怀疑自己拿错了书。"},
+    {hz:"路", py:"lù", zh:"供人或车辆行走的地方。", en:"road; way", eg:"这条路很宽。"},
+    {hz:"道路", py:"dào lù", zh:"供人和车辆通行的路。", en:"road", eg:"下雨后，道路很滑。"},
+    {hz:"马路", py:"mǎ lù", zh:"城市里供车辆和行人通行的路。", en:"road; street", eg:"过马路要看红绿灯。"},
+    {hz:"条条大路通罗马", py:"tiáo tiáo dà lù tōng luó mǎ", zh:"达到目的的方法不只一种。", en:"All roads lead to Rome.", eg:"这道题有很多做法，真是条条大路通罗马。"},
+    {hz:"跳", py:"tiào", zh:"双脚用力，使身体离开地面。", en:"to jump", eg:"小猫跳上了椅子。"},
+    {hz:"跳舞", py:"tiào wǔ", zh:"随着音乐舞动身体。", en:"to dance", eg:"她喜欢跟朋友一起跳舞。"},
+    {hz:"跑", py:"pǎo", zh:"双脚快速向前移动。", en:"to run", eg:"别跑，慢慢走。"},
+    {hz:"奔跑", py:"bēn pǎo", zh:"快速地跑。", en:"to run; to dash", eg:"孩子们在草地上奔跑。"},
+    {hz:"跑得飞快", py:"pǎo de fēi kuài", zh:"跑得非常快。", en:"to run very fast", eg:"他听到铃声后跑得飞快。"},
+    {hz:"跃", py:"yuè", zh:"跳起；向前跳。", en:"to leap", eg:"小鱼跃出水面。"},
+    {hz:"跳跃", py:"tiào yuè", zh:"用脚使身体离开地面。", en:"to jump; to leap", eg:"小朋友在操场上跳跃。"},
+    {hz:"踢", py:"tī", zh:"用脚快速碰东西。", en:"to kick", eg:"请不要踢门。"},
+    {hz:"踢球", py:"tī qiú", zh:"用脚踢球的运动。", en:"to play football; to kick a ball", eg:"放学后我们一起踢球。"},
+    {hz:"跌", py:"diē", zh:"摔下；下降。", en:"to fall; to drop", eg:"走路小心，别跌倒。"},
+    {hz:"跌倒", py:"diē dǎo", zh:"站不稳而倒在地上。", en:"to fall down", eg:"地上很滑，小心跌倒。"},
+    {hz:"下跌", py:"xià diē", zh:"数量或价格下降。", en:"to fall; to decline", eg:"最近菜价开始下跌。"},
+    {hz:"距", py:"jù", zh:"相隔。", en:"to be a distance from", eg:"学校距我家两公里。"},
+    {hz:"距离", py:"jù lí", zh:"两个地方或事物之间相隔的空间。", en:"distance", eg:"我家距离学校很近。"}
+  ];
+
+  const cards = document.querySelector("#cards");
+  const status = document.querySelector(".audio-status");
+  let audio = null;
+
+  function esc(text){
+    return String(text).replace(/[&<>"']/g, c => ({
+      "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+    }[c]));
+  }
+
+  function lengthClass(text){
+    const n = [...text].length;
+    if(n === 1) return "len-1";
+    if(n === 3) return "len-3";
+    if(n === 4) return "len-4";
+    if(n >= 5) return "len-long";
+    return "";
+  }
+
+  cards.innerHTML = words.map(word => {
+    const review = word.review
+      ? `<div class="review-badge">待人工听审 · <span class="review-py">${esc(word.review)}</span></div>`
+      : "";
+    return `<div class="flip prototype-card" role="button" tabindex="0"
+                 aria-label="${esc(word.hz)}词卡，点击翻面" aria-pressed="false">
+      <div class="inner">
+        <div class="side front">
+          <button class="spk" type="button" aria-label="播放${esc(word.hz)}的读音"
+                  data-au="audio/${esc(word.hz)}.mp3" data-hz="${esc(word.hz)}">🔊</button>
+          <div class="hz ${lengthClass(word.hz)}">${esc(word.hz)}</div>
+          <div class="py">${esc(word.py)}</div>
+          ${review}
+        </div>
+        <div class="side back">
+          <div class="meaning-label">中文解释</div>
+          <div class="meaning-zh">${esc(word.zh)}</div>
+          <div class="meaning-label" style="margin-top:14px">ENGLISH</div>
+          <div class="meaning-en">${esc(word.en)}</div>
+          <div class="example-block">
+            <div class="example-label">例句</div>
+            <div class="example-zh">${esc(word.eg)}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+
+  function flipCard(card){
+    const isOn = card.classList.toggle("on");
+    card.setAttribute("aria-pressed", String(isOn));
+  }
+
+  function playWord(event, speaker){
+    event.stopPropagation();
+    if(audio){
+      audio.pause();
+      audio.currentTime = 0;
+    }
+    audio = new Audio(speaker.dataset.au);
+    status.textContent = `正在播放：${speaker.dataset.hz}`;
+    audio.addEventListener("ended", () => { status.textContent = ""; }, { once:true });
+    audio.addEventListener("error", () => {
+      status.textContent = "音频暂时无法播放，请稍后再试。";
+    }, { once:true });
+    audio.play().catch(() => {
+      status.textContent = "请再点一次小喇叭播放读音。";
+    });
+  }
+
+  document.querySelectorAll(".prototype-card").forEach(card => {
+    card.addEventListener("click", () => flipCard(card));
+    card.addEventListener("keydown", event => {
+      if(event.key === "Enter" || event.key === " "){
+        event.preventDefault();
+        flipCard(card);
+      }
+    });
+  });
+  document.querySelectorAll(".spk").forEach(speaker => {
+    speaker.addEventListener("click", event => playWord(event, speaker));
+  });
+})();
+</script>
+</body>
+</html>

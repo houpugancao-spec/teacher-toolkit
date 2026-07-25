@@ -77,7 +77,10 @@ window.CATALOG = {
         { title:"介绍人物-诸葛亮", url:"units/renwu-zhuge-practice/index.html",
           tags:["人物介绍","诸葛亮","孔明","草船借箭","名言","排序","填空","口语"], ready:true }
       ], "听力":[], "阅读":[], "作文":[], "综合":[] },
-      homework:[], exam:[], other:[]
+      homework:[], exam:[], other:[
+        { title:"足部", url:"units/other/foot/index.html",
+          tags:["足部","汉字","词卡","拼音","读音","例句"], ready:true }
+      ]
     },
     {
       id:"y11", name:"Y11",
