@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y11/Y12 · VCE 中文</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<meta name="theme-color" content="#1f6feb">
+<style>
+  .gate{max-width:460px;margin:60px auto;padding:0 20px;text-align:center}
+  .gate .spin{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--blue);border-radius:50%;margin:0 auto 16px;animation:sp 0.8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .gate h2{font-size:19px;margin:0 0 8px}
+  .gate p{color:var(--muted);font-size:15px;line-height:1.6}
+  .gate .btn{display:inline-block;margin-top:16px;padding:10px 20px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer}
+  .gate .btn.ghost{background:#f2f4f8;color:var(--blue-d)}
+  /* 防拷贝：图片不可拖拽/长按存 */
+  #wm-host img{-webkit-user-drag:none;user-drag:none}
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <div class="spin"></div>
+  <p>正在验证登录… Verifying…</p>
+</div>
+
+<script src="../../assets/auth.js"></script>
+<script>
+(function(){
+  "use strict";
+  const A = window.VCEAuth;
+  const gate = document.getElementById("gate");
+  const id = new URLSearchParams(location.search).get("id");
+  const selfUrl = location.pathname.split("/").slice(-2).join("/") ; // units/protected/... 的相对
+  const nextParam = encodeURIComponent("units/protected/index.html" + location.search);
+
+  function show(html){ gate.innerHTML = html; }
+  function toLogin(){ location.href = "../../login.html?next=" + nextParam; }
+
+  async function boot(){
+    if (!id) { show("<h2>缺少课程编号</h2><p>Missing lesson id.</p><a class='btn' href='../../index.html'>返回首页</a>"); return; }
+    if (!A.isLoggedIn()) { toLogin(); return; }
+
+    // 校验档案状态
+    const p = await A.getProfile();
+    if (!p) { toLogin(); return; }
+    if (p.status !== "approved" ||
+        (p.access_until && new Date(p.access_until) < new Date())) {
+      toLogin(); return;   // 登录页会显示"等审批/已过期"
+    }
+
+    // 占单设备坑
+    const r = await A.claimSession();
+    if (r === "occupied") {
+      show("<h2>⚠️ 已在另一台设备登录</h2>" +
+           "<p>一个账号只能用一台设备。请先在那台设备退出登录，或联系老师解除。<br>" +
+           "This account is active on another device.</p>" +
+           "<button class='btn' id='lo'>退出并在此登录 Log out & use here</button>");
+      document.getElementById("lo").onclick = async () => { await A.logout(); toLogin(); };
+      return;
+    }
+    if (r === "not_allowed") { toLogin(); return; }
+
+    // 拉取受保护内容（RLS 按 tier 放行）
+    let row;
+    try { row = await A.getLesson(id); }
+    catch(e){ show("<h2>加载失败</h2><p>"+ (e.message||"") +"</p><button class='btn' onclick='location.reload()'>重试 Retry</button>"); return; }
+    if (!row) {
+      show("<h2>无法访问此内容</h2><p>你的账号可能没有该年级的权限，或课程不存在。<br>No access to this content.</p><a class='btn' href='../../index.html'>返回首页</a>");
+      return;
+    }
+
+    // 喂给现有引擎渲染
+    const content = row.content || {};
+    window.LESSON  = content.LESSON || content;   // 兼容：content 直接是 LESSON，或 {LESSON,WORDS}
+    window.WORDS   = content.WORDS  || {};
+    window.CATALOG = window.CATALOG || { site:"VCE 中文", grades:[] };
+
+    const s = document.createElement("script");
+    s.src = "../../assets/lesson.js";
+    s.onload = () => { applyWatermark(A.currentEmail()); armAntiCopy(); };
+    s.onerror = () => show("<h2>引擎加载失败</h2><p>请重试。</p>");
+    document.body.appendChild(s);   // lesson.js 立即执行、重写 body
+  }
+
+  // ---- 账号水印（平铺、半透明、含邮箱+日期，作证据用）----
+  function applyWatermark(email){
+    const label = (email || "已登录") + " · " + new Date().toLocaleDateString("zh-CN");
+    const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='320' height='190'>" +
+      "<text x='10' y='100' transform='rotate(-24 160 95)' font-size='15' fill='#123' " +
+      "font-family='sans-serif'>" + label.replace(/&/g,"&amp;").replace(/</g,"&lt;") + "</text></svg>";
+    const uri = "data:image/svg+xml," + encodeURIComponent(svg);
+    let host = document.getElementById("wm-host");
+    if (!host) { host = document.createElement("div"); host.id = "wm-host"; document.documentElement.appendChild(host); }
+    host.setAttribute("style",
+      "position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:0.11;" +
+      "background-image:url(\"" + uri + "\");background-repeat:repeat;");
+  }
+
+  // ---- 防拷贝：图片禁右键/拖拽（文字仍可选，方便查词）----
+  function armAntiCopy(){
+    document.addEventListener("contextmenu", e => { if (e.target && e.target.tagName === "IMG") e.preventDefault(); });
+    document.addEventListener("dragstart",  e => { if (e.target && e.target.tagName === "IMG") e.preventDefault(); });
+  }
+
+  boot().catch(e => show("<h2>出错了</h2><p>" + (e.message||"") + "</p><button class='btn' onclick='location.reload()'>重试</button>"));
+})();
+</script>
+</body>
+</html>

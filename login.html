@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 · VCE 中文</title>
+<link rel="stylesheet" href="assets/style.css">
+<meta name="theme-color" content="#1f6feb">
+<style>
+  .authwrap{max-width:420px;margin:0 auto;padding:0 16px 60px}
+  .authcard{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 10px rgba(20,40,80,.06);padding:22px 20px;margin-top:24px}
+  .tabs{display:flex;gap:8px;margin-bottom:18px}
+  .tabs button{flex:1;padding:9px 0;border:1px solid var(--line);background:#f6f8fc;border-radius:10px;font-size:15px;font-weight:600;color:var(--muted);cursor:pointer}
+  .tabs button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .fld{margin-bottom:14px}
+  .fld label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
+  .fld input{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;font-size:16px;font-family:inherit;background:#fff}
+  .fld input:focus{outline:none;border-color:var(--blue)}
+  .btn{width:100%;padding:12px 0;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer}
+  .btn:disabled{opacity:.55;cursor:default}
+  .msg{margin-top:14px;padding:11px 13px;border-radius:10px;font-size:14px;line-height:1.5;display:none}
+  .msg.show{display:block}
+  .msg.info{background:#eaf2ff;color:var(--blue-d)}
+  .msg.ok{background:var(--ok-bg);color:var(--ok)}
+  .msg.err{background:var(--no-bg);color:var(--no)}
+  .hint{font-size:12px;color:var(--muted);margin-top:10px;text-align:center;line-height:1.6}
+  .backlink{display:block;text-align:center;margin-top:18px;font-size:14px;color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="row"><div class="brand">VCE 中文</div></div></div>
+<div class="authwrap">
+  <div class="hero" style="text-align:center"><h1 style="font-size:22px">🔒 Y11 / Y12 内容</h1><p style="color:var(--muted);font-size:14px;margin-top:4px">登录后可见 · 准备班无需登录</p></div>
+
+  <div class="authcard" id="card">
+    <div class="tabs">
+      <button id="tabLogin" class="on">登录 Log in</button>
+      <button id="tabSignup">注册 Register</button>
+    </div>
+    <div class="fld"><label>邮箱 Email</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+    <div class="fld"><label>密码 Password</label><input id="password" type="password" autocomplete="current-password" placeholder="至少 6 位 at least 6"></div>
+    <button class="btn" id="submitBtn">登录 Log in</button>
+    <div class="msg" id="msg"></div>
+    <div class="hint" id="hint">注册后需老师审批通过才能查看内容<br>After registering, wait for teacher approval</div>
+  </div>
+
+  <a class="backlink" href="index.html">← 返回首页（准备班免费内容）Back to home</a>
+</div>
+
+<script src="assets/auth.js"></script>
+<script>
+(function(){
+  "use strict";
+  const A = window.VCEAuth;
+  const $ = id => document.getElementById(id);
+  const params = new URLSearchParams(location.search);
+  const next = params.get("next") || "index.html";
+  let mode = "login";   // 'login' | 'signup'
+
+  const msgEl = $("msg");
+  function msg(text, kind){ msgEl.textContent = text; msgEl.className = "msg show " + (kind||"info"); }
+  function clearMsg(){ msgEl.className = "msg"; }
+
+  function setMode(m){
+    mode = m;
+    $("tabLogin").classList.toggle("on", m==="login");
+    $("tabSignup").classList.toggle("on", m==="signup");
+    $("submitBtn").textContent = m==="login" ? "登录 Log in" : "注册 Register";
+    $("password").autocomplete = m==="login" ? "current-password" : "new-password";
+    clearMsg();
+  }
+  $("tabLogin").onclick  = () => setMode("login");
+  $("tabSignup").onclick = () => setMode("signup");
+
+  // 登录/注册成功后：查 profile → 决定去向
+  async function routeAfterAuth(){
+    const p = await A.getProfile();
+    if (!p) { msg("账号已创建，正在等待建档…请稍后重试登录", "info"); return; }
+    if (p.status === "pending") {
+      msg("✅ 注册成功！你的账号正在等待老师审批。批准后即可查看 Y11/Y12 内容。\nRegistered — waiting for teacher approval.", "ok");
+      return;
+    }
+    if (p.status === "disabled") { msg("此账号已被停用，请联系老师。Account disabled.", "err"); return; }
+    if (p.status === "approved") {
+      if (p.access_until && new Date(p.access_until) < new Date()) {
+        msg("此账号的访问期限已到期，请联系老师续期。Access expired.", "err"); return;
+      }
+      // 已批准且有效 → 占单设备坑
+      msg("登录中…占用设备锁…", "info");
+      const r = await A.claimSession();
+      if (r === "occupied") {
+        msg("⚠️ 此账号已在另一台设备登录。一个账号只能用一台设备。请先在那台设备退出，或联系老师解除。\nAlready logged in on another device.", "err");
+        await A.logout();   // 不放行
+        return;
+      }
+      if (r === "not_allowed") { msg("账号尚未获批或已过期。Not approved/expired.", "err"); return; }
+      // claimed / ok / took_over → 放行
+      location.href = next;
+    }
+  }
+
+  $("submitBtn").onclick = async () => {
+    const email = $("email").value.trim();
+    const pw = $("password").value;
+    if (!email || !pw) { msg("请填写邮箱和密码。Please enter email and password.", "err"); return; }
+    if (mode === "signup" && pw.length < 6) { msg("密码至少 6 位。Password ≥ 6 chars.", "err"); return; }
+    const btn = $("submitBtn"); btn.disabled = true;
+    try {
+      if (mode === "signup") {
+        clearMsg();
+        const d = await A.signup(email, pw);
+        if (!d.access_token) {
+          // 开了邮箱确认：需要先确认邮箱
+          msg("📧 注册成功！请到邮箱点确认链接后再登录。（若没收到，联系老师）\nCheck your email to confirm, then log in.", "ok");
+          btn.disabled = false; return;
+        }
+        await routeAfterAuth();
+      } else {
+        await A.login(email, pw);
+        await routeAfterAuth();
+      }
+    } catch(e) {
+      msg((e && e.message) || "出错了，请重试。Something went wrong.", "err");
+    }
+    btn.disabled = false;
+  };
+
+  // 进页面时：已登录就直接按状态路由
+  if (A.isLoggedIn()) { routeAfterAuth(); }
+
+  setMode("login");
+})();
+</script>
+</body>
+</html>

@@ -86,7 +86,15 @@ window.CATALOG = {
     },
     {
       id:"y11", name:"Y11",
-      lecture:[],
+      lecture:[
+        {
+          id:"y11-demo", no:"样板", title:"访问锁样板课", topic:"测试用·可删",
+          sections:[
+            { id:"y11-1", n:1, title:"受保护内容测试（登录后可见）", url:"units/protected/index.html?id=y11-1",
+              tags:["样板","登录","受保护","水印","测试"], ready:true }
+          ]
+        }
+      ],
       practice:{ "口语":[], "听力":[], "阅读":[], "作文":[], "综合":[] },
       homework:[], exam:[], other:[]
     },

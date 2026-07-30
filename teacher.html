@@ -63,6 +63,7 @@
       <button class="tab on" data-view="detail">📋 成绩明细</button>
       <button class="tab" data-view="byStudent">🧑 交作业 · 按学生</button>
       <button class="tab" data-view="byExercise">📝 交作业 · 按练习</button>
+      <button class="tab" data-view="accounts">🔓 账号审批</button>
       <button id="logoutBtn" style="margin-left:auto;padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;background:#fff;cursor:pointer">退出</button>
     </div>
     <div id="orphanWarn" class="warn"></div>
@@ -105,6 +106,14 @@
       </div>
       <div class="metrics" id="eMetrics"></div>
       <div id="eGrid"></div>
+    </div>
+
+    <!-- 视图④：账号审批（Y11/Y12 访问锁）-->
+    <div id="viewAccounts" style="display:none">
+      <div class="controls"><button id="aRefresh">🔄 刷新</button><span id="aMsg" class="msg"></span></div>
+      <div id="aPending"></div>
+      <div id="aApproved"></div>
+      <div id="aDisabled"></div>
     </div>
   </div>
 
@@ -320,8 +329,10 @@
     $('viewDetail').style.display     = v==='detail'     ? '' : 'none';
     $('viewByStudent').style.display  = v==='byStudent'  ? '' : 'none';
     $('viewByExercise').style.display = v==='byExercise' ? '' : 'none';
+    $('viewAccounts').style.display   = v==='accounts'   ? '' : 'none';
     if(v==='byStudent') renderStudent();
     if(v==='byExercise') renderExercise();
+    if(v==='accounts') loadAccounts();
   });
 
   $('csvBtn').onclick=()=>{
@@ -331,6 +342,60 @@
     const csv="﻿"+[head.join(","),...lines].join("\n");
     const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download="成绩_"+new Date().toISOString().slice(0,10)+".csv";a.click();
   };
+
+  /* ===== 账号审批（Y11/Y12 访问锁）===== */
+  const fmtD = d => d ? new Date(d).toLocaleDateString('en-AU',{timeZone:'Australia/Melbourne',year:'2-digit',month:'2-digit',day:'2-digit'}) : '';
+  async function loadAccounts(){
+    const msg=$('aMsg'); msg.textContent='读取中…'; msg.className='msg';
+    const [{data:profs,error:e1},{data:sess}] = await Promise.all([
+      sb.from('vce_profiles').select('*').order('created_at',{ascending:true}),
+      sb.from('vce_active_sessions').select('user_id,device_label,last_seen')
+    ]);
+    if(e1){ msg.textContent='读取失败：'+e1.message; msg.className='msg b'; return; }
+    msg.textContent='';
+    const online=new Map((sess||[]).map(s=>[s.user_id,s]));
+    renderAccounts(profs||[], online);
+  }
+  function renderAccounts(profs, online){
+    const pending =profs.filter(p=>p.status==='pending');
+    const approved=profs.filter(p=>p.status==='approved');
+    const disabled=profs.filter(p=>p.status==='disabled');
+    $('aPending').innerHTML = `<div style="font-weight:600;margin:14px 0 4px">🕓 待审批（${pending.length}）</div>` + (pending.length?
+      `<div class="card list">`+pending.map(p=>
+        `<div class="chk"><span>${esc0(p.email||p.id)}</span><span class="st">`+
+        `<button class="tab" data-act="y11" data-id="${p.id}" style="padding:5px 10px">批准 Y11</button> `+
+        `<button class="tab" data-act="y12" data-id="${p.id}" style="padding:5px 10px">批准 Y12</button></span></div>`).join("")+`</div>`
+      : `<div class="msg" style="color:var(--muted)">暂无待审批</div>`);
+    $('aApproved').innerHTML = `<div style="font-weight:600;margin:16px 0 4px">✅ 已批准（${approved.length}）</div>` + (approved.length?
+      `<div class="card list">`+approved.map(p=>{
+        const exp=p.access_until, expired=exp&&new Date(exp)<new Date(), on=online.get(p.id);
+        return `<div class="chk ${expired?'miss':'ok'}"><span>${esc0(p.email||p.id)} `+
+          `<b style="color:var(--blue-d)">${(p.tier||'').toUpperCase()}</b>`+
+          `<small style="color:var(--muted)"> · 到期 ${fmtD(exp)}${expired?'（已过期）':''}${on?' · 🟢在线':''}</small></span>`+
+          `<span class="st">`+
+          (on?`<button class="tab" data-act="kick" data-id="${p.id}" style="padding:5px 10px">踢下线</button> `:'')+
+          `<button class="tab" data-act="renew" data-id="${p.id}" data-tier="${p.tier||'y11'}" style="padding:5px 10px">续期1年</button> `+
+          `<button class="tab" data-act="disable" data-id="${p.id}" style="padding:5px 10px">停用</button></span></div>`;
+      }).join("")+`</div>`
+      : `<div class="msg" style="color:var(--muted)">暂无</div>`);
+    $('aDisabled').innerHTML = disabled.length? `<div style="font-weight:600;margin:16px 0 4px">🚫 已停用（${disabled.length}）</div>`+
+      `<div class="card list">`+disabled.map(p=>
+        `<div class="chk"><span>${esc0(p.email||p.id)} <small style="color:var(--muted)">${(p.tier||'').toUpperCase()}</small></span>`+
+        `<span class="st"><button class="tab" data-act="y11" data-id="${p.id}" style="padding:5px 10px">恢复→Y11</button> `+
+        `<button class="tab" data-act="y12" data-id="${p.id}" style="padding:5px 10px">恢复→Y12</button></span></div>`).join("")+`</div>` : '';
+  }
+  $('viewAccounts').addEventListener('click', async e=>{
+    const b=e.target.closest('button[data-act]'); if(!b) return;
+    const id=b.dataset.id, act=b.dataset.act; b.disabled=true;
+    try{
+      if(act==='y11'||act==='y12'){ const {error}=await sb.rpc('vce_approve',{p_user:id,p_tier:act,p_months:12}); if(error)throw error; }
+      else if(act==='renew'){ const {error}=await sb.rpc('vce_approve',{p_user:id,p_tier:b.dataset.tier,p_months:12}); if(error)throw error; }
+      else if(act==='disable'){ if(!confirm('确定停用这个账号？停用后该学生无法查看内容。')) { b.disabled=false; return; } const {error}=await sb.from('vce_profiles').update({status:'disabled'}).eq('id',id); if(error)throw error; }
+      else if(act==='kick'){ const {error}=await sb.from('vce_active_sessions').delete().eq('user_id',id); if(error)throw error; }
+      await loadAccounts();
+    }catch(err){ $('aMsg').textContent='操作失败：'+(err.message||err); $('aMsg').className='msg b'; b.disabled=false; }
+  });
+  $('aRefresh').onclick=loadAccounts;
 
   init();
 })();
