@@ -65,7 +65,10 @@
   function courseCard(co){return `<div class="lcard nav" data-course="${co.id}"><div class="no">${co.no}</div><div class="tt">${co.title}</div><div class="cnt">${co.topic||""} · ${(co.sections||[]).length} 节</div></div>`;}
   function skillCard(g,sk){return `<div class="lcard nav" data-skill="${sk}"><div class="tt">${sk}</div><div class="cnt">${(g.practice[sk]||[]).length} 个</div></div>`;}
   function linkCard(it,label){
-    const tags=(it.tags||[]).map(t=>`<span>${t}</span>`).join("");
+    // 卡片小字：有分节的（练习类）显示节名，比一堆关键词有用；没分节的才回退到 tags。
+    // tags 不动，搜索索引照旧用它，所以搜「中西合璧」这类词仍然搜得到。
+    const chips=(it.sections||[]).length ? it.sections.map(s=>s.title) : (it.tags||[]);
+    const tags=chips.map(t=>`<span>${t}</span>`).join("");
     const path=label?`<div class="res-path">${label}</div>`:"";
     if(it.ready===false) return `<div class="lcard soon">${path}<div class="tt">${it.title}</div><div class="no"><span class="badge">敬请期待</span></div><div class="tags">${tags}</div></div>`;
     return `<a class="lcard" href="${it.url}">${path}<div class="tt">${it.title}</div><div class="tags">${tags}</div></a>`;
