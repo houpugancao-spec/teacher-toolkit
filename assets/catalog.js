@@ -75,7 +75,10 @@ window.CATALOG = {
         { title:"介绍人物-孔子", url:"units/renwu-practice/index.html",
           tags:["人物介绍","外貌","孔子","孔子名言","排序","填空","口语"], ready:true },
         { title:"介绍人物-诸葛亮", url:"units/renwu-zhuge-practice/index.html",
-          tags:["人物介绍","诸葛亮","孔明","草船借箭","名言","排序","填空","口语"], ready:true }
+          tags:["人物介绍","诸葛亮","孔明","草船借箭","名言","排序","填空","口语"], ready:true },
+        { title:"个人情况-介绍自己", url:"units/geren-ziwo/index.html",
+          tags:["个人情况","介绍自己","自我介绍","性格","兴趣爱好","优点","缺点","理想","专业","职业",
+                "句型","关联词","中西合璧","乐天派","开心果","SL","SLA","词卡","纠错","口语"], ready:true }
       ], "听力":[], "阅读":[], "作文":[], "综合":[] },
       homework:[], exam:[], other:[
         { title:"足部", url:"units/other/foot/index.html",

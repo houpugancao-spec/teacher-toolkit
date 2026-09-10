@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>介绍自己 · 第4节 字词（进阶 SLA）</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+.grid{grid-template-columns:repeat(auto-fill,minmax(168px,1fr))}
+.flip{height:152px}
+.flip .back{font-size:15px;padding:8px 9px}
+.flip .back .bk-zh{font-size:14px;line-height:1.4}
+.flip .back .bk-en{font-size:11.5px;margin-top:5px;line-height:1.3}
+/* SLA 卡背换成深紫，和基础轨的蓝色区分开 */
+.flip .back{background:#5b4b9a}
+.sla{display:inline-block;background:#5b4b9a;color:#fff;font-size:11px;padding:2px 8px;border-radius:20px;vertical-align:middle;margin-left:6px}
+/* 说明文字的整句英文小字注解 */
+small.en{display:block;margin-top:6px;color:#5a6472;font-size:12.5px;line-height:1.5}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"geren-ziwo-4", n:4, unit:"geren-ziwo",
+  unitTitle:"Unit 1 个人情况 ·（一）介绍自己",
+  title:"字词 · 进阶 SLA",
+  subtitle:"同样的意思，换成拿分的说法",
+  sections:[
+
+    { type:"culture", title:"这一节做什么 · What to do", sub:"👆 带下划线的词可以点，看拼音和英文解释", facts:[
+      { k:"是什么", html:"这些词全部来自<b>课文二（进阶版）</b>。意思和基础词差不多，但在 VCAA <u class=\"wd\" data-w=\"评分标准\">评分标准</u>里属于<b>「<u class=\"wd\" data-w=\"词汇广度\">词汇广度</u> Range of Vocabulary」</b>——用对了显著加分。"+
+        "<small class=\"en\">These words all come from <b>Text 2 (the advanced version)</b>. They mean much the same as the basic words, but in the VCAA marking criteria they count as <b>Range of Vocabulary</b> — used correctly, they noticeably lift your mark.</small>" },
+      { k:"怎么用", html:"⚠️ <b>不要<u class=\"wd\" data-w=\"堆砌\">堆砌</u>。</b>一篇 200 字的稿子里，<u class=\"wd\" data-w=\"成语\">成语</u><u class=\"wd\" data-w=\"俗语\">俗语</u><b>用 2–3 个就够</b>，而且必须<u class=\"wd\" data-w=\"自然\">自然</u>。先把内容想清楚，再点缀成语；反过来做一定会很生硬。"+
+        "<small class=\"en\">⚠️ <b>Do not pile them on.</b> In a 200-character script, <b>2–3 idioms is plenty</b>, and they must feel natural. Work out what you want to say first, then add an idiom or two — doing it the other way round always sounds forced.</small>" },
+      { k:"SL 同学", html:"你也可以看这一节——<b>先知道“上限长什么样”</b>。挑一两个你最喜欢的用进自己的稿子，就是一次<u class=\"wd\" data-w=\"升级\">升级</u>。"+
+        "<small class=\"en\">SL students: you are welcome here too — it is worth seeing what the ceiling looks like. Pick one or two favourites and work them into your own script; that alone is an upgrade.</small>" }
+    ] },
+
+    { type:"vocab", title:"一、身份认同 Identity", sub:"华裔背景是考官最喜欢挖的深度", words:[
+      { hz:"移民",     zh:"我出生在中国，五岁时随父母移民来到澳大利亚。" },
+      { hz:"独特",     zh:"独特的成长经历让我成为了“中西合璧”的华裔少年。" },
+      { hz:"成长经历", zh:"独特的成长经历让我成为了一个典型的华裔少年。" },
+      { hz:"典型",     zh:"我是一个典型的“中西合璧”的华裔少年。" },
+      { hz:"中西合璧", zh:"我是一个典型的“中西合璧”的华裔少年。" },
+      { hz:"熏陶",     zh:"我既深受中国传统文化的熏陶，又有澳洲人的随和。" },
+      { hz:"传统文化", zh:"我深受中国传统文化的熏陶。" },
+      { hz:"特质",     zh:"我拥有澳大利亚人热情、随和的特质。" },
+      { hz:"适应",     zh:"刚来的时候我用了一年才适应这里的生活。" },
+      { hz:"认同",     zh:"我很认同自己的华裔身份。" }
+    ] },
+
+    { type:"vocab", title:"二、性格 · 高级说法 Personality", sub:"“我很开朗”→“我是个乐天派”", words:[
+      { hz:"乐观豁达", zh:"熟悉我的人都说我是一个乐观豁达的“乐天派”。" },
+      { hz:"乐天派",   zh:"熟悉我的人都说我是一个乐观豁达的“乐天派”。" },
+      { hz:"幽默风趣", zh:"我喜欢用幽默风趣的语言给身边的人带来快乐。" },
+      { hz:"开心果",   zh:"朋友们都亲切地叫我“开心果”。" },
+      { hz:"未见其人，先闻其声", zh:"在生活中，我总是未见其人，先闻其声。" },
+      { hz:"侃侃而谈", zh:"每次在聚会上，我总是侃侃而谈。" },
+      { hz:"眉飞色舞", zh:"一讲起篮球，他就眉飞色舞，停都停不下来。" },
+      { hz:"个性鲜明", zh:"我们班每个人都个性鲜明，谁也不像谁。" }
+    ] },
+
+    { type:"vocab", title:"三、缺点 · 高级说法 Weaknesses", sub:"引用俗语说缺点，显得谦虚，是加分项", words:[
+      { hz:"俗话说",   zh:"俗话说“金无足赤，人无完人”，我也有自己的短处。" },
+      { hz:"金无足赤，人无完人", zh:"俗话说“金无足赤，人无完人”，我也有短处。" },
+      { hz:"短处",     zh:"我也有自己的短处，比如做事粗心大意。" },
+      { hz:"粗心大意", zh:"我有时候做事比较粗心大意，缺乏足够的耐心。" },
+      { hz:"耐心",     zh:"我有时候做事缺乏足够的耐心。" },
+      { hz:"缺乏",     zh:"我在学习上偶尔也会缺乏自律。" },
+      { hz:"偶尔",     zh:"我在学习上偶尔也会缺乏自律。" },
+      { hz:"干扰",     zh:"我容易受到外界的干扰，注意力不够集中。" },
+      { hz:"克服",     zh:"这些都是我今后必须努力改正和克服的缺点。" },
+      { hz:"半途而废", zh:"我弟弟学东西总是半途而废，练了三天琴就放弃。" },
+      { hz:"丢三落四", zh:"我这个人丢三落四，考试竟然忘了写名字。" },
+      { hz:"垂头丧气", zh:"比赛输了以后，他垂头丧气地回了家。" }
+    ] },
+
+    { type:"vocab", title:"四、兴趣爱好 · 高级说法 Interests", sub:"“我喜欢运动”→“我是不折不扣的体育迷”", words:[
+      { hz:"动静结合", zh:"在兴趣爱好方面，我可以说是“动静结合”。" },
+      { hz:"不折不扣", zh:"我是一个不折不扣的“体育迷”。" },
+      { hz:"酷爱",     zh:"我尤其酷爱游泳和打篮球。" },
+      { hz:"每逢",     zh:"每逢周末，我都会和三五好友去体育馆。" },
+      { hz:"三五好友", zh:"每逢周末，我都会和三五好友去切磋球技。" },
+      { hz:"切磋",     zh:"我常和好友去体育馆切磋球技。" },
+      { hz:"球技",     zh:"我们在球场上互相切磋球技，谁也不服谁。" },
+      { hz:"强健",     zh:"运动不仅强健了我的体魄，还让我心情放松。" },
+      { hz:"体魄",     zh:"运动强健了我的体魄，也磨练了我的意志。" },
+      { hz:"之余",     zh:"运动让我在紧张的学习之余得到了放松。" },
+      { hz:"挥洒汗水", zh:"除了在运动场上挥洒汗水，我也喜欢安静地听音乐。" },
+      { hz:"沉浸",     zh:"我喜欢沉浸在音乐的世界里。" },
+      { hz:"擅长",     zh:"我擅长弹吉他，兴致来的时候还会创作歌曲。" },
+      { hz:"兴致",     zh:"兴致来的时候，我还会尝试创作歌曲。" },
+      { hz:"创作",     zh:"兴致来的时候，我还会尝试自己创作歌曲。" },
+      { hz:"陶冶情操", zh:"音乐对我来说，是一种陶冶情操的最好方式。" },
+      { hz:"不可或缺", zh:"音乐是我生活中不可或缺的一部分。" },
+      { hz:"开阔眼界", zh:"旅行让我开阔眼界、增长见识。" },
+      { hz:"雷打不动", zh:"每周六早上八点去球场练球，多年来雷打不动。" }
+    ] },
+
+    { type:"vocab", title:"五、理想 · 高级说法 Aspirations", sub:"结尾这几个词，一句顶十句", words:[
+      { hz:"立志",     zh:"我立志考入一所顶尖大学。" },
+      { hz:"顶尖",     zh:"我立志考入一所顶尖大学，攻读人工智能专业。" },
+      { hz:"攻读",     zh:"我希望攻读计算机科学与人工智能专业。" },
+      { hz:"深信",     zh:"在科技飞速发展的时代，我深信科技改变生活。" },
+      { hz:"让梦想照进现实", zh:"我希望成为优秀的工程师，让梦想照进现实。" },
+      { hz:"完善自我", zh:"我是一个乐观自信、并在不断完善自我的大男孩。" },
+      { hz:"取长补短", zh:"希望能和大家取长补短，携手共进！" },
+      { hz:"携手共进", zh:"在未来的日子里，希望能和大家携手共进！" },
+      { hz:"脚踏实地", zh:"他做事脚踏实地，从来不好高骛远。" },
+      { hz:"小巫见大巫", zh:"跟中国学生的作业量比，我的那点简直是小巫见大巫。" }
+    ] },
+
+    { type:"quiz", title:"六、升级挑战：哪个说法更高级？", sub:"意思一样，选那个能拿分的", questions:[
+      { ask:"① “我很乐观。”换成 SLA 说法是——",
+        options:["我很高兴。","我性格乐观豁达，是个“乐天派”。","我不难过。"], answer:1 },
+      { ask:"② “我喜欢运动，也喜欢音乐。”换成 SLA 说法是——",
+        options:["我的爱好可以说是“动静结合”。","我有两个爱好。","我喜欢很多东西。"], answer:0 },
+      { ask:"③ “我有缺点。”换成 SLA 说法是——",
+        options:["我不是完美的。","俗话说“金无足赤，人无完人”，我也有自己的短处。","我有很多问题。"], answer:1 },
+      { ask:"④ “音乐让我变成更好的人。”换成 SLA 说法是——",
+        options:["音乐是一种陶冶情操的最好方式。","音乐很有用。","我很喜欢音乐。"], answer:0 },
+      { ask:"⑤ “切磋”的正确读音是——",
+        options:["qiè cuō","qiē cuō","qiē chā"], answer:1 },
+      { ask:"⑥ “擅长”里的“长”读——",
+        options:["cháng","zhǎng","zhàng"], answer:0 },
+      { ask:"⑦ 一篇 200 字的 SLA 稿子里，成语俗语用几个最合适？",
+        options:["越多越好，至少八个","2–3 个，而且要自然嵌入","一个都不用"], answer:1 },
+      { ask:"⑧ “金无足赤，人无完人”通常用来——",
+        options:["夸别人很厉害","谦虚地引出自己的缺点","说明黄金很贵"], answer:1 }
+    ] }
+
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

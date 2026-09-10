@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>介绍自己 · 第7节 综合练习</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+.cloze{background:#f5f8ff;border-left:3px solid var(--blue);padding:10px 12px;border-radius:0 8px 8px 0;font-size:15px;line-height:1.9}
+.cloze b{color:var(--blue-d)}
+.wrong{color:#c0392b}
+/* 说明文字的整句英文小字注解 */
+small.en{display:block;margin-top:6px;color:#5a6472;font-size:12.5px;line-height:1.5}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"geren-ziwo-7", n:7, unit:"geren-ziwo",
+  unitTitle:"Unit 1 个人情况 ·（一）介绍自己",
+  title:"综合练习 · 计分",
+  subtitle:"对对碰 + 选词填空 + 中式中文纠错 + 看场景猜性格",
+  sections:[
+
+    { type:"match", title:"一、词义对对碰 Matching", sub:"点左边的中文，再点右边的英文，配对成功就得分",
+      words:[
+        { hz:"开朗活泼",   en:"Outgoing, lively and cheerful" },
+        { hz:"内向安静",   en:"Introverted, quiet and reserved" },
+        { hz:"坚持有毅力", en:"Persistent; showing great perseverance" },
+        { hz:"马虎大意",   en:"Careless; sloppy; prone to mistakes" },
+        { hz:"半途而废",   en:"To give up halfway" },
+        { hz:"大大咧咧",   en:"Carefree; easygoing" },
+        { hz:"中西合璧",   en:"A blend of Chinese and Western cultures" },
+        { hz:"雷打不动",   en:"Unshakeable; a habit that never changes" },
+        { hz:"金无足赤，人无完人", en:"No one is perfect; everyone has flaws" },
+        { hz:"乐天派",     en:"An optimist; someone with a positive mindset" }
+      ] },
+
+    { type:"culture", title:"二、选词填空 · 先读一遍这段话", sub:"读完再做下面的题", facts:[
+      { k:"短文", html:"<div class=\"cloze\">很多人觉得我是一个 <b>(1)</b> 的华裔少年。确实，在墨尔本长大的我，性格既有澳洲人的随和，也有中国人的勤奋。<br>在学校里，我非常 <b>(2)</b>，总是面带微笑，所以人缘很好。<br>我的爱好非常广泛，但我最 <b>(3)</b>，特别是打篮球。每个周六早上八点，我都会去球场练习，这件事多年来 <b>(4)</b>。爸爸常夸我做事 <b>(5)</b>，只要定下目标就绝不放弃。对比之下，我弟弟就比较贪玩，学东西总是 <b>(6)</b>，练了三天琴就想放弃。<br>不过，俗话说得好：“<b>(7)</b>”。我也不是完美的。我最大的缺点就是 <b>(8)</b>，考试时经常因为看不清题目而丢分。<br>这次去中国，我发现中国学生的作业真的太多了！每天都要写到深夜。跟我以前抱怨的作业量相比，那简直是 <b>(9)</b>。看到他们那么拼命，我深刻意识到自己在学习上还是不够 <b>(10)</b>，以后一定要更加努力。</div>" },
+      { k:"词库", html:"开朗活泼｜坚持有毅力｜马虎大意｜半途而废｜中西合璧｜小巫见大巫｜雷打不动｜金无足赤，人无完人｜喜欢运动｜自律" }
+    ] },
+
+    { type:"quiz", title:"三、选词填空 Cloze", sub:"每空选一个最合适的词", questions:[
+      { ask:"(1) 很多人觉得我是一个＿＿的华裔少年。",
+        options:["中西合璧","小巫见大巫","半途而废"], answer:0 },
+      { ask:"(2) 在学校里，我非常＿＿，总是面带微笑。",
+        options:["内向安静","开朗活泼","马虎大意"], answer:1 },
+      { ask:"(3) 我的爱好非常广泛，但我最＿＿，特别是打篮球。",
+        options:["喜欢运动","雷打不动","自律"], answer:0 },
+      { ask:"(4) 每个周六早上八点去球场练习，这件事多年来＿＿。",
+        options:["半途而废","雷打不动","小巫见大巫"], answer:1 },
+      { ask:"(5) 爸爸常夸我做事＿＿，只要定下目标就绝不放弃。",
+        options:["马虎大意","坚持有毅力","开朗活泼"], answer:1 },
+      { ask:"(6) 我弟弟学东西总是＿＿，练了三天琴就想放弃。",
+        options:["半途而废","坚持有毅力","雷打不动"], answer:0 },
+      { ask:"(7) 不过，俗话说得好：“＿＿”。我也不是完美的。",
+        options:["三个臭皮匠，顶个诸葛亮","金无足赤，人无完人","家和万事兴"], answer:1 },
+      { ask:"(8) 我最大的缺点就是＿＿，考试时经常看不清题目而丢分。",
+        options:["马虎大意","开朗活泼","中西合璧"], answer:0 },
+      { ask:"(9) 跟中国学生的作业量相比，那简直是＿＿。",
+        options:["雷打不动","小巫见大巫","金无足赤"], answer:1 },
+      { ask:"(10) 我意识到自己在学习上还是不够＿＿，以后要更努力。",
+        options:["自律","活泼","随和"], answer:0 }
+    ] },
+
+    { type:"quiz", title:"四、中式中文纠错 Chinglish", sub:"⚠️ 语序公式：谁 + 什么时候 + 在哪里 + 做什么", questions:[
+      { ask:"① <span class=\"wrong\">我学中文在学校每个星期一。</span> 正确说法是——",
+        options:["我每个星期一在学校学中文。","我在学校学中文每个星期一。","我学中文每个星期一在学校。"], answer:0 },
+      { ask:"② <span class=\"wrong\">我非常感兴趣在音乐。</span> 正确说法是——",
+        options:["我感兴趣非常在音乐。","我对音乐非常感兴趣。","我音乐非常感兴趣。"], answer:1 },
+      { ask:"③ <span class=\"wrong\">我打篮球比我弟弟更好。</span> 正确说法是——",
+        options:["我打篮球比我弟弟非常好。","我打篮球打得比我弟弟好一点。","我打篮球更好比我弟弟。"], answer:1 },
+      { ask:"④ <span class=\"wrong\">我常常去图书馆看书和我的朋友。</span> 正确说法是——",
+        options:["我常常和我的朋友去图书馆看书。","我常常去图书馆和我的朋友看书。","我和我的朋友常常看书去图书馆。"], answer:0 },
+      { ask:"⑤ <span class=\"wrong\">我有十七岁。</span> 正确说法是——",
+        options:["我是十七岁。","我今年十七岁。","我有十七年。"], answer:1 },
+      { ask:"⑥ <span class=\"wrong\">我上学在博文中学。</span> 正确说法是——",
+        options:["我在博文中学上学。","我上学博文中学。","博文中学我上学。"], answer:0 },
+      { ask:"⑦ <span class=\"wrong\">我的妈妈是非常漂亮。</span> 正确说法是——",
+        options:["我的妈妈是很漂亮。","我的妈妈非常漂亮。","我的妈妈有非常漂亮。"], answer:1 },
+      { ask:"⑧ <span class=\"wrong\">他喜欢打游戏在房间里整天。</span> 正确说法是——",
+        options:["他整天在房间里打游戏。","他在房间里打游戏整天。","他打游戏整天在房间里。"], answer:0 }
+    ] },
+
+    { type:"quiz", title:"五、看场景，猜性格", sub:"从生活细节推出性格关键词", questions:[
+      { ask:"① 小明考试前会把所有的笔、尺子检查三遍，生怕出错。",
+        options:["谨慎小心","大大咧咧","半途而废"], answer:0 },
+      { ask:"② 即使比赛输了一场又一场，大卫依然笑着说：“只要努力，总有赢球的那一天！”",
+        options:["垂头丧气","乐观豁达、不轻言放弃","情绪化"], answer:1 },
+      { ask:"③ 丽丽不喜欢去热闹的派对，更愿意一个人在房间里看书写日记。",
+        options:["善于社交","内向安静、喜欢独处","乐天派"], answer:1 },
+      { ask:"④ 王老师对学生要求非常高，作业写得不整齐就必须全部重写。",
+        options:["随和","严厉、追求完美","马虎大意"], answer:1 },
+      { ask:"⑤ 每次学校组织活动，张强总是第一个报名，并主动去认识新同学。",
+        options:["开朗活泼、善于社交","胆小羞怯","缺乏自信"], answer:0 }
+    ] },
+
+    { type:"culture", title:"六、做完了？还有一件事", sub:"👆 带下划线的词可以点，看拼音和英文解释", facts:[
+      { k:"口语稿", html:"这一课真正的作业是<b>你自己的那篇稿子</b>。回到<b>第 3 节</b>写基础版（150–200 字），再到<b>第 6 节</b>照清单<u class=\"wd\" data-w=\"升级\">升级</u>一遍。"+
+        "<small class=\"en\">The real homework for this lesson is <b>your own script</b>. Go back to Section 3 to write the basic version (150–200 characters), then to Section 6 to upgrade it using the checklist.</small>" },
+      { k:"练口语", html:"写完<b>一定要读出声</b>，最好录下来听一遍。<b>能流利说出来的才算数</b>——考试是「说」，不是「写」。"+
+        "<small class=\"en\">Once written, <b>read it aloud</b> — ideally record yourself and listen back. <b>Only what you can say fluently counts</b>: the exam is speaking, not writing.</small>" },
+      { k:"下一步", html:"这套<u class=\"wd\" data-w=\"结构\">结构</u>（字词 → <u class=\"wd\" data-w=\"句型\">句式</u> → 文章）同样适用于：<b>介绍好朋友 / 介绍对我影响最大的人 / 介绍我的家庭</b>。换个话题，换套词，句型是一样的。"+
+        "<small class=\"en\">This same structure (words → sentence patterns → full text) works for the other topics too: <b>my best friend / the person who influenced me most / my family</b>. Change the topic and the vocabulary — the sentence patterns stay the same.</small>" }
+    ] }
+
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

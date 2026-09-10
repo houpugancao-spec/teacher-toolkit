@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>介绍自己 · 第1节 字词（基础）</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+/* 本课词卡背面要放「中文例句 + 英文解释」，比一般词卡装得多：
+   只在本 unit 的页面里加高卡片、缩小字号，不动全站 assets/style.css */
+.grid{grid-template-columns:repeat(auto-fill,minmax(168px,1fr))}
+.flip{height:152px}
+.flip .back{font-size:15px;padding:8px 9px}
+.flip .back .bk-zh{font-size:14px;line-height:1.4}
+.flip .back .bk-en{font-size:11.5px;margin-top:5px;line-height:1.3}
+/* 说明文字的整句英文小字注解 */
+small.en{display:block;margin-top:6px;color:#5a6472;font-size:12.5px;line-height:1.5}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"geren-ziwo-1", n:1, unit:"geren-ziwo",
+  unitTitle:"Unit 1 个人情况 ·（一）介绍自己",
+  title:"字词 · 基础 SL",
+  subtitle:"翻卡：正面词语+拼音，背面例句+英文",
+  sections:[
+
+    { type:"culture", title:"这一节做什么 · What to do", sub:"👆 带下划线的词可以点，看拼音和英文", facts:[
+      { k:"翻卡", html:"点一下卡片翻到<b>背面</b>：上面是<b>中文例句</b>，下面是<b>英文解释</b>。再点一下翻回来。"+
+        "<small class=\"en\">Tap a card to flip it. The back shows a Chinese example sentence on top and the English meaning below. Tap again to flip back.</small>" },
+      { k:"目标", html:"这五组词对应课堂练习表格的五个格子：<u class=\"wd\" data-w=\"性格\">性格</u> / 优点 / <u class=\"wd\" data-w=\"缺点\">缺点</u> / <u class=\"wd\" data-w=\"兴趣爱好\">兴趣爱好</u> / <u class=\"wd\" data-w=\"理想\">理想</u>职业。学完挑出<b>适合描述你自己</b>的词，填进表格并<u class=\"wd\" data-w=\"仿写\">仿写</u>造句。"+
+        "<small class=\"en\">These five groups match the five boxes in your worksheet: personality, strengths, weaknesses, hobbies, and future career. Afterwards, pick the words that really describe <b>you</b>, write them in the table, and make your own sentences.</small>" },
+      { k:"提示", html:"不用全部背下来。<b>每组挑 3–5 个真的像你的词</b>，能用在自己的口语稿里，比背五十个用不上的词有用得多。"+
+        "<small class=\"en\">You do <b>not</b> need to memorise them all. Pick 3–5 per group that genuinely sound like you — words you can actually use in your own speech are worth far more than fifty you never use.</small>" }
+    ] },
+
+    { type:"vocab", title:"一、性格 Personality", sub:"描述你是个什么样的人", words:[
+      { hz:"开朗",     zh:"他性格开朗，走到哪儿都有朋友。" },
+      { hz:"活泼",     zh:"我妹妹很活泼，一分钟也坐不住。" },
+      { hz:"幽默",     zh:"我说话很幽默，总把人逗得哈哈大笑。" },
+      { hz:"外向",     zh:"她性格外向，很快就能和陌生人聊起来。" },
+      { hz:"内向",     zh:"我比较内向，人多的时候不太爱说话。" },
+      { hz:"安静",     zh:"我喜欢安静，最爱一个人待在图书馆。" },
+      { hz:"随和",     zh:"我性格随和，跟谁都合得来。" },
+      { hz:"勇敢",     zh:"他很勇敢，第一个举手上台演讲。" },
+      { hz:"胆小",     zh:"我小时候很胆小，连黑都怕。" },
+      { hz:"冷静",     zh:"遇到困难时，他能保持冷静。" },
+      { hz:"冲动",     zh:"我有时候太冲动，话说出口才后悔。" },
+      { hz:"情绪化",   zh:"他有时比较情绪化，需要学会控制情绪。" },
+      { hz:"乐于助人", zh:"她乐于助人，同学有问题都找她。" },
+      { hz:"谨慎",     zh:"他做事谨慎，考试前把答案检查三遍。" },
+      { hz:"大大咧咧", zh:"我这个人大大咧咧，从来不记小事。" }
+    ] },
+
+    { type:"vocab", title:"二、优点 Strengths", sub:"你身上好的那一面", words:[
+      { hz:"自信",       zh:"经过多次练习以后，他变得更自信了。" },
+      { hz:"独立",       zh:"她性格独立，很多事情都会自己解决。" },
+      { hz:"自觉",       zh:"他学习很自觉，不需要父母督促。" },
+      { hz:"自律",       zh:"我自律性还不够好，这是我要改正的缺点。" },
+      { hz:"有毅力",     zh:"学习一门语言需要有毅力，不能轻易放弃。" },
+      { hz:"有条理",     zh:"他做事很有条理，生活安排得井井有条。" },
+      { hz:"主动",       zh:"他在课堂上很主动，经常回答问题。" },
+      { hz:"合作能力强", zh:"他合作能力强，很适合小组活动。" }
+    ] },
+
+    { type:"vocab", title:"三、缺点 Weaknesses", sub:"“人无完人”——大方地说出来，是加分项", words:[
+      { hz:"马虎",       zh:"我做事有点马虎，常常看错题目。" },
+      { hz:"懒惰",       zh:"他有时有点懒惰，不爱运动。" },
+      { hz:"拖延",       zh:"我最大的缺点是有时会拖延作业。" },
+      { hz:"紧张",       zh:"考试前他常常感到紧张。" },
+      { hz:"不够专心",   zh:"上课时他有时不够专心。" },
+      { hz:"容易放弃",   zh:"遇到困难时，他有时容易放弃。" },
+      { hz:"缺乏自信",   zh:"他很有能力，就是有点缺乏自信。" },
+      { hz:"人无完人",   zh:"不过，人无完人，我也有自己的弱点。" }
+    ] },
+
+    { type:"vocab", title:"四、兴趣爱好 Interests & Hobbies", sub:"课文句式：更是一个……迷，尤其热爱……", words:[
+      { hz:"体育迷",     zh:"我更是一个“体育迷”，尤其热爱打篮球。" },
+      { hz:"锻炼身体",   zh:"打球不仅能锻炼身体，还能放松心情。" },
+      { hz:"放松心情",   zh:"每到周末去打球，能让我放松心情。" },
+      { hz:"体育馆",     zh:"每到周末，我都会和朋友们去体育馆打球。" },
+      { hz:"弹吉他",     zh:"我会弹吉他，有时候还会尝试自己写歌。" },
+      { hz:"感兴趣",     zh:"除了运动，我也对音乐感兴趣。" },
+      { hz:"尝试",       zh:"我有时候还会尝试自己写歌。" },
+      { hz:"热爱",       zh:"我尤其热爱打篮球和游泳。" },
+      { hz:"尤其",       zh:"我有很多爱好，尤其喜欢运动。" },
+      { hz:"爱好广泛",   zh:"我爱好广泛，运动和音乐都喜欢。" },
+      { hz:"喜欢挑战",   zh:"我喜欢挑战，越难的事越想试一试。" },
+      { hz:"多才多艺",   zh:"她多才多艺，会跳舞也会画画。" }
+    ] },
+
+    { type:"vocab", title:"五、理想 · 专业与职业 Aspirations", sub:"课文句式：我希望能考上……，学习……专业", words:[
+      { hz:"理想",       zh:"关于未来的理想，我希望能考上一所好大学。" },
+      { hz:"专业",       zh:"我想学习计算机人工智能专业。" },
+      { hz:"人工智能",   zh:"因为我对科技很感兴趣，所以想学人工智能。" },
+      { hz:"软件工程师", zh:"软件工程师在科技行业中很受欢迎。" },
+      { hz:"数据分析师", zh:"数据分析师需要很强的逻辑思维能力。" },
+      { hz:"建筑师",     zh:"他将来想当一名建筑师，设计环保的建筑。" },
+      { hz:"心理学家",   zh:"她对心理学很感兴趣，希望成为心理学家。" },
+      { hz:"医生",       zh:"我的理想职业是当一名医生，帮助更多的人。" },
+      { hz:"教师",       zh:"教师是我的理想职业。" },
+      { hz:"护士",       zh:"护士的工作既辛苦又有意义。" },
+      { hz:"设计师",     zh:"她想成为一名平面设计师。" },
+      { hz:"媒体工作者", zh:"媒体工作者需要良好的沟通能力。" },
+      { hz:"商科",       zh:"很多学生选择商科作为大学专业。" },
+      { hz:"金融",       zh:"他希望将来从事金融行业。" },
+      { hz:"会计",       zh:"会计需要细心和责任感。" },
+      { hz:"工程学",     zh:"他在大学主修工程学。" },
+      { hz:"环境科学",   zh:"环境科学是一个越来越重要的专业。" }
+    ] },
+
+    { type:"quiz", title:"六、挑一挑：哪个词更合适？", sub:"选出最贴切的那一个", questions:[
+      { ask:"① 他考试前会把笔和尺子检查三遍，生怕出错。他的性格是——",
+        options:["谨慎","大大咧咧","冲动"], answer:0 },
+      { ask:"② 丽丽不喜欢热闹的派对，更愿意一个人在房间里看书。她的性格是——",
+        options:["外向","内向","情绪化"], answer:1 },
+      { ask:"③ 每次学校组织活动，张强总是第一个报名，还主动去认识新同学。他——",
+        options:["胆小","乐于助人","开朗又主动"], answer:2 },
+      { ask:"④ “我每天练琴，从来不放弃。”这说明他——",
+        options:["有毅力","容易放弃","拖延"], answer:0 },
+      { ask:"⑤ 课文里说“我也有弱点，比如做事马虎”。“马虎”的意思是——",
+        options:["很努力","不细心","很安静"], answer:1 },
+      { ask:"⑥ “爱好”的正确读音是——",
+        options:["ài hǎo","ài hào","ài hāo"], answer:1 }
+    ] }
+
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>
