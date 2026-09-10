@@ -73,12 +73,31 @@ window.CATALOG = {
       ],
       practice:{ "口语":[
         { title:"介绍人物-孔子", url:"units/renwu-practice/index.html",
-          tags:["人物介绍","外貌","孔子","孔子名言","排序","填空","口语"], ready:true },
+          tags:["人物介绍","外貌","孔子","孔子名言","排序","填空","口语"], ready:true,
+          sections:[   // 有 sections 才有「上一节/下一节」
+            { id:"renwu-practice-1", n:1, title:"词汇", url:"units/renwu-practice/1.html", ready:true },
+            { id:"renwu-practice-2", n:2, title:"介绍孔子", url:"units/renwu-practice/2.html", ready:true },
+            { id:"renwu-practice-3", n:3, title:"介绍一个名人／熟悉的人", url:"units/renwu-practice/3.html", ready:true }
+          ] },
         { title:"介绍人物-诸葛亮", url:"units/renwu-zhuge-practice/index.html",
-          tags:["人物介绍","诸葛亮","孔明","草船借箭","名言","排序","填空","口语"], ready:true },
+          tags:["人物介绍","诸葛亮","孔明","草船借箭","名言","排序","填空","口语"], ready:true,
+          sections:[
+            { id:"renwu-zhuge-practice-1", n:1, title:"词汇", url:"units/renwu-zhuge-practice/1.html", ready:true },
+            { id:"renwu-zhuge-practice-2", n:2, title:"介绍诸葛亮", url:"units/renwu-zhuge-practice/2.html", ready:true },
+            { id:"renwu-zhuge-practice-3", n:3, title:"介绍一个熟悉的人", url:"units/renwu-zhuge-practice/3.html", ready:true }
+          ] },
         { title:"个人情况-介绍自己", url:"units/geren-ziwo/index.html",
           tags:["个人情况","介绍自己","自我介绍","性格","兴趣爱好","优点","缺点","理想","专业","职业",
-                "句型","关联词","中西合璧","乐天派","开心果","SL","SLA","词卡","纠错","口语"], ready:true }
+                "句型","关联词","中西合璧","乐天派","开心果","SL","SLA","词卡","纠错","口语"], ready:true,
+          sections:[
+            { id:"geren-ziwo-1", n:1, title:"字词 · 基础 SL",  url:"units/geren-ziwo/1.html", ready:true },
+            { id:"geren-ziwo-2", n:2, title:"句式 · 基础 SL",  url:"units/geren-ziwo/2.html", ready:true },
+            { id:"geren-ziwo-3", n:3, title:"文章 · 基础 SL",  url:"units/geren-ziwo/3.html", ready:true },
+            { id:"geren-ziwo-4", n:4, title:"字词 · 进阶 SLA", url:"units/geren-ziwo/4.html", ready:true },
+            { id:"geren-ziwo-5", n:5, title:"句式 · 进阶 SLA", url:"units/geren-ziwo/5.html", ready:true },
+            { id:"geren-ziwo-6", n:6, title:"文章 · 进阶 SLA", url:"units/geren-ziwo/6.html", ready:true },
+            { id:"geren-ziwo-7", n:7, title:"综合练习 · 计分", url:"units/geren-ziwo/7.html", ready:true }
+          ] }
       ], "听力":[], "阅读":[], "作文":[], "综合":[] },
       homework:[], exam:[], other:[
         { title:"足部", url:"units/other/foot/index.html",

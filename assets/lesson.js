@@ -24,15 +24,23 @@
   // ---- 在 catalog 里定位本节所属的「课」，取同课的上一节/下一节 ----
   const CN=["一","二","三","四","五","六","七","八","九","十","十一","十二"];
   let course=null, gradeName="";
-  (CAT?CAT.grades:[]).forEach(g=>(g.lecture||[]).forEach(co=>{
-    if((co.sections||[]).some(s=>s.id===L.id)){course=co;gradeName=g.name;}
-  }));
+  // 授课 lecture[] + 练习 practice{技能:[]} + 作业/测验/其它：凡在 catalog 里带 sections[] 的
+  // 条目都能有上一节/下一节。没写 sections 的条目照旧（空数组→不匹配→行为不变）。
+  (CAT?CAT.grades:[]).forEach(g=>{
+    const pools=[g.lecture||[]];
+    const pr=g.practice||{}; Object.keys(pr).forEach(sk=>pools.push(pr[sk]||[]));
+    ["homework","exam","other"].forEach(k=>pools.push(g[k]||[]));
+    pools.forEach(list=>(list||[]).forEach(co=>{
+      if((co.sections||[]).some(s=>s.id===L.id)){course=co;gradeName=g.name;}
+    }));
+  });
   const secs = course?(course.sections||[]):[];
   const si = secs.findIndex(s=>s.id===L.id);
   const curN = si>=0?secs[si].n:(L.n||1);
   const prev = si>0 ? secs[si-1] : null;
   const next = si>=0 && si<secs.length-1 ? secs[si+1] : null;
-  const courseLabel = course ? `${course.no} ${course.title}` : (L.unitTitle||"");
+  // 练习类条目没有 no（第九课/第十课那种编号），filter 掉避免显示 "undefined 标题"
+  const courseLabel = course ? [course.no,course.title].filter(Boolean).join(" ") : (L.unitTitle||"");
   const rel = u => "../../" + u;                 // 课页在 units/<u>/，根目录退两级
   const navLink = (le,label)=> le && le.ready!==false
       ? `<a href="${rel(le.url)}">${label}</a>`
