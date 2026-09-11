@@ -1,7 +1,7 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v38";
+const CACHE = "vce-zhongwen-v39";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./login.html", "./manifest.json", "./icon.svg",
   "./assets/icons/icon-192.png", "./assets/icons/icon-512.png",
@@ -200,7 +200,14 @@ const CORE = [
   "./units/geren-ziwo/1.html", "./units/geren-ziwo/2.html", "./units/geren-ziwo/3.html",
   "./units/geren-ziwo/4.html", "./units/geren-ziwo/5.html", "./units/geren-ziwo/6.html",
   "./units/geren-ziwo/7.html",
-  "./units/geren-ziwo/audio/reading-sl.mp3", "./units/geren-ziwo/audio/reading-sla.mp3"
+  "./units/geren-ziwo/audio/reading-sl.mp3", "./units/geren-ziwo/audio/reading-sla.mp3",
+  // 个人情况 · 介绍家庭
+  "./units/geren-jiating/index.html", "./units/geren-jiating/words.js",
+  "./units/geren-jiating/1.html", "./units/geren-jiating/2.html", "./units/geren-jiating/3.html",
+  "./units/geren-jiating/4.html", "./units/geren-jiating/5.html", "./units/geren-jiating/6.html",
+  "./units/geren-jiating/7.html",
+  "./units/geren-jiating/audio/reading-sl.mp3", "./units/geren-jiating/audio/reading-sla3.mp3",
+  "./units/geren-jiating/audio/reading-sla4.mp3"
 ];
 
 self.addEventListener("install", e => {

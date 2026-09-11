@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>介绍家庭 · 第1节 字词（基础）</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+/* 本课词卡背面要放「中文例句 + 英文解释」，比一般词卡装得多：
+   只在本 unit 的页面里加高卡片、缩小字号，不动全站 assets/style.css */
+.grid{grid-template-columns:repeat(auto-fill,minmax(168px,1fr))}
+.flip{height:152px}
+.flip .back{font-size:15px;padding:8px 9px}
+.flip .back .bk-zh{font-size:14px;line-height:1.4}
+.flip .back .bk-en{font-size:11.5px;margin-top:5px;line-height:1.3}
+/* 说明文字的整句英文小字注解 */
+small.en{display:block;margin-top:6px;color:#5a6472;font-size:12.5px;line-height:1.5}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"geren-jiating-1", n:1, unit:"geren-jiating",
+  unitTitle:"Unit 1 个人情况 ·（四）介绍家庭",
+  title:"字词 · 基础 SL",
+  subtitle:"翻卡：正面词语+拼音，背面例句+英文",
+  sections:[
+
+    { type:"culture", title:"这一节做什么 · What to do", sub:"👆 带下划线的词可以点，看拼音和英文", facts:[
+      { k:"翻卡", html:"点一下卡片翻到<b>背面</b>：上面是<b>中文例句</b>，下面是<b>英文解释</b>。再点一下翻回来。"+
+        "<small class=\"en\">Tap a card to flip it. The back shows a Chinese example sentence on top and the English meaning below. Tap again to flip back.</small>" },
+      { k:"目标", html:"五组词正好对应介绍家庭的顺序：<b>家里有谁 → 做什么工作 → 家人什么样 → 一起做什么 → 你对家的感受</b>。学完挑出<b>适合你家</b>的词，<u class=\"wd\" data-w=\"仿写\">仿写</u>造句。"+
+        "<small class=\"en\">The five groups follow the order of a family introduction: who is in your family → their jobs → what they are like → what you do together → how you feel about your family. Afterwards, pick the words that fit <b>your</b> family and make your own sentences.</small>" },
+      { k:"提示", html:"每个家庭都不一样。没有兄弟姐妹、和外婆一起住、爸爸妈妈不住在一起……<b>都完全没问题，照实说就好</b>。每组挑 3–5 个你真的用得上的词。"+
+        "<small class=\"en\">Every family is different. No siblings, living with your grandmother, parents who live apart — <b>all completely fine; just describe your real family</b>. Pick 3–5 words per group that you will actually use.</small>" }
+    ] },
+
+    { type:"vocab", title:"一、家庭成员 Family members", sub:"家里有谁？数人用量词「口」", words:[
+      { hz:"家庭",     zh:"家庭对每个人来说都很重要。" },
+      { hz:"四口人",   zh:"我家一共四口人：爸爸、妈妈、姐姐和我。" },
+      { hz:"四口之家", zh:"我有一个温暖的四口之家。" },
+      { hz:"家庭成员", zh:"我的家庭成员有爸爸、妈妈、姐姐和我。" },
+      { hz:"父母",     zh:"我的父母都很关心我。" },
+      { hz:"兄弟姐妹", zh:"你有兄弟姐妹吗？" },
+      { hz:"独生子女", zh:"我是独生子女，没有兄弟姐妹。" },
+      { hz:"爷爷奶奶", zh:"周末我们常去看爷爷奶奶。" },
+      { hz:"外公外婆", zh:"我外公外婆住在上海。" },
+      { hz:"亲戚",     zh:"春节的时候，很多亲戚来我家吃饭。" },
+      { hz:"宠物",     zh:"我们家还有一只宠物狗。" },
+      { hz:"一只猫",   zh:"我们家还有一只猫，叫点点。" }
+    ] },
+
+    { type:"vocab", title:"二、工作与学业 Work & study", sub:"说职业用「一名／一位」，不用「一个」", words:[
+      { hz:"一名",     zh:"爸爸是一名工程师。" },
+      { hz:"一位",     zh:"妈妈是一位老师。" },
+      { hz:"工程师",   zh:"我爸爸是一名土木工程师。" },
+      { hz:"医生",     zh:"我爸爸是医生，在医院工作。" },
+      { hz:"护士",     zh:"我妈妈是一名护士，经常上夜班。" },
+      { hz:"会计",     zh:"我妈妈在一家公司当会计。" },
+      { hz:"公司职员", zh:"我爸爸是一名普通的公司职员。" },
+      { hz:"做生意",   zh:"我爸爸自己做生意，开了一家小餐馆。" },
+      { hz:"上班",     zh:"妈妈每天早上八点去上班。" },
+      { hz:"加班",     zh:"爸爸工作很忙，经常加班。" },
+      { hz:"抽出时间", zh:"不管多忙，妈妈都会抽出时间听我说话。" },
+      { hz:"退休",     zh:"我爷爷已经退休了。" },
+      { hz:"十二年级", zh:"姐姐今年上十二年级。" },
+      { hz:"紧张",     zh:"姐姐上十二年级，学习很紧张。" }
+    ] },
+
+    { type:"vocab", title:"三、家人的性格 Family personalities", sub:"点到为止：每个家人一两句就够，别跑题", words:[
+      { hz:"温柔",       zh:"我妈妈说话很温柔。" },
+      { hz:"严格",       zh:"爸爸对我的学习要求很严格。" },
+      { hz:"慈祥",       zh:"奶奶很慈祥，总是笑眯眯的。" },
+      { hz:"关心",       zh:"妈妈不仅关心我们的学习，还关心我们的身体。" },
+      { hz:"唠叨",       zh:"妈妈有时候有点唠叨，但我知道她是为我好。" },
+      { hz:"幽默",       zh:"爸爸很幽默，饭桌上总是很热闹。" },
+      { hz:"性格不一样", zh:"我和姐姐性格不一样，她安静，我活泼。" },
+      { hz:"相同的爱好", zh:"我们全家有一个相同的爱好——旅游。" },
+      { hz:"很会做菜",   zh:"妈妈很会做菜，她做的饺子特别好吃。" }
+    ] },
+
+    { type:"vocab", title:"四、一起做的事 Family time", sub:"考官最想听的部分：全家一起做什么", words:[
+      { hz:"陪伴",     zh:"爸爸总是在周末抽出时间陪伴我们。" },
+      { hz:"每逢",     zh:"每逢节假日，我们都会去郊外旅游。" },
+      { hz:"节假日",   zh:"节假日的时候，爸爸妈妈不用上班。" },
+      { hz:"郊外",     zh:"周末我们开车去郊外爬山。" },
+      { hz:"旅游",     zh:"我们全家都喜欢旅游。" },
+      { hz:"享受",     zh:"我很享受和家人在一起的时间。" },
+      { hz:"幸福时光", zh:"和家人一起旅游是我最幸福的时光。" },
+      { hz:"忙忙碌碌", zh:"我们一家人平时都忙忙碌碌的。" },
+      { hz:"聊天",     zh:"吃完晚饭，我们常常坐在一起聊天。" },
+      { hz:"做家务",   zh:"周末我会帮妈妈做家务。" },
+      { hz:"聚餐",     zh:"春节的时候，亲戚们都会来我家聚餐。" },
+      { hz:"过节",     zh:"过春节的时候，我们全家会一起包饺子。" }
+    ] },
+
+    { type:"vocab", title:"五、对家的感受 Feelings about family", sub:"结尾要有感情，别只说「我的家很好」", words:[
+      { hz:"温暖",     zh:"我有一个温暖的家庭。" },
+      { hz:"幸福",     zh:"我觉得自己生活在一个幸福的家庭里。" },
+      { hz:"港湾",     zh:"家就像一个温暖的港湾。" },
+      { hz:"风雨",     zh:"人生总会遇到一些风雨。" },
+      { hz:"安心",     zh:"只要回到家，我就会感到安心。" },
+      { hz:"珍惜",     zh:"我很珍惜和家人在一起的每一天。" },
+      { hz:"家人",     zh:"我很爱我的家人。" },
+      { hz:"感恩",     zh:"我很感恩父母为我做的一切。" },
+      { hz:"支持",     zh:"不管我做什么决定，父母都很支持我。" },
+      { hz:"亲密",     zh:"我和姐姐的关系很亲密。" }
+    ] },
+
+    { type:"quiz", title:"六、挑一挑：哪个词更合适？", sub:"选出最贴切的那一个", questions:[
+      { ask:"① 介绍家里有几个人，最地道的说法是——",
+        options:["我家有四个人。","我家一共四口人。","我家是四人。"], answer:1 },
+      { ask:"② 妈妈是＿＿老师。（说老师，要有礼貌）",
+        options:["一只","一位","一口"], answer:1 },
+      { ask:"③ 「姐姐上十二年级，学习很紧张。」这里的「紧张」意思是——",
+        options:["很害怕","功课多、压力大","很生气"], answer:1 },
+      { ask:"④ 家里只有我一个孩子，我是——",
+        options:["独生子女","兄弟姐妹","亲戚"], answer:0 },
+      { ask:"⑤ 「家就像一个温暖的港湾」，「港湾」比喻的是——",
+        options:["让人安心的地方","很远的地方","爸爸工作的地方"], answer:0 },
+      { ask:"⑥ 我们一家人平时都＿＿的，很少有时间一起吃晚饭。",
+        options:["忙忙碌碌","温温暖暖","安安心心"], answer:0 },
+      { ask:"⑦ 「会计」的正确读音是——",
+        options:["huìjì","kuàijì","kuàijī"], answer:1 }
+    ] }
+
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

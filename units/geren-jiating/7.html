@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>介绍家庭 · 第7节 综合练习</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+.cloze{background:#f5f8ff;border-left:3px solid var(--blue);padding:10px 12px;border-radius:0 8px 8px 0;font-size:15px;line-height:1.9}
+.cloze b{color:var(--blue-d)}
+.wrong{color:#c0392b}
+/* 说明文字的整句英文小字注解 */
+small.en{display:block;margin-top:6px;color:#5a6472;font-size:12.5px;line-height:1.5}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"geren-jiating-7", n:7, unit:"geren-jiating",
+  unitTitle:"Unit 1 个人情况 ·（四）介绍家庭",
+  title:"综合练习 · 计分",
+  subtitle:"对对碰 + 选词填空 + 中式中文纠错 + 跑题判断",
+  sections:[
+
+    { type:"match", title:"一、词义对对碰 Matching", sub:"点左边的中文，再点右边的英文，配对成功就得分",
+      words:[
+        { hz:"四口之家",   en:"A family of four" },
+        { hz:"独生子女",   en:"An only child" },
+        { hz:"中西合璧",   en:"A blend of Chinese and Western cultures" },
+        { hz:"百善孝为先", en:"Filial piety comes first among all virtues" },
+        { hz:"家和万事兴", en:"A harmonious family prospers in everything" },
+        { hz:"盲目顺从",   en:"Blind obedience" },
+        { hz:"独立思考",   en:"To think independently" },
+        { hz:"动静结合",   en:"A balance of active and quiet activities" },
+        { hz:"天南地北",   en:"(To chat) about anything and everything" },
+        { hz:"港湾",       en:"A harbour; (fig.) a safe haven" }
+      ] },
+
+    { type:"culture", title:"二、选词填空 · 先读一遍这段话", sub:"读完再做下面的题", facts:[
+      { k:"短文", html:"<div class=\"cloze\">我叫大卫，今年十六岁，住在墨尔本。我家是一个 <b>(1)</b>：爸爸、妈妈、弟弟和我。爸爸是一位医生，平时工作很忙，经常 <b>(2)</b>，可是每逢周末，他都会 <b>(3)</b> 陪伴我们。<br>我们家是一个典型的华裔家庭，可以说是“<b>(4)</b>”：一方面，爸妈很讲究“<b>(5)</b>”，要求我们尊敬爷爷奶奶；另一方面，他们又很 <b>(6)</b>，大事小事都会和我们一起商量。<br>我们全家的生活方式是“<b>(7)</b>”：周末要么去打网球，要么就坐在一起 <b>(8)</b> 地聊天。爸妈常说，凡事都要 <b>(9)</b>，不要盲目顺从别人。俗话说“<b>(10)</b>”，我觉得我的家就是最好的例子。</div>" },
+      { k:"词库", html:"四口之家｜加班｜抽出时间｜中西合璧｜百善孝为先｜民主｜动静结合｜天南地北｜独立思考｜家和万事兴" }
+    ] },
+
+    { type:"quiz", title:"三、选词填空 Cloze", sub:"每空选一个最合适的词", questions:[
+      { ask:"(1) 我家是一个＿＿：爸爸、妈妈、弟弟和我。",
+        options:["独生子女","四口之家","亲戚"], answer:1 },
+      { ask:"(2) 爸爸平时工作很忙，经常＿＿。",
+        options:["加班","退休","聚餐"], answer:0 },
+      { ask:"(3) 可是每逢周末，他都会＿＿陪伴我们。",
+        options:["忙忙碌碌","盲目顺从","抽出时间"], answer:2 },
+      { ask:"(4) 我们家是一个典型的华裔家庭，可以说是“＿＿”。",
+        options:["中西合璧","天南地北","动静结合"], answer:0 },
+      { ask:"(5) 爸妈很讲究“＿＿”，要求我们尊敬爷爷奶奶。",
+        options:["家和万事兴","百善孝为先","金无足赤，人无完人"], answer:1 },
+      { ask:"(6) 他们又很＿＿，大事小事都会和我们一起商量。",
+        options:["严格","唠叨","民主"], answer:2 },
+      { ask:"(7) 我们全家的生活方式是“＿＿”：周末要么去打网球，要么就坐在一起聊天。",
+        options:["动静结合","中西合璧","百善孝为先"], answer:0 },
+      { ask:"(8) 要么就坐在一起＿＿地聊天。",
+        options:["忙忙碌碌","天南地北","温暖"], answer:1 },
+      { ask:"(9) 爸妈常说，凡事都要＿＿，不要盲目顺从别人。",
+        options:["加班","享受","独立思考"], answer:2 },
+      { ask:"(10) 俗话说“＿＿”，我觉得我的家就是最好的例子。",
+        options:["家和万事兴","小巫见大巫","三个臭皮匠，顶个诸葛亮"], answer:0 }
+    ] },
+
+    { type:"quiz", title:"四、中式中文纠错 Chinglish", sub:"⚠️ 语序公式：谁 + 什么时候 + 在哪里 + 做什么", questions:[
+      { ask:"① <span class=\"wrong\">我的家有四个人。</span> 正确说法是——",
+        options:["我的家有四只人。","我家一共有四口人。","我家是四个人有。"], answer:1 },
+      { ask:"② <span class=\"wrong\">我的爸爸工作在医院。</span> 正确说法是——",
+        options:["我爸爸在医院工作。","我爸爸工作在医院里。","我爸爸医院工作在。"], answer:0 },
+      { ask:"③ <span class=\"wrong\">我的哥哥是二十岁。</span> 正确说法是——",
+        options:["我哥哥有二十岁。","我哥哥是二十年。","我哥哥今年二十岁。"], answer:2 },
+      { ask:"④ <span class=\"wrong\">我们也有一个猫。</span> 正确说法是——",
+        options:["我们家还有一个猫。","我们家还有一只猫。","我们也有猫一个。"], answer:1 },
+      { ask:"⑤ <span class=\"wrong\">他喜欢打游戏在房间里整天。</span> 正确说法是——",
+        options:["他整天在房间里打游戏。","他在房间里打游戏整天。","他打游戏整天在房间里。"], answer:0 },
+      { ask:"⑥ <span class=\"wrong\">我们去旅游在节假日每年。</span> 正确说法是——",
+        options:["我们每年节假日去旅游在。","我们去旅游每年节假日。","我们每年节假日都去旅游。"], answer:2 },
+      { ask:"⑦ <span class=\"wrong\">我妈妈是一个老师在中学。</span> 正确说法是——",
+        options:["我妈妈是一位中学老师。","我妈妈是一个老师在中学里。","我妈妈中学是一位老师。"], answer:0 },
+      { ask:"⑧ <span class=\"wrong\">我和我的姐姐常常看电影一起。</span> 正确说法是——",
+        options:["我常常看电影和姐姐一起。","我和姐姐常常一起看电影。","我和姐姐一起常常电影看。"], answer:1 }
+    ] },
+
+    { type:"quiz", title:"五、这句跑没跑题？", sub:"考官问：“请你介绍一下你的家庭。”哪一句最适合放进去？", questions:[
+      { ask:"①",
+        options:["我哥哥每天在房间里打游戏，一玩就是一整天。","每逢周末，我们全家都会一起去海边散步。","我哥哥最喜欢的游戏有好几十个关卡。"], answer:1 },
+      { ask:"②",
+        options:["我的猫叫点点，它最爱吃鱼，每天要睡十几个小时。","我家的猫是白色的，眼睛是蓝色的。","我们家还有一只猫，它就像家里的一个小成员。"], answer:2 },
+      { ask:"③",
+        options:["我爸爸是一名医生，尽管工作很忙，也总是抽出时间陪伴我们。","我爸爸工作的医院有五百张病床。","我爸爸大学读了六年医学，后来又读了硕士。"], answer:0 },
+      { ask:"④",
+        options:["我妈妈非常漂亮，头发很长，眼睛很大。","我妈妈是一位老师，不仅关心我们的学习，还很会做菜。","我妈妈喜欢买衣服，她有一百多件衣服。"], answer:1 },
+      { ask:"⑤",
+        options:["我家的房子有四个房间和两个卫生间。","我家离学校开车要二十分钟。","我觉得家就像一个温暖的港湾。"], answer:2 },
+      { ask:"⑥ 为什么「我哥哥在墨尔本大学学建筑」说一两句可以，说一大段就不行？",
+        options:["因为考官不喜欢建筑","因为考官问的是家庭整体，一个人讲太多就跑题了","因为这句话太难"], answer:1 }
+    ] },
+
+    { type:"culture", title:"六、做完了？还有一件事", sub:"👆 带下划线的词可以点，看拼音和英文解释", facts:[
+      { k:"口语稿", html:"这一课真正的作业是<b>你自己家的那篇稿子</b>。回到<b>第 3 节</b>写基础版（150–200 字），再到<b>第 6 节</b>照清单<u class=\"wd\" data-w=\"升级\">升级</u>一遍。"+
+        "<small class=\"en\">The real homework for this lesson is <b>a script about your own family</b>. Go back to Section 3 to write the basic version (150–200 characters), then to Section 6 to upgrade it using the checklist.</small>" },
+      { k:"练口语", html:"写完<b>一定要读出声</b>，最好录下来听一遍。<b>能流利说出来的才算数</b>——考试是「说」，不是「写」。"+
+        "<small class=\"en\">Once written, <b>read it aloud</b> — ideally record yourself and listen back. <b>Only what you can say fluently counts</b>: the exam is speaking, not writing.</small>" },
+      { k:"下一步", html:"这套<u class=\"wd\" data-w=\"结构\">结构</u>（字词 → <u class=\"wd\" data-w=\"句型\">句式</u> → 文章）同样适用于<b>介绍好朋友、介绍对你影响最大的人</b>。换个话题，换套词，很多句型是一样的。"+
+        "<small class=\"en\">The same structure (words → sentence patterns → full text) works for <b>introducing your best friend</b> and <b>the person who has influenced you most</b>. Change the topic and the vocabulary — many of the patterns stay the same.</small>" }
+    ] }
+
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>

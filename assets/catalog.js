@@ -97,6 +97,18 @@ window.CATALOG = {
             { id:"geren-ziwo-5", n:5, title:"句式 · 进阶 SLA", url:"units/geren-ziwo/5.html", ready:true },
             { id:"geren-ziwo-6", n:6, title:"文章 · 进阶 SLA", url:"units/geren-ziwo/6.html", ready:true },
             { id:"geren-ziwo-7", n:7, title:"综合练习 · 计分", url:"units/geren-ziwo/7.html", ready:true }
+          ] },
+        { title:"个人情况-介绍家庭", url:"units/geren-jiating/index.html",
+          tags:["个人情况","介绍家庭","家庭","家人","家庭成员","职业","量词","语序","句型","关联词",
+                "中西合璧","百善孝为先","家和万事兴","语气词","SL","SLA","词卡","纠错","跑题","口语"], ready:true,
+          sections:[
+            { id:"geren-jiating-1", n:1, title:"字词 · 基础 SL",  url:"units/geren-jiating/1.html", ready:true },
+            { id:"geren-jiating-2", n:2, title:"句式 · 基础 SL",  url:"units/geren-jiating/2.html", ready:true },
+            { id:"geren-jiating-3", n:3, title:"文章 · 基础 SL",  url:"units/geren-jiating/3.html", ready:true },
+            { id:"geren-jiating-4", n:4, title:"字词 · 进阶 SLA", url:"units/geren-jiating/4.html", ready:true },
+            { id:"geren-jiating-5", n:5, title:"句式 · 进阶 SLA", url:"units/geren-jiating/5.html", ready:true },
+            { id:"geren-jiating-6", n:6, title:"文章 · 进阶 SLA", url:"units/geren-jiating/6.html", ready:true },
+            { id:"geren-jiating-7", n:7, title:"综合练习 · 计分", url:"units/geren-jiating/7.html", ready:true }
           ] }
       ], "听力":[], "阅读":[], "作文":[], "综合":[] },
       homework:[], exam:[], other:[

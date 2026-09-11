@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>介绍家庭 · 第3节 文章（基础）</title>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>
+.step{display:block;font-size:16px;font-weight:700;color:var(--blue-d);margin-bottom:2px}
+.src{display:block;background:#f5f8ff;border-left:3px solid var(--blue);padding:6px 10px;border-radius:0 8px 8px 0;margin:5px 0}
+.draft{background:#fdf6f0;border-left:3px solid #d98c4a;padding:8px 12px;border-radius:0 8px 8px 0;font-size:15px;line-height:1.9}
+.wrong{color:#c0392b;text-decoration:underline wavy #c0392b}
+.right{color:#1e8449;font-weight:600}
+/* 说明文字的整句英文小字注解 */
+small.en{display:block;margin-top:6px;color:#5a6472;font-size:12.5px;line-height:1.5}
+</style>
+</head>
+<body>
+<script src="../../assets/catalog.js"></script>
+<script src="words.js"></script>
+<script>
+window.LESSON = {
+  id:"geren-jiating-3", n:3, unit:"geren-jiating",
+  unitTitle:"Unit 1 个人情况 ·（四）介绍家庭",
+  title:"文章 · 基础 SL",
+  subtitle:"情境：口语考试，考官问：“请你介绍一下你的家庭。”",
+  sections:[
+
+    { type:"reading", title:"课文一 · 介绍我的家庭（基础版）",
+      audio:"audio/reading-sl.mp3", audioLabel:"全文朗读（慢速）· Listen to the whole text",
+      paras:[
+        "我有一个温暖的家庭，一共四口人：爸爸、妈妈、姐姐和我。爸爸是一名工程师，尽管平时工作很忙，也总是在周末抽出时间陪伴我们；妈妈是一位老师，不仅关心我们的学习，还会做很多好吃的饭菜。",
+        "姐姐今年上十二年级了，学习很紧张，我们虽然性格不一样，却也有很多相同的爱好。我们一家人虽然平时都忙忙碌碌的，但每逢节假日，我们都会去郊外旅游，享受一家人在一起的幸福时光。",
+        "我觉得家就像一个温暖的港湾，不管在外面遇到什么风雨，只要回到家，就会感到安心和温暖。我很爱我的家人，也很珍惜我们在一起的每一天。"
+      ] },
+
+    { type:"culture", title:"一、拆开看：这篇文章是怎么搭起来的", sub:"👆 带下划线的词可以点，看拼音和英文解释", facts:[
+      { k:"第1段", html:"<span class=\"step\">成员 + 职业</span>先说家的感觉和人数，再<b>每人一句</b>：职业 + 他为家做了什么。<span class=\"src\">爸爸是一名工程师，尽管平时工作很忙，也总是在周末抽出时间陪伴我们。</span>"+
+        "<small class=\"en\">Paragraph 1 — members and jobs. Start with what your family feels like and how many people; then <b>one sentence per person</b>: their job plus something they do for the family.</small>" },
+      { k:"第2段", html:"<span class=\"step\">家人关系 + 全家一起做的事</span>这是<b>全篇的重点</b>，也是<u class=\"wd\" data-w=\"考官\">考官</u>最想听的：不是某一个人，而是<b>一家人怎么相处</b>。<span class=\"src\">每逢节假日，我们都会去郊外旅游，享受一家人在一起的幸福时光。</span>"+
+        "<small class=\"en\">Paragraph 2 — relationships and family time. This is <b>the heart of the answer</b> and what the examiner most wants to hear: not one person, but <b>how the family lives together</b>.</small>" },
+      { k:"第3段", html:"<span class=\"step\">感受 + 结尾</span><u class=\"wd\" data-w=\"比喻\">比喻</u>（家像港湾）→ 把比喻讲清楚（不管……只要……就……）→ 一句话表态（很爱、很珍惜）。"+
+        "<small class=\"en\">Paragraph 3 — feelings and ending: a metaphor (home is a harbour) → explain it (no matter… as long as… then…) → one closing sentence of feeling (love, cherish).</small>" },
+      { k:"⚠️ 别跑题", html:"考官问的是<b>「家庭」</b>。哥哥多聪明、多懒，猫多可爱——写的是某一个人、某一只动物，不是<u class=\"wd\" data-w=\"整体\">家庭整体</u>。<b>每个家人一两句就够。</b>"+
+        "<small class=\"en\">⚠️ The question is about your <b>family</b>. How clever or lazy your brother is, how cute the cat is — that is about one person or one pet, not the family as a whole. <b>One or two sentences per person is enough.</b></small>" },
+      { k:"💡 你的家", html:"课文是四口之家，你家不一定是。独生子女、和外公外婆一起住、爸爸妈妈不住在一起……<b>都照实说</b>，一样用这个<u class=\"wd\" data-w=\"结构\">结构</u>。"+
+        "<small class=\"en\">The model text is a family of four, but yours does not have to be. Only child, living with grandparents, parents who live apart — <b>describe it as it really is</b>, using the same structure.</small>" }
+    ] },
+
+    { type:"culture", title:"二、纠错示范：这份学生原稿哪里有问题？", sub:"先自己找一找，再往下看答案", facts:[
+      { k:"原稿", html:"<div class=\"draft\">我的家有四个人，爸爸、妈妈、哥哥和我。我的爸爸工作在医院，他是医生。我的妈妈是非常漂亮，她喜欢买东西和做菜。我的哥哥是二十岁，他在墨尔本大学学习建筑，他非常聪明但是很懒，每天他喜欢打游戏在房间里整天。我们也有一个猫叫点点，点点很可爱。我觉得我的家很好。</div>"+
+        "<small class=\"en\">A student's first draft (about 120 characters). Try to spot the problems before reading on.</small>" },
+      { k:"① 量词", html:"<span class=\"wrong\">我的家有四个人</span> → <span class=\"right\">我家一共有四口人</span><br><span class=\"wrong\">我们也有一个猫</span> → <span class=\"right\">我们家还有一只猫</span><br>数家里的人用「口」，猫、狗用「只」。"+
+        "<small class=\"en\">Measure words: count family members with 口, and cats and dogs with 只 — not 个.</small>" },
+      { k:"② 语序", html:"<span class=\"wrong\">我的爸爸工作在医院</span> → <span class=\"right\">我爸爸在医院工作</span><br><span class=\"wrong\">每天他喜欢打游戏在房间里整天</span> → <span class=\"right\">他整天在房间里打游戏</span><br><u class=\"wd\" data-w=\"语序\">语序</u>公式：<b>谁 + 什么时候 + 在哪里 + 做什么</b>。英文把地点放后面（work <i>at a hospital</i>），中文要放前面。"+
+        "<small class=\"en\">Word order: <b>who + when + where + what they do</b>. English puts the place at the end (work <i>at a hospital</i>); Chinese puts it before the verb.</small>" },
+      { k:"③ 多余的「是」", html:"<span class=\"wrong\">我的妈妈是非常漂亮</span> → <span class=\"right\">我妈妈非常漂亮</span><br><span class=\"wrong\">我的哥哥是二十岁</span> → <span class=\"right\">我哥哥今年二十岁</span><br>形容词前、说年龄，都<b>不加「是」</b>。"+
+        "<small class=\"en\">No 是 before an adjective, and no 是 when giving an age — Chinese does not need a word for “is” here.</small>" },
+      { k:"④ 跑题", html:"<span class=\"wrong\">他非常聪明但是很懒，每天在房间里打游戏</span><br>这是在介绍<b>哥哥一个人</b>，对「家庭」没有帮助。→ 删掉，换成<b>全家一起做的事</b>。"+
+        "<small class=\"en\">Off topic: this describes <b>the brother</b>, not the family. Cut it and talk about something the <b>whole family</b> does together.</small>" },
+      { k:"⑤ 结尾", html:"<span class=\"wrong\">我觉得我的家很好。</span> → <span class=\"right\">我很爱我的家人，也很珍惜我们在一起的每一天。</span><br>「很好」太空，要说出<b>感情</b>。"+
+        "<small class=\"en\">“My family is good” is empty. The ending should express <b>feeling</b>.</small>" },
+      { k:"小建议", html:"口语里说家人，<u class=\"wd\" data-w=\"称呼\">称呼</u>前一般省掉「的」：<b>我爸爸、我妈妈、我姐姐</b>，比「我的爸爸」更自然。"+
+        "<small class=\"en\">Tip: in speech, drop 的 before family terms — 我爸爸, 我妈妈 sound more natural than 我的爸爸.</small>" }
+    ] },
+
+    { type:"quiz", title:"三、读懂了吗 · Reading check", sub:"根据课文一回答", questions:[
+      { ask:"① 这个家一共有几口人？",
+        options:["三口人","四口人","五口人"], answer:1 },
+      { ask:"② 爸爸是做什么工作的？他平时怎么样？",
+        options:["老师，工作很轻松","工程师，工作很忙，但周末会陪伴家人","医生，经常加班"], answer:1 },
+      { ask:"③ 妈妈除了关心孩子的学习，还——",
+        options:["会做很多好吃的饭菜","很会打篮球","很会弹吉他"], answer:0 },
+      { ask:"④ 姐姐和“我”——",
+        options:["性格一样，爱好不同","性格不一样，却有很多相同的爱好","性格和爱好都不一样"], answer:1 },
+      { ask:"⑤ 每逢节假日，全家会做什么？",
+        options:["在家看电视","去郊外旅游","去看爷爷奶奶"], answer:1 },
+      { ask:"⑥ 为什么说家“就像一个温暖的港湾”？",
+        options:["因为家住在海边","因为不管遇到什么风雨，回到家就会感到安心","因为爸爸在港口工作"], answer:1 }
+    ] },
+
+    { type:"quiz", title:"四、哪些是「介绍家庭」的重点？", sub:"想一想：考官最想听哪一类信息", questions:[
+      { ask:"① 课文一主要介绍了哪些内容？",
+        options:["每个人的样貌和身高","家庭成员、职业、全家一起做的事、对家的感受","家里的房子和宠物"], answer:1 },
+      { ask:"② 「我哥哥非常聪明但是很懒，每天在房间里打游戏」放进介绍家庭里——",
+        options:["很好，很具体","跑题了：写的是哥哥一个人，不是家庭整体","必须写，否则不完整"], answer:1 },
+      { ask:"③ 介绍每个家庭成员，一般说多少就够？",
+        options:["一两句","每人一大段","一句都不用说"], answer:0 },
+      { ask:"④ 下面哪个结尾最有感情？",
+        options:["我觉得我的家很好。","我的家有四个人。","我很爱我的家人，也很珍惜我们在一起的每一天。"], answer:2 }
+    ] },
+
+    { type:"speak", title:"五、轮到你了 · 写你家的稿子",
+      sub:"照着课文的顺序，写 150–200 字（照实说你自己的家）",
+      frame:"<b>① 成员</b>：我有一个＿＿＿＿的家庭，一共＿＿口人：＿＿＿＿＿＿。<br><br>"+
+            "<b>② 职业</b>：我爸爸是一名＿＿＿＿，尽管＿＿＿＿，也总是＿＿＿＿；我妈妈是一位＿＿＿＿，不仅＿＿＿＿，还＿＿＿＿。<br><br>"+
+            "<b>③ 家人关系</b>：我和＿＿虽然＿＿＿＿，却＿＿＿＿。<br><br>"+
+            "<b>④ 一起做的事</b>：我们一家人虽然平时＿＿＿＿，但每逢＿＿＿＿，我们都会＿＿＿＿，享受＿＿＿＿的时光。<br><br>"+
+            "<b>⑤ 感受</b>：我觉得家就像＿＿＿＿，不管＿＿＿＿，只要＿＿＿＿，就＿＿＿＿。我很爱＿＿＿＿，也很珍惜＿＿＿＿。",
+      eg:"<b>检查三件事</b>：① 讲的是<b>全家</b>，还是一直在讲某一个人？ ② 至少用了 <b>3 个</b>本课句型吗？ ③ 量词和语序对吗（四口人、一位老师、一只猫、在医院工作）？"
+    }
+
+  ]
+};
+</script>
+<script src="../../assets/lesson.js"></script>
+</body>
+</html>
