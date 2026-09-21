@@ -16,6 +16,48 @@
   .gate .btn.ghost{background:#f2f4f8;color:var(--blue-d)}
   /* 防拷贝：图片不可拖拽/长按存 */
   #wm-host img{-webkit-user-drag:none;user-drag:none}
+
+  /* ---- 受保护课页的通用加样式 ----
+     受保护内容来自数据库，没有自己的 <style>，所以要用的样式都写在这个外壳里。 */
+
+  /* 词卡 🔊：全站 style.css 里是 21x15（约占卡片百分之一），手机上点不中、
+     一点就翻面。这里放大成圆钮，点击区约 41x29。 */
+  .flip .spk{top:5px;right:5px;font-size:17px;opacity:1;padding:5px 8px;
+    background:#eaf1ff;border:1px solid #cfe0ff;border-radius:16px;line-height:1}
+  .flip .spk:active{background:#cfe0ff}
+  /* 背面要放「完整中文例句 + 英文」，比一般词卡装得多，加高一点 */
+  .flip{height:164px}
+  .flip .back{font-size:15px;padding:8px 9px}
+  .flip .back .bk-zh{font-size:14px;line-height:1.45}
+  .flip .back .bk-en{font-size:11.5px;margin-top:5px;line-height:1.3}
+  .flip .front .hz{font-size:23px}
+  .flip .front .py{font-size:12px}
+  /* 句式模板里的整句英文小字注解 */
+  small.en{display:block;margin-top:5px;color:#5a6472;font-size:12.5px;line-height:1.5}
+  /* .fact 是 flex：左边 .k 标签 flex:none 不收缩，右边内容 flex item 默认
+     min-width:auto 也不肯收缩 → 长内容会把卡片撑破，手机上横向溢出。
+     所以给 k 限宽、给内容区放开收缩。 */
+  /* 不设 min-width：.k 已是 flex:none（按内容宽度，不会换行），设死宽只会让
+     格式卡那种单个数字的标签白占 84px，手机上很亏。只限最大宽度防它霸屏。 */
+  .facts .k{max-width:38%;overflow-wrap:anywhere}
+  .fact>div:last-child{min-width:0}
+
+  /* ---- 写作格式卡（第 2 节）----
+     原稿是 17 列方格稿纸，手机上没法看；改成竖排「信纸」块，
+     靠缩进和对齐把版式讲清楚：顶格 / 空两格 / 居中 / 右对齐。 */
+  .fmt{background:#fffdf7;border:1px solid #e8dfc8;border-radius:8px;
+    padding:12px 14px;margin:6px 0 8px;
+    background-image:repeating-linear-gradient(#fffdf7 0 27px,#f0e8d4 27px 28px);
+    font-family:'LXGW Kai','KaiTi','楷体',serif;font-size:15px;line-height:28px}
+  .fmt .ln{white-space:pre-wrap;overflow-wrap:anywhere}  /* pre-wrap 保留全角空格排版；anywhere 让长网址能断行 */
+  .fmt .i2{text-indent:2em}          /* 正文空两格 */
+  .fmt .c{text-align:center}         /* 标题居中 */
+  .fmt .r{text-align:right}          /* 署名 / 日期靠右 */
+  .fmt .sm{font-size:13px;color:#6b6252}
+  .fmt .blank{color:#b9ae95}         /* 省略号占位 */
+  .fmt-tip{font-size:13.5px;color:#2a3648;background:#eef4ff;
+    border-left:3px solid #1f6feb;border-radius:6px;padding:8px 10px;line-height:1.6}
+  .fmt-en{color:#7a8496;font-weight:400;font-size:13px;margin-left:4px}
 </style>
 </head>
 <body>

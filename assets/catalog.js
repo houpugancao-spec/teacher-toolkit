@@ -136,7 +136,7 @@ window.CATALOG = {
                 "媒体","艺术","环境","成长","家庭","职业"], ready:true,
           sections:[
             { id:"y11-zwcj-01", n:1,  title:"文体五式",            url:"units/protected/index.html?id=y11-zwcj-01", ready:false },
-            { id:"y11-zwcj-02", n:2,  title:"写作格式十七种",      url:"units/protected/index.html?id=y11-zwcj-02", ready:false },
+            { id:"y11-zwcj-02", n:2,  title:"写作格式十七种",      url:"units/protected/index.html?id=y11-zwcj-02", ready:true  },
             { id:"y11-zwcj-03", n:3,  title:"教育、学习与未来",    url:"units/protected/index.html?id=y11-zwcj-03", ready:true  },
             { id:"y11-zwcj-04", n:4,  title:"科技、AI 与数字生活", url:"units/protected/index.html?id=y11-zwcj-04", ready:false },
             { id:"y11-zwcj-05", n:5,  title:"中国文化传统",        url:"units/protected/index.html?id=y11-zwcj-05", ready:false },
