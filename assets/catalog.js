@@ -120,6 +120,39 @@ window.CATALOG = {
     },
     {
       id:"y11", name:"Y11",
+      // Y11 用自己的一级目录，不走全站那五类（index.html 的 catsOf 支持按年级覆盖）
+      categories:[
+        { id:"listening", name:"听力",     ico:"🎧" },
+        { id:"speaking",  name:"口语",     ico:"🗣️" },
+        { id:"writing",   name:"作文",     ico:"✍️" },
+        { id:"review",    name:"复习材料", ico:"📚" }
+      ],
+      listening:[], speaking:[], writing:[],
+      review:[
+        // ⚠ 受保护内容：正文存 Supabase vce_lessons，公开仓只有这个目录条目和音频
+        { title:"作文-话题-基础词句", url:"units/protected/index.html?id=y11-zwcj-03",
+          tags:["作文","词汇","短语","句式","话题","VCE真题","SL","SLA","词卡","拼音","读音",
+                "文体","格式","连接词","升格句","教育","科技","文化","旅游","健康","社会",
+                "媒体","艺术","环境","成长","家庭","职业"], ready:true,
+          sections:[
+            { id:"y11-zwcj-01", n:1,  title:"文体五式",            url:"units/protected/index.html?id=y11-zwcj-01", ready:false },
+            { id:"y11-zwcj-02", n:2,  title:"写作格式十七种",      url:"units/protected/index.html?id=y11-zwcj-02", ready:false },
+            { id:"y11-zwcj-03", n:3,  title:"教育、学习与未来",    url:"units/protected/index.html?id=y11-zwcj-03", ready:true  },
+            { id:"y11-zwcj-04", n:4,  title:"科技、AI 与数字生活", url:"units/protected/index.html?id=y11-zwcj-04", ready:false },
+            { id:"y11-zwcj-05", n:5,  title:"中国文化传统",        url:"units/protected/index.html?id=y11-zwcj-05", ready:false },
+            { id:"y11-zwcj-06", n:6,  title:"旅游、城市与跨文化",  url:"units/protected/index.html?id=y11-zwcj-06", ready:false },
+            { id:"y11-zwcj-07", n:7,  title:"健康与生活方式",      url:"units/protected/index.html?id=y11-zwcj-07", ready:false },
+            { id:"y11-zwcj-08", n:8,  title:"社会热点与社会责任",  url:"units/protected/index.html?id=y11-zwcj-08", ready:false },
+            { id:"y11-zwcj-09", n:9,  title:"媒体、网络与传播",    url:"units/protected/index.html?id=y11-zwcj-09", ready:false },
+            { id:"y11-zwcj-10", n:10, title:"艺术、娱乐与体育",    url:"units/protected/index.html?id=y11-zwcj-10", ready:false },
+            { id:"y11-zwcj-11", n:11, title:"环境与可持续发展",    url:"units/protected/index.html?id=y11-zwcj-11", ready:false },
+            { id:"y11-zwcj-12", n:12, title:"个人与成长",          url:"units/protected/index.html?id=y11-zwcj-12", ready:false },
+            { id:"y11-zwcj-13", n:13, title:"家庭、人际与社区",    url:"units/protected/index.html?id=y11-zwcj-13", ready:false },
+            { id:"y11-zwcj-14", n:14, title:"工作、职业与未来社会",url:"units/protected/index.html?id=y11-zwcj-14", ready:false },
+            { id:"y11-zwcj-15", n:15, title:"连接词与升格句",      url:"units/protected/index.html?id=y11-zwcj-15", ready:false }
+          ] }
+      ],
+      // 下面这些保留原样：7 月的访问锁样板课还在数据里，只是不在上面四个目录里露面
       lecture:[
         {
           id:"y11-demo", no:"样板", title:"访问锁样板课", topic:"测试用·可删",

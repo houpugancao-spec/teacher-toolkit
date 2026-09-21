@@ -28,9 +28,12 @@
 <script>
 (function(){
   const C=window.CATALOG;
-  const CN=["一","二","三","四","五","六","七","八","九","十","十一","十二"];
+  const CN=["一","二","三","四","五","六","七","八","九","十","十一","十二",
+            "十三","十四","十五","十六","十七","十八","十九","二十"];
   const CAT_ICO={lecture:"📖",practice:"✍️",homework:"📝",exam:"📊",other:"📦"};
-  const catName=id=>{const c=C.categories.find(x=>x.id===id);return c?c.name:id;};
+  // 年级可以自带一级目录（如 Y11 的 听力/口语/作文/复习材料）；没写就用全站那五类。
+  const catsOf=g=>(g&&g.categories)||C.categories;
+  const catName=(id,g)=>{const c=catsOf(g).find(x=>x.id===id);return c?c.name:id;};
   document.getElementById('brand').textContent=C.site;
   document.getElementById('siteTitle').textContent=C.site;
   document.title=C.site;
@@ -44,7 +47,9 @@
     (g.lecture||[]).forEach(co=>(co.sections||[]).forEach(s=>FLAT.push({url:s.url,title:`第${CN[s.n-1]}节 ${s.title}`,ready:s.ready,tags:s.tags||[],path:`${g.name} · 授课 · ${co.no} ${co.title}`})));
     const pr=g.practice||{};
     Object.keys(pr).forEach(sk=>(pr[sk]||[]).forEach(it=>FLAT.push({url:it.url,title:it.title,ready:it.ready,tags:it.tags||[],path:`${g.name} · 练习 · ${sk}`})));
-    ["homework","exam","other"].forEach(k=>(g[k]||[]).forEach(it=>FLAT.push({url:it.url,title:it.title,ready:it.ready,tags:it.tags||[],path:`${g.name} · ${catName(k)}`})));
+    // 除授课/练习外的类别（含年级自定义的），都是「项目数组」，一律按同一种方式进搜索索引
+    catsOf(g).forEach(c=>{ if(c.id==="lecture"||c.id==="practice") return;
+      (g[c.id]||[]).forEach(it=>FLAT.push({url:it.url,title:it.title,ready:it.ready,tags:it.tags||[],path:`${g.name} · ${c.name}`}));});
   });
   FLAT.forEach(f=>f.hay=(f.title+" "+f.tags.join(" ")+" "+f.path).toLowerCase());
   function kwMatch(hay){const t=kw.match(/[a-z0-9]+|[一-鿿]/g)||[kw];return t.every(x=>hay.includes(x));}
@@ -60,7 +65,7 @@
     if(c.id==="lecture")cnt=(g.lecture||[]).length+" 门课";
     else if(c.id==="practice"){let n=0;Object.values(g.practice||{}).forEach(a=>n+=a.length);cnt=n+" 个练习";}
     else cnt=(g[c.id]||[]).length+" 项";
-    return `<div class="lcard nav cat" data-cat="${c.id}"><span class="ico">${CAT_ICO[c.id]||"📁"}</span><div><div class="tt">${c.name}</div><div class="cnt">${cnt}</div></div></div>`;
+    return `<div class="lcard nav cat" data-cat="${c.id}"><span class="ico">${c.ico||CAT_ICO[c.id]||"📁"}</span><div><div class="tt">${c.name}</div><div class="cnt">${cnt}</div></div></div>`;
   }
   function courseCard(co){return `<div class="lcard nav" data-course="${co.id}"><div class="no">${co.no}</div><div class="tt">${co.title}</div><div class="cnt">${co.topic||""} · ${(co.sections||[]).length} 节</div></div>`;}
   function skillCard(g,sk){return `<div class="lcard nav" data-skill="${sk}"><div class="tt">${sk}</div><div class="cnt">${(g.practice[sk]||[]).length} 个</div></div>`;}
@@ -85,8 +90,8 @@
     const g=C.grades[state.g];
     let h=`<a data-nav="grade">${g.name}</a>`;
     if(state.cat){h+=`<span class="sep">›</span>`;
-      if(state.course||state.skill)h+=`<a data-nav="cat">${catName(state.cat)}</a>`;
-      else h+=`<span class="cur">${catName(state.cat)}</span>`;
+      if(state.course||state.skill)h+=`<a data-nav="cat">${catName(state.cat,g)}</a>`;
+      else h+=`<span class="cur">${catName(state.cat,g)}</span>`;
     }
     if(state.course){const co=g.lecture.find(x=>x.id===state.course);h+=`<span class="sep">›</span><span class="cur">${co.no} ${co.title}</span>`;}
     if(state.skill){h+=`<span class="sep">›</span><span class="cur">${state.skill}</span>`;}
@@ -99,7 +104,7 @@
     if(kw){ crumbEl.innerHTML=""; const r=FLAT.filter(f=>kwMatch(f.hay)); listEl.innerHTML=r.length?grid(r.map(it=>linkCard(it,it.path)).join("")):empty("没有找到相关内容 No results"); return; }
     crumb();
     const g=C.grades[state.g];
-    if(!state.cat){ listEl.innerHTML=grid(C.categories.map(c=>catCard(g,c)).join("")); return; }
+    if(!state.cat){ listEl.innerHTML=grid(catsOf(g).map(c=>catCard(g,c)).join("")); return; }
     if(state.cat==="lecture"){
       if(!state.course){ const co=g.lecture||[]; listEl.innerHTML=co.length?grid(co.map(courseCard).join("")):empty(); return; }
       const course=g.lecture.find(x=>x.id===state.course);

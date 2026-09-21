@@ -22,14 +22,18 @@
   });
 
   // ---- 在 catalog 里定位本节所属的「课」，取同课的上一节/下一节 ----
-  const CN=["一","二","三","四","五","六","七","八","九","十","十一","十二"];
+  // 补到二十：作文·话题基础词句有 15 节，原来只到十二会显示「第undefined节」
+  const CN=["一","二","三","四","五","六","七","八","九","十","十一","十二",
+            "十三","十四","十五","十六","十七","十八","十九","二十"];
   let course=null, gradeName="";
   // 授课 lecture[] + 练习 practice{技能:[]} + 作业/测验/其它：凡在 catalog 里带 sections[] 的
   // 条目都能有上一节/下一节。没写 sections 的条目照旧（空数组→不匹配→行为不变）。
   (CAT?CAT.grades:[]).forEach(g=>{
     const pools=[g.lecture||[]];
     const pr=g.practice||{}; Object.keys(pr).forEach(sk=>pools.push(pr[sk]||[]));
-    ["homework","exam","other"].forEach(k=>pools.push(g[k]||[]));
+    // 年级可自定义一级目录（Y11 的 听力/口语/作文/复习材料）；没定义就还是原来那三类
+    (g.categories||[{id:"homework"},{id:"exam"},{id:"other"}]).forEach(c=>{
+      if(c.id!=="lecture"&&c.id!=="practice") pools.push(g[c.id]||[]); });
     pools.forEach(list=>(list||[]).forEach(co=>{
       if((co.sections||[]).some(s=>s.id===L.id)){course=co;gradeName=g.name;}
     }));
