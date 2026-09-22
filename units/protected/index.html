@@ -144,18 +144,22 @@
     const day = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
     const line2 = isTeacher ? "" : "【授权使用，请勿传播：";
     const line3 = isTeacher ? "" : (esc(email || "已登录") + "-" + day + "】");
-    const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='420' height='260'>" +
-      "<g transform='rotate(-24 210 130)' fill='#123' font-family='sans-serif'>" +
-      "<text x='20' y='120' font-size='17' font-weight='600'>【" + esc(WM_BRAND) + "】</text>" +
-      (line2 ? "<text x='20' y='140' font-size='11'>" + line2 + "</text>" : "") +
-      (line3 ? "<text x='20' y='156' font-size='11'>" + line3 + "</text>" : "") +
+    const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='460' height='190'>" +
+      "<g transform='rotate(-20 230 95)' fill='#123' font-family='sans-serif'>" +
+      "<text x='24' y='86' font-size='17' font-weight='600'>【" + esc(WM_BRAND) + "】</text>" +
+      (line2 ? "<text x='24' y='106' font-size='11'>" + line2 + "</text>" : "") +
+      (line3 ? "<text x='24' y='122' font-size='11'>" + line3 + "</text>" : "") +
       "</g></svg>";
     const uri = "data:image/svg+xml," + encodeURIComponent(svg);
     let host = document.getElementById("wm-host");
     if (!host) { host = document.createElement("div"); host.id = "wm-host"; document.documentElement.appendChild(host); }
+    // 只在屏幕上、下两条带铺（repeat-x），中间读文区留白。
+    // 水印层是 fixed，滚到哪儿两条带都贴着屏幕上下沿，截图跑不掉。
     host.setAttribute("style",
       "position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:0.10;" +
-      "background-image:url(\"" + uri + "\");background-repeat:repeat;");
+      "background-image:url(\"" + uri + "\"),url(\"" + uri + "\");" +
+      "background-position:left top,left bottom;" +
+      "background-repeat:repeat-x,repeat-x;");
   }
 
   // ---- 防拷贝（只加低代价的三项；浏览器里的内容真防不住，靠水印威慑）----
