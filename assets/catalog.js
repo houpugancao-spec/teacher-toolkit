@@ -135,7 +135,7 @@ window.CATALOG = {
                 "文体","格式","连接词","升格句","教育","科技","文化","旅游","健康","社会",
                 "媒体","艺术","环境","成长","家庭","职业"], ready:true,
           sections:[
-            { id:"y11-zwcj-01", n:1,  title:"文体五式",            url:"units/protected/index.html?id=y11-zwcj-01", ready:false },
+            { id:"y11-zwcj-01", n:1,  title:"文体五式",            url:"units/protected/index.html?id=y11-zwcj-01", ready:true  },
             { id:"y11-zwcj-02", n:2,  title:"写作格式十七种",      url:"units/protected/index.html?id=y11-zwcj-02", ready:true  },
             { id:"y11-zwcj-03", n:3,  title:"教育、学习与未来",    url:"units/protected/index.html?id=y11-zwcj-03", ready:true  },
             { id:"y11-zwcj-04", n:4,  title:"科技、AI 与数字生活", url:"units/protected/index.html?id=y11-zwcj-04", ready:true  },
@@ -149,7 +149,7 @@ window.CATALOG = {
             { id:"y11-zwcj-12", n:12, title:"个人与成长",          url:"units/protected/index.html?id=y11-zwcj-12", ready:false },
             { id:"y11-zwcj-13", n:13, title:"家庭、人际与社区",    url:"units/protected/index.html?id=y11-zwcj-13", ready:false },
             { id:"y11-zwcj-14", n:14, title:"工作、职业与未来社会",url:"units/protected/index.html?id=y11-zwcj-14", ready:false },
-            { id:"y11-zwcj-15", n:15, title:"连接词与升格句",      url:"units/protected/index.html?id=y11-zwcj-15", ready:false }
+            { id:"y11-zwcj-15", n:15, title:"连接词与升格句",      url:"units/protected/index.html?id=y11-zwcj-15", ready:true  }
           ] }
       ],
       // 下面这些保留原样：7 月的访问锁样板课还在数据里，只是不在上面四个目录里露面
