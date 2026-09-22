@@ -130,7 +130,11 @@ window.CATALOG = {
       listening:[], speaking:[], writing:[],
       review:[
         // ⚠ 受保护内容：正文存 Supabase vce_lessons，公开仓只有这个目录条目和音频
-        { title:"作文-话题-基础词句", url:"units/protected/index.html?id=y11-zwcj-03",
+        // drill:true —— 这个单元的每一节都是独立课页、没有自己的首页，
+        // 所以主页要能展开节列表直接进（index.html 见到 drill 才下钻；
+        // 孔子／诸葛亮那几个练习有自己的 index.html，不加这个标记，行为不变）。
+        { id:"y11-zwcj", drill:true,
+          title:"作文-话题-基础词句", url:"units/protected/index.html?id=y11-zwcj-03",
           tags:["作文","词汇","短语","句式","话题","VCE真题","SL","SLA","词卡","拼音","读音",
                 "文体","格式","连接词","升格句","教育","科技","文化","旅游","健康","社会",
                 "媒体","艺术","环境","成长","家庭","职业"], ready:true,

@@ -182,12 +182,23 @@
   const upLabel = (catId==="lecture" && course)
       ? [course.no,course.title].filter(Boolean).join(" ")
       : (skillName || catLabel);
+  // 「☰ 目录」：只有在 catalog 里查得到同单元兄弟节（secs>1）且不是总览页时才出现。
+  // 查不到的课页 secs 为空 → 两个常量都是空串 → 页面与改造前一模一样。
+  const hasToc = !isOverview && secs.length > 1;
+  const tocBtn = hasToc ? `<a id="tocBtn" href="javascript:void(0)">☰ 目录</a>` : "";
+  const tocPanel = hasToc ? `<div class="toc" id="tocPanel" hidden>` + secs.map(sc=>{
+      const label = `第${CN[sc.n-1]}节 ${esc(sc.title)}`;
+      if(sc.ready===false) return `<span class="soon">${label}</span>`;
+      return sc.id===L.id ? `<a class="cur" href="${rel(sc.url)}">${label}</a>`
+                          : `<a href="${rel(sc.url)}">${label}</a>`;
+    }).join("") + `</div>` : "";
+
   const navRow = (gradeIdx>=0
       ? `<a href="../../index.html">🏠 主页</a>`+
         `<a href="../../index.html#g=${gradeIdx}">${esc(gradeName)}</a>`+
         (upLabel ? `<a href="../../index.html${upHash}">${esc(upLabel)}</a>` : "")
       : `<a href="../../index.html">🏠 主页</a><a href="../../index.html">🔍 目录/搜索</a>`)+
-    (isOverview ? "" : `${navLink(prev,"◀ 上一节")}${navLink(next,"下一节 ▶")}`);
+    (isOverview ? "" : `${tocBtn}${navLink(prev,"◀ 上一节")}${navLink(next,"下一节 ▶")}`);
   const idcard = scored ? `<div class="card idcard" id="idcard"></div>` : "";
   const submitBox = scored ? `<div class="card" style="text-align:center">
       <div style="font-weight:600;margin-bottom:10px">做完了？把成绩交给老师 👇<br><small style="color:#6b7686;font-weight:400">Finished? Send your score to the teacher</small></div>
@@ -202,6 +213,7 @@
       ${scoreBox}
     </div>
     <div class="navbtns">${navRow}</div>
+    ${tocPanel}
   </div>
   <div class="wrap">
     ${isOverview ? "" : `<div class="seclabel"><span class="sn">第${CN[curN-1]}节</span>${esc(L.title)}</div>`}
@@ -211,6 +223,16 @@
     <p class="foot">${esc(gradeName)} · ${esc(courseLabel)}${isOverview?"":" · 第"+CN[curN-1]+"节"}<br>学生自测练习</p>
   </div>`;
   document.body.innerHTML = body;
+
+  // 目录展开／收起。没有目录按钮的课页（secs 查不到）这段直接跳过。
+  (function(){
+    const btn = document.getElementById("tocBtn"), panel = document.getElementById("tocPanel");
+    if(!btn || !panel) return;
+    btn.addEventListener("click", () => {
+      panel.hidden = !panel.hidden;
+      btn.textContent = panel.hidden ? "☰ 目录" : "✕ 收起";
+    });
+  })();
 
   // ===== 学生身份：本地记住（花名册下拉；「其它」→自由填，老师/访客用）=====
   const ID_KEY = "vce_identity";

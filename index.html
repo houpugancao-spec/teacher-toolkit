@@ -38,7 +38,7 @@
   document.getElementById('siteTitle').textContent=C.site;
   document.title=C.site;
 
-  let state={g:0,cat:null,course:null,skill:null}, kw="";
+  let state={g:0,cat:null,course:null,skill:null,unit:null}, kw="";
 
   // ---- hash 路由：让「回到某个年级/分类」能用链接表达 ----
   // 形如 #g=1&cat=review&skill=口语&course=kongzi。课页的面包屑就指这种地址。
@@ -48,7 +48,7 @@
     const h=(location.hash||"").replace(/^#/,""); if(!h) return false;
     const q={}; h.split("&").forEach(kv=>{const i=kv.indexOf("="); if(i>0) q[kv.slice(0,i)]=decodeURIComponent(kv.slice(i+1));});
     const gi=parseInt(q.g,10);
-    state={ g:(gi>=0&&gi<C.grades.length)?gi:0, cat:q.cat||null, course:q.course||null, skill:q.skill||null };
+    state={ g:(gi>=0&&gi<C.grades.length)?gi:0, cat:q.cat||null, course:q.course||null, skill:q.skill||null, unit:q.unit||null };
     return true;
   }
   function writeHash(push){
@@ -56,13 +56,14 @@
     if(state.cat)    p.push("cat="+encodeURIComponent(state.cat));
     if(state.skill)  p.push("skill="+encodeURIComponent(state.skill));
     if(state.course) p.push("course="+encodeURIComponent(state.course));
+    if(state.unit)   p.push("unit="+encodeURIComponent(state.unit));
     const h="#"+p.join("&");
     if(h===location.hash) return;
     if(push) history.pushState(null,"",h); else history.replaceState(null,"",h);
   }
   // 退到「无 hash」那一步时要回默认态，否则面包屑会停在上一级不动
   window.addEventListener("popstate",()=>{
-    if(!readHash()) state={g:0,cat:null,course:null,skill:null};
+    if(!readHash()) state={g:0,cat:null,course:null,skill:null,unit:null};
     render();
   });
   const gradesEl=document.getElementById('grades'), crumbEl=document.getElementById('crumb'), listEl=document.getElementById('list');
@@ -75,13 +76,19 @@
     Object.keys(pr).forEach(sk=>(pr[sk]||[]).forEach(it=>FLAT.push({url:it.url,title:it.title,ready:it.ready,tags:it.tags||[],path:`${g.name} · 练习 · ${sk}`})));
     // 除授课/练习外的类别（含年级自定义的），都是「项目数组」，一律按同一种方式进搜索索引
     catsOf(g).forEach(c=>{ if(c.id==="lecture"||c.id==="practice") return;
-      (g[c.id]||[]).forEach(it=>FLAT.push({url:it.url,title:it.title,ready:it.ready,tags:it.tags||[],path:`${g.name} · ${c.name}`}));});
+      (g[c.id]||[]).forEach(it=>{
+        FLAT.push({url:it.url,title:it.title,ready:it.ready,tags:it.tags||[],path:`${g.name} · ${c.name}`});
+        // 可下钻的单元：每节也单独进索引，否则搜「环境」只能命中整个单元、点进去落到第 3 节
+        if(it.drill) (it.sections||[]).forEach(sec=>FLAT.push({
+          url:sec.url, title:`第${CN[sec.n-1]}节 ${sec.title}`, ready:sec.ready,
+          tags:sec.tags||[], path:`${g.name} · ${c.name} · ${it.title}`}));
+      });});
   });
   FLAT.forEach(f=>f.hay=(f.title+" "+f.tags.join(" ")+" "+f.path).toLowerCase());
   function kwMatch(hay){const t=kw.match(/[a-z0-9]+|[一-鿿]/g)||[kw];return t.every(x=>hay.includes(x));}
 
   // ---- 年级标签 ----
-  C.grades.forEach((g,i)=>{const b=document.createElement('button');b.className='chip-f'+(i===0?' on':'');b.textContent=g.name;b.onclick=()=>{state={g:i,cat:null,course:null,skill:null};writeHash(true);render();};gradesEl.appendChild(b);});
+  C.grades.forEach((g,i)=>{const b=document.createElement('button');b.className='chip-f'+(i===0?' on':'');b.textContent=g.name;b.onclick=()=>{state={g:i,cat:null,course:null,skill:null,unit:null};writeHash(true);render();};gradesEl.appendChild(b);});
 
   document.getElementById('search').addEventListener('input',e=>{kw=e.target.value.trim().toLowerCase();render();});
 
@@ -104,6 +111,13 @@
     if(it.ready===false) return `<div class="lcard soon">${path}<div class="tt">${it.title}</div><div class="no"><span class="badge">敬请期待</span></div><div class="tags">${tags}</div></div>`;
     return `<a class="lcard" href="${it.url}">${path}<div class="tt">${it.title}</div><div class="tags">${tags}</div></a>`;
   }
+  // 可下钻的单元卡：点它展开节列表，而不是直接跳某一节
+  function unitCard(it){
+    const n=(it.sections||[]).length;
+    const done=(it.sections||[]).filter(s=>s.ready!==false).length;
+    const cnt=done===n?`${n} 节`:`${n} 节 · 已上线 ${done}`;
+    return `<div class="lcard nav" data-unit="${it.id}"><div class="tt">${it.title}</div><div class="cnt">${cnt}</div></div>`;
+  }
   function sectionCard(s){
     const it={url:s.url,title:`第${CN[s.n-1]}节 · ${s.title}`,ready:s.ready,tags:s.tags};
     return linkCard(it);
@@ -116,11 +130,13 @@
     const g=C.grades[state.g];
     let h=`<a data-nav="grade">${g.name}</a>`;
     if(state.cat){h+=`<span class="sep">›</span>`;
-      if(state.course||state.skill)h+=`<a data-nav="cat">${catName(state.cat,g)}</a>`;
+      if(state.course||state.skill||state.unit)h+=`<a data-nav="cat">${catName(state.cat,g)}</a>`;
       else h+=`<span class="cur">${catName(state.cat,g)}</span>`;
     }
     if(state.course){const co=g.lecture.find(x=>x.id===state.course);h+=`<span class="sep">›</span><span class="cur">${co.no} ${co.title}</span>`;}
     if(state.skill){h+=`<span class="sep">›</span><span class="cur">${state.skill}</span>`;}
+    // 单元下钻（如「作文-话题-基础词句」的 15 节）多一级
+    if(state.unit){const u=findUnit(g);if(u)h+=`<span class="sep">›</span><span class="cur">${u.title}</span>`;}
     crumbEl.innerHTML=h;
   }
 
@@ -143,17 +159,32 @@
       if(!state.skill){ listEl.innerHTML=grid(C.practiceSkills.map(sk=>skillCard(g,sk)).join("")); return; }
       const items=g.practice[state.skill]||[]; listEl.innerHTML=items.length?grid(items.map(it=>linkCard(it)).join("")):empty(); return;
     }
-    const items=g[state.cat]||[]; listEl.innerHTML=items.length?grid(items.map(it=>linkCard(it)).join("")):empty();
+    const items=g[state.cat]||[];
+    // 带 drill 的条目（每节独立成页、没有自己首页的单元）先展开节列表再进节
+    if(state.unit){
+      const u=findUnit(g);
+      if(u){ listEl.innerHTML=grid((u.sections||[]).map(sectionCard).join("")); return; }
+      state.unit=null;   // hash 里的 unit 找不到就退回本级，别白屏
+    }
+    listEl.innerHTML=items.length?grid(items.map(it=>it.drill&&(it.sections||[]).length?unitCard(it):linkCard(it)).join("")):empty();
+  }
+  // 在当前年级的所有「项目数组」类别里按 id 找带 drill 的单元
+  function findUnit(g){
+    let hit=null;
+    catsOf(g).forEach(c=>{ if(c.id==="lecture"||c.id==="practice") return;
+      (g[c.id]||[]).forEach(it=>{ if(it.id===state.unit) hit=it; }); });
+    return hit;
   }
 
   // ---- 点击（下钻 + 面包屑）----
   document.addEventListener('click',e=>{
-    const el=e.target.closest('[data-cat],[data-course],[data-skill],[data-nav]'); if(!el)return;
-    if(el.dataset.nav==="grade"){state.cat=state.course=state.skill=null;}
-    else if(el.dataset.nav==="cat"){state.course=state.skill=null;}
-    else if(el.dataset.cat){state.cat=el.dataset.cat;state.course=null;state.skill=null;}
+    const el=e.target.closest('[data-cat],[data-course],[data-skill],[data-unit],[data-nav]'); if(!el)return;
+    if(el.dataset.nav==="grade"){state.cat=state.course=state.skill=state.unit=null;}
+    else if(el.dataset.nav==="cat"){state.course=state.skill=state.unit=null;}
+    else if(el.dataset.cat){state.cat=el.dataset.cat;state.course=null;state.skill=null;state.unit=null;}
     else if(el.dataset.course){state.course=el.dataset.course;}
     else if(el.dataset.skill){state.skill=el.dataset.skill;}
+    else if(el.dataset.unit){state.unit=el.dataset.unit;}
     writeHash(true);
     render();
   });
