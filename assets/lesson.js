@@ -224,14 +224,24 @@
   </div>`;
   document.body.innerHTML = body;
 
-  // 目录展开／收起。没有目录按钮的课页（secs 查不到）这段直接跳过。
+  // 目录下拉：展开／收起 + 点外面关 + Esc 关。
+  // 面板是浮层（css 里 position:absolute），不占文档流，所以不会把正文顶下去。
+  // 没有目录按钮的课页（secs 查不到）这段直接跳过。
   (function(){
     const btn = document.getElementById("tocBtn"), panel = document.getElementById("tocPanel");
     if(!btn || !panel) return;
-    btn.addEventListener("click", () => {
-      panel.hidden = !panel.hidden;
-      btn.textContent = panel.hidden ? "☰ 目录" : "✕ 收起";
+    const setOpen = open => {
+      panel.hidden = !open;
+      btn.textContent = open ? "✕ 收起" : "☰ 目录";
+      if(open) { const cur = panel.querySelector("a.cur"); if(cur) cur.scrollIntoView({block:"nearest"}); }
+    };
+    btn.addEventListener("click", e => { e.stopPropagation(); setOpen(panel.hidden); });
+    // 点面板以外的任何地方就收起（点面板里的链接是跳转，不拦）
+    document.addEventListener("click", e => {
+      if(panel.hidden) return;
+      if(!panel.contains(e.target) && e.target !== btn) setOpen(false);
     });
+    document.addEventListener("keydown", e => { if(e.key === "Escape" && !panel.hidden) setOpen(false); });
   })();
 
   // ===== 学生身份：本地记住（花名册下拉；「其它」→自由填，老师/访客用）=====
