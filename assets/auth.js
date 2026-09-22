@@ -111,12 +111,24 @@
     return rows[0] || null;   // 无权时 RLS 返回空 → null
   }
 
+
+  // ---------- 老师身份（水印用：老师不显示邮箱小字，投屏时不漏私人邮箱）----------
+  // 问数据库的 vce_is_teacher()，避免把老师邮箱写进公开仓。
+  // 未登录/出错一律当学生处理（显示完整水印），安全方向不会错。
+  async function isTeacher(){
+    try {
+      const r = await restFetch("/rpc/vce_is_teacher", { method:"POST", body:"{}" });
+      if (!r.ok) return false;
+      return (await r.json()) === true;
+    } catch(e){ return false; }
+  }
+
   // ---------- 小工具 ----------
   const currentEmail = () => { const s = loadSession(); return s ? (decodeJwt(s.access_token).email || "") : ""; };
   const isLoggedIn   = () => !!loadSession();
 
   window.VCEAuth = {
-    signup, login, logout, getProfile, getAccessToken,
+    signup, login, logout, getProfile, getAccessToken, isTeacher,
     claimSession, claimRelease, getLesson, currentEmail, isLoggedIn
   };
 })();

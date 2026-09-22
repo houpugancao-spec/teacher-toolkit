@@ -123,29 +123,54 @@
 
     const s = document.createElement("script");
     s.src = "../../assets/lesson.js";
-    s.onload = () => { applyWatermark(A.currentEmail()); armAntiCopy(); };
+    s.onload = async () => {
+      const teacher = await A.isTeacher();        // 老师：只显品牌行，投屏不漏邮箱
+      applyWatermark(A.currentEmail(), teacher);
+      armAntiCopy();
+    };
     s.onerror = () => show("<h2>引擎加载失败</h2><p>请重试。</p>");
     document.body.appendChild(s);   // lesson.js 立即执行、重写 body
   }
 
-  // ---- 账号水印（平铺、半透明、含邮箱+日期，作证据用）----
-  function applyWatermark(email){
-    const label = (email || "已登录") + " · " + new Date().toLocaleDateString("zh-CN");
-    const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='320' height='190'>" +
-      "<text x='10' y='100' transform='rotate(-24 160 95)' font-size='15' fill='#123' " +
-      "font-family='sans-serif'>" + label.replace(/&/g,"&amp;").replace(/</g,"&lt;") + "</text></svg>";
+  // ---- 水印（双行：品牌大字 + 访客标识小字，平铺半透明）----
+  // 品牌行人人都看得到；小字行是泄漏溯源用的证据，
+  // 老师自己登录时不显（上课投屏不把私人邮箱扒在屏幕上）。
+  const WM_BRAND = "周老师的VCE中文教案";
+  function applyWatermark(email, isTeacher){
+    const esc = t => String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+    // 学生：品牌大字 + 【授权使用，请勿传播：邮箱-日期】
+    // （拆两行排：整串在 340px 的水印格里会溢出，长邮箱尤其）
+    const d = new Date();
+    const day = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+    const line2 = isTeacher ? "" : "【授权使用，请勿传播：";
+    const line3 = isTeacher ? "" : (esc(email || "已登录") + "-" + day + "】");
+    const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='420' height='260'>" +
+      "<g transform='rotate(-24 210 130)' fill='#123' font-family='sans-serif'>" +
+      "<text x='20' y='120' font-size='17' font-weight='600'>【" + esc(WM_BRAND) + "】</text>" +
+      (line2 ? "<text x='20' y='140' font-size='11'>" + line2 + "</text>" : "") +
+      (line3 ? "<text x='20' y='156' font-size='11'>" + line3 + "</text>" : "") +
+      "</g></svg>";
     const uri = "data:image/svg+xml," + encodeURIComponent(svg);
     let host = document.getElementById("wm-host");
     if (!host) { host = document.createElement("div"); host.id = "wm-host"; document.documentElement.appendChild(host); }
     host.setAttribute("style",
-      "position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:0.11;" +
+      "position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:0.10;" +
       "background-image:url(\"" + uri + "\");background-repeat:repeat;");
   }
 
-  // ---- 防拷贝：图片禁右键/拖拽（文字仍可选，方便查词）----
+  // ---- 防拷贝（只加低代价的三项；浏览器里的内容真防不住，靠水印威慑）----
+  // ① 屏蔽打印 / 另存 PDF　② 手机长按图片不弹「保存」　③ 全页禁右键
+  // 文字仍可选中：学生要圈词查字典，老师自己也要复制。
   function armAntiCopy(){
-    document.addEventListener("contextmenu", e => { if (e.target && e.target.tagName === "IMG") e.preventDefault(); });
+    document.addEventListener("contextmenu", e => e.preventDefault());
     document.addEventListener("dragstart",  e => { if (e.target && e.target.tagName === "IMG") e.preventDefault(); });
+    const st = document.createElement("style");
+    st.textContent =
+      "img{-webkit-touch-callout:none;-webkit-user-drag:none}" +
+      "@media print{body>*{display:none!important}" +
+      "body::after{content:'【" + WM_BRAND + "】受保护内容，不提供打印。';" +
+      "display:block;padding:60px 20px;text-align:center;font-size:18px}}";
+    document.head.appendChild(st);
   }
 
   boot().catch(e => show("<h2>出错了</h2><p>" + (e.message||"") + "</p><button class='btn' onclick='location.reload()'>重试</button>"));
