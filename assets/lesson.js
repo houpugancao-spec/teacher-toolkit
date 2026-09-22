@@ -25,17 +25,20 @@
   // 补到二十：作文·话题基础词句有 15 节，原来只到十二会显示「第undefined节」
   const CN=["一","二","三","四","五","六","七","八","九","十","十一","十二",
             "十三","十四","十五","十六","十七","十八","十九","二十"];
-  let course=null, gradeName="";
+  let course=null, gradeName="", gradeIdx=-1, catId=null, skillName=null;
   // 授课 lecture[] + 练习 practice{技能:[]} + 作业/测验/其它：凡在 catalog 里带 sections[] 的
   // 条目都能有上一节/下一节。没写 sections 的条目照旧（空数组→不匹配→行为不变）。
-  (CAT?CAT.grades:[]).forEach(g=>{
-    const pools=[g.lecture||[]];
-    const pr=g.practice||{}; Object.keys(pr).forEach(sk=>pools.push(pr[sk]||[]));
+  // 每个 pool 带上它来自哪个分类（面包屑要用）；匹配逻辑与改造前一致
+  (CAT?CAT.grades:[]).forEach((g,gi)=>{
+    const pools=[{cat:"lecture",skill:null,list:g.lecture||[]}];
+    const pr=g.practice||{}; Object.keys(pr).forEach(sk=>pools.push({cat:"practice",skill:sk,list:pr[sk]||[]}));
     // 年级可自定义一级目录（Y11 的 听力/口语/作文/复习材料）；没定义就还是原来那三类
     (g.categories||[{id:"homework"},{id:"exam"},{id:"other"}]).forEach(c=>{
-      if(c.id!=="lecture"&&c.id!=="practice") pools.push(g[c.id]||[]); });
-    pools.forEach(list=>(list||[]).forEach(co=>{
-      if((co.sections||[]).some(s=>s.id===L.id)){course=co;gradeName=g.name;}
+      if(c.id!=="lecture"&&c.id!=="practice") pools.push({cat:c.id,skill:null,list:g[c.id]||[]}); });
+    pools.forEach(p=>(p.list||[]).forEach(co=>{
+      if((co.sections||[]).some(s=>s.id===L.id)){
+        course=co; gradeName=g.name; gradeIdx=gi; catId=p.cat; skillName=p.skill;
+      }
     }));
   });
   const secs = course?(course.sections||[]):[];
@@ -155,7 +158,35 @@
     ? esc(L.title) + (L.subtitle?" · "+esc(L.subtitle):"")
     : `第${CN[curN-1]}节 · ${esc(L.title)} ${L.subtitle?"· "+esc(L.subtitle):""}`;
   const scoreBox = scored ? `<div class="score">⭐ <span id="score">0</span>/${maxScore}</div>` : "";
-  const navRow = `<a href="../../index.html">🏠 主页</a><a href="../../index.html">🔍 目录/搜索</a>`+
+  // 面包屑：主页 › 年级 › 分类，每一级都可点，不再跳级回主页。
+  // 靠 index.html 的 hash 路由定位（#g=1&cat=review）。
+  // 定位不到（老课页、或 catalog 里没登记）就退回改造前的样子，不会坏。
+  const catLabel = (()=>{
+    if(!CAT||gradeIdx<0||!catId) return "";
+    const g=CAT.grades[gradeIdx]||{};
+    const list=(g.categories||CAT.categories||[]);
+    const c=list.find(x=>x.id===catId);
+    return c ? ((c.ico?c.ico+" ":"")+c.name) : "";
+  })();
+  // 最后一格 = 本节的【直接上级】，不跳级：
+  //   授课课页 → 所属课（第九课 孔子）　练习页 → 所属技能（口语）　其它 → 所属分类（复习材料）
+  // 再往上的层级，主页自己的面包屑会接着给，不必全堵在这条小导航里。
+  const upHash = (()=>{
+    if(gradeIdx<0) return "";
+    let h="#g="+gradeIdx;
+    if(catId) h+="&cat="+encodeURIComponent(catId);
+    if(skillName) h+="&skill="+encodeURIComponent(skillName);
+    if(catId==="lecture" && course && course.id) h+="&course="+encodeURIComponent(course.id);
+    return h;
+  })();
+  const upLabel = (catId==="lecture" && course)
+      ? [course.no,course.title].filter(Boolean).join(" ")
+      : (skillName || catLabel);
+  const navRow = (gradeIdx>=0
+      ? `<a href="../../index.html">🏠 主页</a>`+
+        `<a href="../../index.html#g=${gradeIdx}">${esc(gradeName)}</a>`+
+        (upLabel ? `<a href="../../index.html${upHash}">${esc(upLabel)}</a>` : "")
+      : `<a href="../../index.html">🏠 主页</a><a href="../../index.html">🔍 目录/搜索</a>`)+
     (isOverview ? "" : `${navLink(prev,"◀ 上一节")}${navLink(next,"下一节 ▶")}`);
   const idcard = scored ? `<div class="card idcard" id="idcard"></div>` : "";
   const submitBox = scored ? `<div class="card" style="text-align:center">

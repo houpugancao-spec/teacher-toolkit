@@ -39,6 +39,32 @@
   document.title=C.site;
 
   let state={g:0,cat:null,course:null,skill:null}, kw="";
+
+  // ---- hash 路由：让「回到某个年级/分类」能用链接表达 ----
+  // 形如 #g=1&cat=review&skill=口语&course=kongzi。课页的面包屑就指这种地址。
+  // 附带好处：下钻时 pushState，手机返回手势/浏览器后退能一级一级退。
+  // 无 hash 时行为与改造前完全一致（默认第一个年级）。
+  function readHash(){
+    const h=(location.hash||"").replace(/^#/,""); if(!h) return false;
+    const q={}; h.split("&").forEach(kv=>{const i=kv.indexOf("="); if(i>0) q[kv.slice(0,i)]=decodeURIComponent(kv.slice(i+1));});
+    const gi=parseInt(q.g,10);
+    state={ g:(gi>=0&&gi<C.grades.length)?gi:0, cat:q.cat||null, course:q.course||null, skill:q.skill||null };
+    return true;
+  }
+  function writeHash(push){
+    const p=["g="+state.g];
+    if(state.cat)    p.push("cat="+encodeURIComponent(state.cat));
+    if(state.skill)  p.push("skill="+encodeURIComponent(state.skill));
+    if(state.course) p.push("course="+encodeURIComponent(state.course));
+    const h="#"+p.join("&");
+    if(h===location.hash) return;
+    if(push) history.pushState(null,"",h); else history.replaceState(null,"",h);
+  }
+  // 退到「无 hash」那一步时要回默认态，否则面包屑会停在上一级不动
+  window.addEventListener("popstate",()=>{
+    if(!readHash()) state={g:0,cat:null,course:null,skill:null};
+    render();
+  });
   const gradesEl=document.getElementById('grades'), crumbEl=document.getElementById('crumb'), listEl=document.getElementById('list');
 
   // ---- 全站搜索索引 ----
@@ -55,7 +81,7 @@
   function kwMatch(hay){const t=kw.match(/[a-z0-9]+|[一-鿿]/g)||[kw];return t.every(x=>hay.includes(x));}
 
   // ---- 年级标签 ----
-  C.grades.forEach((g,i)=>{const b=document.createElement('button');b.className='chip-f'+(i===0?' on':'');b.textContent=g.name;b.onclick=()=>{state={g:i,cat:null,course:null,skill:null};render();};gradesEl.appendChild(b);});
+  C.grades.forEach((g,i)=>{const b=document.createElement('button');b.className='chip-f'+(i===0?' on':'');b.textContent=g.name;b.onclick=()=>{state={g:i,cat:null,course:null,skill:null};writeHash(true);render();};gradesEl.appendChild(b);});
 
   document.getElementById('search').addEventListener('input',e=>{kw=e.target.value.trim().toLowerCase();render();});
 
@@ -128,9 +154,11 @@
     else if(el.dataset.cat){state.cat=el.dataset.cat;state.course=null;state.skill=null;}
     else if(el.dataset.course){state.course=el.dataset.course;}
     else if(el.dataset.skill){state.skill=el.dataset.skill;}
+    writeHash(true);
     render();
   });
 
+  readHash();          // 带 hash 进来（从课页面包屑点回来）就还原到那一层
   render();
 })();
 </script>
