@@ -122,12 +122,30 @@ window.CATALOG = {
       id:"y11", name:"Y11",
       // Y11 用自己的一级目录，不走全站那五类（index.html 的 catsOf 支持按年级覆盖）
       categories:[
-        { id:"listening", name:"听力",     ico:"🎧" },
-        { id:"speaking",  name:"口语",     ico:"🗣️" },
-        { id:"writing",   name:"作文",     ico:"✍️" },
-        { id:"review",    name:"复习材料", ico:"📚" }
+        { id:"listening", name:"听力-阅读", ico:"🎧" },
+        { id:"speaking",  name:"口语",      ico:"🗣️" },
+        { id:"writing",   name:"小作文",    ico:"✍️" },
+        { id:"essay",     name:"大作文",    ico:"📝" },
+        { id:"review",    name:"复习材料",  ico:"📚" }
       ],
-      listening:[], speaking:[], writing:[],
+      listening:[], speaking:[], essay:[],
+      writing:[
+        // ⚠ 受保护内容：正文存 Supabase vce_lessons（y11-xzw-01…06），公开仓只有目录条目
+        // 数据源 03_Input\小作文\小作文材料库-网站上传.docx，构建脚本 06_Scripts\xiaozuowen\build.py
+        { id:"y11-xzw", drill:true,
+          title:"小作文材料库", url:"units/protected/index.html?id=y11-xzw-01",
+          tags:["小作文","材料","阅读","听力","作文题","书信","邮件","日记","演讲稿","校报文章",
+                "露营","人工智能","AI","开放日","大学","丽江","旅游","文化演出","川剧变脸",
+                "汉服","学生代表理事会","SRC"], ready:true,
+          sections:[
+            { id:"y11-xzw-01", n:1, title:"学校秋季露营活动介绍",           url:"units/protected/index.html?id=y11-xzw-01", ready:true },
+            { id:"y11-xzw-02", n:2, title:"中学生使用人工智能（AI）写作业的调查", url:"units/protected/index.html?id=y11-xzw-02", ready:true },
+            { id:"y11-xzw-03", n:3, title:"天星大学2022年开放日",           url:"units/protected/index.html?id=y11-xzw-03", ready:true },
+            { id:"y11-xzw-04", n:4, title:"丽江旅游介绍",                   url:"units/protected/index.html?id=y11-xzw-04", ready:true },
+            { id:"y11-xzw-05", n:5, title:"中国传统文化演出",               url:"units/protected/index.html?id=y11-xzw-05", ready:true },
+            { id:"y11-xzw-06", n:6, title:"认识我们的学生代表理事会",       url:"units/protected/index.html?id=y11-xzw-06", ready:true }
+          ] }
+      ],
       review:[
         // ⚠ 受保护内容：正文存 Supabase vce_lessons，公开仓只有这个目录条目和音频
         // drill:true —— 这个单元的每一节都是独立课页、没有自己的首页，
