@@ -172,6 +172,17 @@ window.CATALOG = {
             { id:"y11-zwcj-13", n:13, title:"家庭、人际与社区",    url:"units/protected/index.html?id=y11-zwcj-13", ready:true  },
             { id:"y11-zwcj-14", n:14, title:"工作、职业与未来社会",url:"units/protected/index.html?id=y11-zwcj-14", ready:true  },
             { id:"y11-zwcj-15", n:15, title:"连接词与升格句",      url:"units/protected/index.html?id=y11-zwcj-15", ready:true  }
+          ] },
+        { id:"y11-silu", drill:true,
+          title:"说服文-评估文-思路集锦", url:"units/protected/index.html?id=y11-silu-01",
+          tags:["作文","说服文","评估文","思路","角度","好处","坏处","利弊","短语","词卡",
+                "拼音","读音","例句","SL","SLA","经济","健康","教育","环境","社会","文化",
+                "科技","家庭","社交","公平","安全"], ready:true,
+          sections:[
+            { id:"y11-silu-01", n:1, title:"对个人的好处",            url:"units/protected/index.html?id=y11-silu-01", ready:true },
+            { id:"y11-silu-02", n:2, title:"对个人的坏处",            url:"units/protected/index.html?id=y11-silu-02", ready:true },
+            { id:"y11-silu-03", n:3, title:"对自然环境 / 社会的好处", url:"units/protected/index.html?id=y11-silu-03", ready:true },
+            { id:"y11-silu-04", n:4, title:"对自然环境 / 社会的坏处", url:"units/protected/index.html?id=y11-silu-04", ready:true }
           ] }
       ],
       // 下面这些保留原样：7 月的访问锁样板课还在数据里，只是不在上面四个目录里露面
