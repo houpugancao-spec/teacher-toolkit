@@ -156,6 +156,13 @@ audio{width:100%;margin:4px 0 10px;height:40px}
 .flip{position:relative}
 .spk{position:absolute;top:6px;right:8px;font-size:15px;z-index:2;line-height:1;opacity:.75;cursor:pointer}
 .spk:hover{opacity:1}
+/* 词卡 🔊 做成圆钮：原来 21x15 手机上点不中、一点就翻面。
+   看得见的钮约 32x24（不挤四字词）；外圈是透明边框，也算按钮，点击区约 46x34。
+   （用 ::after 外扩在 3D 翻转卡里点击判定不稳，别改回去） */
+.flip:not(.prototype-card) .spk{top:0;right:0;font-size:14px;opacity:1;padding:4px 6px;line-height:1;
+  border:5px solid transparent;border-width:5px 7px;border-radius:19px;
+  background:#eaf1ff;background-clip:padding-box;box-shadow:inset 0 0 0 1px #cfe0ff}
+.flip:not(.prototype-card) .spk:active{background-color:#cfe0ff}
 /* 讲解卡（facts）里的 🔊 改为行内按钮样式，不用卡片角标定位 */
 .fact .spk{position:static;display:inline-block;font-size:14px;line-height:1.4;opacity:1;margin-left:4px;padding:1px 9px;border:1px solid var(--line);border-radius:20px;background:#eef4ff;color:var(--blue-d);vertical-align:middle}
 .fact .spk:hover{background:#dbe9ff}

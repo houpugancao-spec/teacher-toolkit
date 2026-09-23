@@ -126,7 +126,9 @@
   };
 
   // 进页面时：已登录就直接按状态路由
-  if (A.isLoggedIn()) { routeAfterAuth(); }
+  if (A.isLoggedIn()) {
+    routeAfterAuth().catch(e => msg((e && e.message) || "出错了，请重试。Something went wrong.", "err"));
+  }
 
   setMode("login");
 })();

@@ -84,7 +84,14 @@
   // ---------- profile（自己的一行；RLS 保证只读到自己）----------
   async function getProfile(){
     const r = await restFetch("/vce_profiles?select=*", {});
-    if (!r.ok) return null;
+    // 请求失败要抛错，不能返回 null：null 专指「真没有档案」，否则 401/500 都会被显示成「等待建档」
+    if (!r.ok) {
+      if (r.status === 401) {
+        clearSession();   // 登录失效：清掉本地会话，重试时自然回登录页
+        throw new Error("登录已失效，请重新登录。Session expired, please log in again.");
+      }
+      throw new Error("读取账号信息失败（" + r.status + "），请稍后重试。Could not load your account, please try again.");
+    }
     const rows = await r.json();
     return rows[0] || null;
   }
