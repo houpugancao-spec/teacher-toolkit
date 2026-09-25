@@ -128,7 +128,30 @@ window.CATALOG = {
         { id:"essay",     name:"大作文",    ico:"📝" },
         { id:"review",    name:"复习材料",  ico:"📚" }
       ],
-      listening:[], speaking:[], essay:[],
+      listening:[], speaking:[],
+      essay:[
+        // ⚠ 受保护内容：正文存 Supabase vce_lessons（y11-dzw-01…12），公开仓只有目录条目、音频和数据图
+        // 数据源 03_Input\大作文\大作文-材料-热点话题-网站上传.docx，构建脚本 06_Scripts\dazuowen\build.py
+        { id:"y11-dzw", drill:true,
+          title:"大作文-热点话题", url:"units/protected/index.html?id=y11-dzw-01",
+          tags:["大作文","热点话题","议论文","说服文","评估文","阅读","好词","好句","关联词","仿写",
+                "小贴士","词卡","拼音","读音","人工智能","AI","无人驾驶","机器人","老人","社交媒体",
+                "创业","退学","教育","兼职","四天工作日","短剧","影视","医疗","自由职业","数字游民"], ready:true,
+          sections:[
+            { id:"y11-dzw-01", n:1,  title:"人工智能",                           url:"units/protected/index.html?id=y11-dzw-01", ready:true },
+            { id:"y11-dzw-02", n:2,  title:"人工智能：机遇与挑战",               url:"units/protected/index.html?id=y11-dzw-02", ready:true },
+            { id:"y11-dzw-03", n:3,  title:"无人驾驶出租车",                     url:"units/protected/index.html?id=y11-dzw-03", ready:true },
+            { id:"y11-dzw-04", n:4,  title:"机器人陪伴老人",                     url:"units/protected/index.html?id=y11-dzw-04", ready:true },
+            { id:"y11-dzw-05", n:5,  title:"社交媒体",                           url:"units/protected/index.html?id=y11-dzw-05", ready:true },
+            { id:"y11-dzw-06", n:6,  title:"大学退学去创业",                     url:"units/protected/index.html?id=y11-dzw-06", ready:true },
+            { id:"y11-dzw-07", n:7,  title:"AI对教育的双重影响",                 url:"units/protected/index.html?id=y11-dzw-07", ready:true },
+            { id:"y11-dzw-08", n:8,  title:"中学生兼职工作",                     url:"units/protected/index.html?id=y11-dzw-08", ready:true },
+            { id:"y11-dzw-09", n:9,  title:"四天工作日",                         url:"units/protected/index.html?id=y11-dzw-09", ready:true },
+            { id:"y11-dzw-10", n:10, title:"AI短剧对影视行业的冲击",             url:"units/protected/index.html?id=y11-dzw-10", ready:true },
+            { id:"y11-dzw-11", n:11, title:"AI推动医疗发展的影响",               url:"units/protected/index.html?id=y11-dzw-11", ready:true },
+            { id:"y11-dzw-12", n:12, title:"青年人选择自由职业，到低消费地区生活", url:"units/protected/index.html?id=y11-dzw-12", ready:true }
+          ] }
+      ],
       writing:[
         // ⚠ 受保护内容：正文存 Supabase vce_lessons（y11-xzw-01…06），公开仓只有目录条目
         // 数据源 03_Input\小作文\小作文材料库-网站上传.docx，构建脚本 06_Scripts\xiaozuowen\build.py
