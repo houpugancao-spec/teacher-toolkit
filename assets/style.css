@@ -192,11 +192,12 @@ a.secitem:hover{border-color:var(--blue);transform:translateY(-1px)}
 
 /* ===== 字卡（大纲必备汉字 · lesson.js 的 zika 区块）===== */
 .zk-grid{grid-template-columns:repeat(auto-fill,minmax(138px,1fr))}
-.flip.zk{height:270px}
+.flip.zk{height:295px}
 .flip.zk .front .hz{font-size:60px;font-weight:400;line-height:1.1}
 .flip.zk .front .py{font-size:17px;margin-top:4px}
 .flip.zk .zk-en{font-size:12.5px;color:var(--muted);margin-top:6px;padding:0 8px;line-height:1.3;text-align:center}
-.flip.zk .back{font-size:14px;justify-content:flex-start;align-items:stretch;text-align:left;padding:10px 10px;overflow-y:auto}
+.flip.zk .back{font-size:14px;justify-content:flex-start;align-items:stretch;text-align:left;padding:36px 10px 10px;overflow-y:auto}
+/* 背面顶部空出 36px：右上角 🔊 圆钮翻面后仍浮在最上层，会挡住第一行（用户 2026-09-26 反馈） */
 .zk-words{list-style:none;margin:0;padding:0}
 .zk-words li{margin:0 0 4px;line-height:1.22}
 .zk-w{font-size:17px}
