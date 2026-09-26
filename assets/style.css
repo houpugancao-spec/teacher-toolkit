@@ -189,3 +189,34 @@ a.secitem:hover{border-color:var(--blue);transform:translateY(-1px)}
 .secitem .go{color:var(--blue);font-weight:700}
 .secitem.soon{opacity:.55}
 .secitem .soonbadge{font-size:11px;color:var(--gold);font-weight:600}
+
+/* ===== 字卡（大纲必备汉字 · lesson.js 的 zika 区块）===== */
+.zk-grid{grid-template-columns:repeat(auto-fill,minmax(138px,1fr))}
+.flip.zk{height:270px}
+.flip.zk .front .hz{font-size:60px;font-weight:400;line-height:1.1}
+.flip.zk .front .py{font-size:17px;margin-top:4px}
+.flip.zk .zk-en{font-size:12.5px;color:var(--muted);margin-top:6px;padding:0 8px;line-height:1.3;text-align:center}
+.flip.zk .back{font-size:14px;justify-content:flex-start;align-items:stretch;text-align:left;padding:10px 10px;overflow-y:auto}
+.zk-words{list-style:none;margin:0;padding:0}
+.zk-words li{margin:0 0 4px;line-height:1.22}
+.zk-w{font-size:17px}
+.zk-wpy{font-size:12px;opacity:.9}
+.zk-wen{display:block;font-size:11.5px;opacity:.8}
+.zk-say{border-top:1px solid rgba(255,255,255,.35);margin-top:4px;padding-top:6px}
+.zk-sz{font-size:16px;line-height:1.3}
+.zk-spy{font-size:11.5px;opacity:.9;margin-top:1px}
+.zk-sen{font-size:11.5px;opacity:.8;margin-top:1px;line-height:1.25}
+.zk-back{font-size:14.5px;line-height:1.5;margin:auto 0}
+.flip.nf{cursor:default}
+.flip.nf.on .inner{transform:none}
+.zk-w, .zk-sz, .zk-back.zh{font-family:'LXGW Kai','KaiTi','楷体','STKaiti',serif}
+/* 主页节列表紧凑单行（大纲必备汉字：「23. 二十个字」，手机一行放下） */
+.lcard.sec1{padding:10px 10px;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:10px;
+  font-family:'LXGW Kai','KaiTi','楷体','STKaiti',serif}
+.lcard.sec1 b{font-family:system-ui,sans-serif;font-weight:600;color:var(--blue-d);margin-right:2px}
+.cards:has(.sec1){gap:7px}
+.secdiv{grid-column:1/-1;margin:10px 0 0;padding:6px 10px;border-left:4px solid var(--gold);background:#fff8e6;border-radius:6px;font-size:14px;font-weight:600;color:#8a5a00}
+/* 词卡（多字）按字数缩字号，四字词也能一行放下 */
+.flip.zk .front .hz.l2{font-size:46px}
+.flip.zk .front .hz.l3{font-size:36px}
+.flip.zk .front .hz.l4{font-size:29px}

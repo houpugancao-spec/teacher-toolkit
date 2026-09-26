@@ -206,7 +206,53 @@ window.CATALOG = {
             { id:"y11-silu-02", n:2, title:"对个人的坏处",            url:"units/protected/index.html?id=y11-silu-02", ready:true },
             { id:"y11-silu-03", n:3, title:"对自然环境 / 社会的好处", url:"units/protected/index.html?id=y11-silu-03", ready:true },
             { id:"y11-silu-04", n:4, title:"对自然环境 / 社会的坏处", url:"units/protected/index.html?id=y11-silu-04", ready:true }
-          ] }
+          ] },
+        // <dghz> 大纲必备汉字：dagang_hanzi/build.py 生成，别手改
+        // ⚠ 受保护内容：正文存 Supabase vce_lessons（y11-dghz-NN），公开仓只有目录条目和音频
+        // arabic:true —— 37 节，序号用阿拉伯数字（第23节），用户 2026-09-26 定
+        { id:"y11-dghz", drill:true, arabic:true,
+          title:"大纲必备汉字", url:"units/protected/index.html?id=y11-dghz-01",
+          tags:["汉字","字卡","大纲","必会","SL","SLA","拼音","读音","词语","成语","俗语","名言","复习"], ready:true,
+          sections:[
+            { id:"y11-dghz-01", n:1, title:"本果片山风水日月星雨电气身手心口自肉子儿", url:"units/protected/index.html?id=y11-dghz-01", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-02", n:2, title:"孩考女男头人文字音书工力功网业车两乐京门", url:"units/protected/index.html?id=y11-dghz-02", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-03", n:3, title:"象牛羊马龙狗猫物蛋鱼再上下左右前后里外内", url:"units/protected/index.html?id=y11-dghz-03", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-04", n:4, title:"东南西北中方面边今昨早午晚夜年岁季期春夏", url:"units/protected/index.html?id=y11-dghz-04", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-05", n:5, title:"秋冬黑白红黄蓝绿米菜茶药花饭汤味酒馆官饺", url:"units/protected/index.html?id=y11-dghz-05", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-06", n:6, title:"家室客堂店商参楼校杯城景影院园元国部场所", url:"units/protected/index.html?id=y11-dghz-06", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-07", n:7, title:"衣表医床笔班科路街房间时史事旅社市海汉河", url:"units/protected/index.html?id=y11-dghz-07", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-08", n:8, title:"汽法规友朋师课歌情理诗技题图信息颜色篮球", url:"units/protected/index.html?id=y11-dghz-08", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-09", n:9, title:"队英语话级节体意脑姓名票钱机觉经始样我你", url:"units/protected/index.html?id=y11-dghz-09", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-10", n:10, title:"您他她它己谁这那哪什么者些然最亚怎出回发", url:"units/protected/index.html?id=y11-dghz-10", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-11", n:11, title:"到开关来去飞离行起还进送迎运走坐站住合会", url:"units/protected/index.html?id=y11-dghz-11", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-12", n:12, title:"从化变生画写习易是有爱感怕办为包跑唱吵吃", url:"units/protected/index.html?id=y11-dghz-12", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-13", n:13, title:"告喝号问听谢叫知收处报服挺接打订找换受丢", url:"units/protected/index.html?id=y11-dghz-13", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-14", n:14, title:"将度穿带计说记识谈诉试请让认访放分划刻见", url:"units/protected/index.html?id=y11-dghz-14", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-15", n:15, title:"看睡观视现望玩改教数学候假借作做停休练给", url:"units/protected/index.html?id=y11-dghz-15", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-16", n:16, title:"买卖容赛闹骑庆思想忘喜兴笑等养应活洗泳游", url:"units/protected/index.html?id=y11-dghz-16", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-17", n:17, title:"漂建交较动努种祝丰几公私久旧古故长短高平", url:"units/protected/index.html?id=y11-dghz-17", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-18", n:18, title:"末先正大太小少多美亲新鲜安宜富福饱饿便病", url:"units/protected/index.html?id=y11-dghz-18", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-19", n:19, title:"瘦胖差错同真常费贵过远近迷趣好坏华欢难紧", url:"units/protected/index.html?id=y11-dghz-19", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-20", n:20, title:"累剧利空冷热乱舒快慢忙轻重晴明没半点另别", url:"units/protected/index.html?id=y11-dghz-20", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-21", n:21, title:"可已以用比非不成对该共历能如次刚更很就每", url:"units/protected/index.html?id=y11-dghz-21", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-22", n:22, title:"完相要总但当都或也了的得地和在吗呢个件块", url:"units/protected/index.html?id=y11-dghz-22", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-23", n:23, title:"条位只", url:"units/protected/index.html?id=y11-dghz-23", ready:true, group:"SL、SLA 都必学的汉字" },
+            { id:"y11-dghz-24", n:24, title:"众乒乓央世式阳台财产胡脏价值卡沙浪律农租", url:"units/protected/index.html?id=y11-dghz-24", ready:true, group:"以下是 SLA 必学汉字（SLA only）" },
+            { id:"y11-dghz-25", n:25, title:"皮权司孙态弹屋戏形性哲志眼雪血圆愿则章帐", url:"units/protected/index.html?id=y11-dghz-25", ready:true, group:"以下是 SLA 必学汉字（SLA only）" },
+            { id:"y11-dghz-26", n:26, title:"政启取采争宣传付管奖结显组联骂免拍批拼提", url:"units/protected/index.html?id=y11-dghz-26", ready:true, group:"以下是 SLA 必学汉字（SLA only）" },
+            { id:"y11-dghz-27", n:27, title:"投推择招折挣指评训讨培增设误证神逃通退造", url:"units/protected/index.html?id=y11-dghz-27", ready:true, group:"以下是 SLA 必学汉字（SLA only）" },
+            { id:"y11-dghz-28", n:28, title:"征越舞消注效整压研移阅赞展照专转装永青尤", url:"units/protected/index.html?id=y11-dghz-28", ready:true, group:"以下是 SLA 必学汉字（SLA only）" },
+            { id:"y11-dghz-29", n:29, title:"优幽幼约杂反困幸满暖普奇软实顺速随限温污", url:"units/protected/index.html?id=y11-dghz-29", ready:true, group:"以下是 SLA 必学汉字（SLA only）" },
+            { id:"y11-dghz-30", n:30, title:"细香修严预原周主准必才而及其双未无向由允", url:"units/protected/index.html?id=y11-dghz-30", ready:true, group:"以下是 SLA 必学汉字（SLA only）" },
+            { id:"y11-dghz-31", n:31, title:"之支", url:"units/protected/index.html?id=y11-dghz-31", ready:true, group:"以下是 SLA 必学汉字（SLA only）" },
+            { id:"y11-dghz-32", n:32, title:"数字 零一二三四五六七八九十百千万亿", url:"units/protected/index.html?id=y11-dghz-32", ready:true, group:"专项词汇" },
+            { id:"y11-dghz-33", n:33, title:"亲属称谓 爷爷奶奶爸爸妈妈哥哥姐姐…", url:"units/protected/index.html?id=y11-dghz-33", ready:true, group:"专项词汇" },
+            { id:"y11-dghz-34", n:34, title:"姓氏 高李刘王黄林毛张赵孙", url:"units/protected/index.html?id=y11-dghz-34", ready:true, group:"专项词汇" },
+            { id:"y11-dghz-35", n:35, title:"名人 孔子李白孙中山毛泽东蒋介石邓小平", url:"units/protected/index.html?id=y11-dghz-35", ready:true, group:"专项词汇" },
+            { id:"y11-dghz-36", n:36, title:"地名 澳大利亚墨尔本北京上海香港…", url:"units/protected/index.html?id=y11-dghz-36", ready:true, group:"专项词汇" },
+            { id:"y11-dghz-37", n:37, title:"节日 春节元旦中秋节端午节圣诞节", url:"units/protected/index.html?id=y11-dghz-37", ready:true, group:"专项词汇" }
+          ] },
+        // </dghz>
       ],
       // 下面这些保留原样：7 月的访问锁样板课还在数据里，只是不在上面四个目录里露面
       lecture:[

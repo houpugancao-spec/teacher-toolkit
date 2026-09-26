@@ -41,6 +41,8 @@
       }
     }));
   });
+  // 单元带 arabic:true（如大纲必备汉字 37 节）序号用阿拉伯数字：第23节；其余照旧用 一二三
+  const NUM = n => (course&&course.arabic) ? String(n) : (CN[n-1]||String(n));
   const secs = course?(course.sections||[]):[];
   const si = secs.findIndex(s=>s.id===L.id);
   const curN = si>=0?secs[si].n:(L.n||1);
@@ -62,7 +64,7 @@
                  (s.sub?`<p class="sub">${esc(s.sub)}</p>`:"");
     return head + ({
       listen:listen, vocab:vocab, match:match, culture:culture, speak:speak, quiz:quiz,
-      reading:reading, sectionnav:sectionnav
+      reading:reading, sectionnav:sectionnav, zika:zika
     }[s.type]||(()=> ""))(s);
   }
   // 把文本里出现的重点词自动包成可点的下划线；长词优先，非贪婪扫描避免嵌套
@@ -98,7 +100,7 @@
   // 分节导航（总览页用）
   function sectionnav(s){
     const items=(s.items||[]).map((it,i)=>{
-      const inner=`<span class="sn">第${CN[i]}节</span><span class="st">${esc(it.title)}</span>`+
+      const inner=`<span class="sn">第${NUM(i+1)}节</span><span class="st">${esc(it.title)}</span>`+
                   (it.ready===false?`<span class="soonbadge">敬请期待</span>`:`<span class="go">▶</span>`);
       return it.ready===false
         ? `<div class="secitem soon">${inner}</div>`
@@ -137,6 +139,25 @@
     }).join("");
     return `<div class="card"><div class="grid">${c}</div><div class="hint">👆 点卡片翻面，点 🔊 听读音 · tap to flip, 🔊 to listen</div></div>`;
   }
+  // 字卡（大纲必备汉字）：正面 🔊+字+拼音+英文；背面 三个常用词 + 成语／俗语／名言，或一段例句／简介。
+  // 没有背面内容的卡（姓氏、地名）只有正面，不翻面。
+  function zika(s){
+    const c = (s.cards||[]).map(v=>{
+      const spk = v.audio ? `<span class="spk" data-au="${esc(v.audio)}">🔊</span>` : "";
+      const front = `${spk}<div class="hz${v.hz.length>1?" l"+Math.min(v.hz.length,4):""}">${esc(v.hz)}</div><div class="py">${esc(v.py||"")}</div>`+
+                    (v.en?`<div class="zk-en">${esc(v.en)}</div>`:"");
+      const words = (v.words||[]).map(w=>
+        `<li><span class="zk-w">${esc(w[0])}</span> <span class="zk-wpy">${esc(w[1]||"")}</span><span class="zk-wen">${esc(w[2]||"")}</span></li>`).join("");
+      const say = v.say ? `<div class="zk-say"><div class="zk-sz">${esc(v.say[0])}</div>`+
+                          (v.say[1]?`<div class="zk-spy">${esc(v.say[1])}</div>`:"")+
+                          (v.say[2]?`<div class="zk-sen">${esc(v.say[2])}</div>`:"")+`</div>` : "";
+      const back = (words?`<ul class="zk-words">${words}</ul>`:"") + say +
+                   (v.back?`<div class="zk-back${/[一-鿿]/.test(v.back)?" zh":""}">${esc(v.back)}</div>`:"");
+      if(!back) return `<div class="flip zk nf"><div class="inner"><div class="side front">${front}</div></div></div>`;
+      return `<button class="flip zk"><div class="inner"><div class="side front">${front}</div><div class="side back">${back}</div></div></button>`;
+    }).join("");
+    return `<div class="card"><div class="grid zk-grid">${c}</div><div class="hint">👆 点卡片翻面，点 🔊 听读音 · tap to flip, 🔊 to listen</div></div>`;
+  }
   function match(s){
     return `<div class="card"><div class="match"><div class="col" data-side="L"></div><div class="col" data-side="R"></div></div><div class="fb mfb" style="text-align:center;margin-top:10px"></div></div>`;
   }
@@ -153,10 +174,10 @@
   // ---- 组装页面 ----
   const isOverview = (L.kind==="overview");   // 课文总览页：无计分、无提交
   const scored = maxScore>0 && !isOverview;   // 有可评分题才显示计分/提交
-  document.title = isOverview ? `${courseLabel} · ${L.title}` : `${courseLabel} 第${CN[curN-1]}节 · ${L.title}`;
+  document.title = isOverview ? `${courseLabel} · ${L.title}` : `${courseLabel} 第${NUM(curN)}节 · ${L.title}`;
   const brandSmall = isOverview
     ? esc(L.title) + (L.subtitle?" · "+esc(L.subtitle):"")
-    : `第${CN[curN-1]}节 · ${esc(L.title)} ${L.subtitle?"· "+esc(L.subtitle):""}`;
+    : `第${NUM(curN)}节 · ${esc(L.title)} ${L.subtitle?"· "+esc(L.subtitle):""}`;
   const scoreBox = scored ? `<div class="score">⭐ <span id="score">0</span>/${maxScore}</div>` : "";
   // 面包屑：主页 › 年级 › 分类，每一级都可点，不再跳级回主页。
   // 靠 index.html 的 hash 路由定位（#g=1&cat=review）。
@@ -187,7 +208,7 @@
   const hasToc = !isOverview && secs.length > 1;
   const tocBtn = hasToc ? `<a id="tocBtn" href="javascript:void(0)">☰ 目录</a>` : "";
   const tocPanel = hasToc ? `<div class="toc" id="tocPanel" hidden>` + secs.map(sc=>{
-      const label = `第${CN[sc.n-1]}节 ${esc(sc.title)}`;
+      const label = `第${NUM(sc.n)}节 ${esc(sc.title)}`;
       if(sc.ready===false) return `<span class="soon">${label}</span>`;
       return sc.id===L.id ? `<a class="cur" href="${rel(sc.url)}">${label}</a>`
                           : `<a href="${rel(sc.url)}">${label}</a>`;
@@ -216,11 +237,11 @@
     ${tocPanel}
   </div>
   <div class="wrap">
-    ${isOverview ? "" : `<div class="seclabel"><span class="sn">第${CN[curN-1]}节</span>${esc(L.title)}</div>`}
+    ${isOverview ? "" : `<div class="seclabel"><span class="sn">第${NUM(curN)}节</span>${esc(L.title)}</div>`}
     ${idcard}
     ${L.sections.map(section).join("")}
     ${submitBox}
-    <p class="foot">${esc(gradeName)} · ${esc(courseLabel)}${isOverview?"":" · 第"+CN[curN-1]+"节"}<br>学生自测练习</p>
+    <p class="foot">${esc(gradeName)} · ${esc(courseLabel)}${isOverview?"":" · 第"+NUM(curN)+"节"}<br>学生自测练习</p>
   </div>`;
   document.body.innerHTML = body;
 

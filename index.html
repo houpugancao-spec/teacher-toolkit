@@ -80,7 +80,7 @@
         FLAT.push({url:it.url,title:it.title,ready:it.ready,tags:it.tags||[],path:`${g.name} · ${c.name}`});
         // 可下钻的单元：每节也单独进索引，否则搜「环境」只能命中整个单元、点进去落到第 3 节
         if(it.drill) (it.sections||[]).forEach(sec=>FLAT.push({
-          url:sec.url, title:`第${CN[sec.n-1]}节 ${sec.title}`, ready:sec.ready,
+          url:sec.url, title:`第${it.arabic?sec.n:CN[sec.n-1]}节 ${sec.title}`, ready:sec.ready,
           tags:sec.tags||[], path:`${g.name} · ${c.name} · ${it.title}`}));
       });});
   });
@@ -118,8 +118,13 @@
     const cnt=done===n?`${n} 节`:`${n} 节 · 已上线 ${done}`;
     return `<div class="lcard nav" data-unit="${it.id}"><div class="tt">${it.title}</div><div class="cnt">${cnt}</div></div>`;
   }
-  function sectionCard(s){
-    const it={url:s.url,title:`第${CN[s.n-1]}节 · ${s.title}`,ready:s.ready,tags:s.tags};
+  function sectionCard(s,u){
+    // 单元带 arabic:true（大纲必备汉字 37 节）：手机上一行放下「23. 二十个字」，紧凑单行，不用大卡片
+    if(u&&u.arabic){
+      if(s.ready===false) return `<div class="lcard soon sec1"><b>${s.n}.</b> ${s.title}</div>`;
+      return `<a class="lcard sec1" href="${s.url}"><b>${s.n}.</b> ${s.title}</a>`;
+    }
+    const it={url:s.url,title:`第${u&&u.arabic?s.n:CN[s.n-1]}节 · ${s.title}`,ready:s.ready,tags:s.tags};
     return linkCard(it);
   }
   const grid=h=>`<div class="cards">${h}</div>`;
@@ -163,7 +168,9 @@
     // 带 drill 的条目（每节独立成页、没有自己首页的单元）先展开节列表再进节
     if(state.unit){
       const u=findUnit(g);
-      if(u){ listEl.innerHTML=grid((u.sections||[]).map(sectionCard).join("")); return; }
+      // 节可带 group（如「以下是 SLA 必学汉字」）：分组变化处插一条通栏分隔标题
+      if(u){ listEl.innerHTML=grid((u.sections||[]).map((s,i,a)=>
+        (s.group&&(i===0||a[i-1].group!==s.group)?`<div class="secdiv">${s.group}</div>`:"")+sectionCard(s,u)).join("")); return; }
       state.unit=null;   // hash 里的 unit 找不到就退回本级，别白屏
     }
     listEl.innerHTML=items.length?grid(items.map(it=>it.drill&&(it.sections||[]).length?unitCard(it):linkCard(it)).join("")):empty();
