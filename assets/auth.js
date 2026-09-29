@@ -58,8 +58,11 @@
   }
 
   // ---------- 认证动作 ----------
-  async function signup(email, password){
-    const r = await authFetch("/signup", { method:"POST", body: JSON.stringify({ email, password }) });
+  // name 放进 user metadata，由数据库触发器写入 vce_profiles.display_name
+  async function signup(email, password, name){
+    const body = { email, password };
+    if (name) body.data = { name };
+    const r = await authFetch("/signup", { method:"POST", body: JSON.stringify(body) });
     const data = await r.json();
     if (!r.ok) throw new Error(data.msg || data.error_description || data.error || ("注册失败 " + r.status));
     if (data.access_token) saveSession(data);   // 未开邮箱确认时直接给 session

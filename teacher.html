@@ -345,6 +345,7 @@
 
   /* ===== 账号审批（Y11/Y12 访问锁）===== */
   const fmtD = d => d ? new Date(d).toLocaleDateString('en-AU',{timeZone:'Australia/Melbourne',year:'2-digit',month:'2-digit',day:'2-digit'}) : '';
+  let ACCT=new Map();   // id → profile（改名时取当前名）
   async function loadAccounts(){
     const msg=$('aMsg'); msg.textContent='读取中…'; msg.className='msg';
     const [{data:profs,error:e1},{data:sess}] = await Promise.all([
@@ -354,22 +355,29 @@
     if(e1){ msg.textContent='读取失败：'+e1.message; msg.className='msg b'; return; }
     msg.textContent='';
     const online=new Map((sess||[]).map(s=>[s.user_id,s]));
+    ACCT=new Map((profs||[]).map(p=>[p.id,p]));
     renderAccounts(profs||[], online);
   }
+  // 姓名大字 + 邮箱小字 + ✏️改名；老账号没填姓名显示「（未填）」
+  const who = p => `<b style="font-size:16px">${p.display_name?esc0(p.display_name):'<span style="color:var(--muted);font-weight:400">（未填）</span>'}</b>`+
+    ` <button class="tab" data-act="rename" data-id="${p.id}" title="改名" style="padding:1px 6px">✏️</button>`+
+    ` <small style="color:var(--muted)">${esc0(p.email||p.id)}</small>`;
+  const byName = (a,b) => (a.display_name||'￿').localeCompare(b.display_name||'￿','zh');
   function renderAccounts(profs, online){
+    profs = profs.slice().sort(byName);
     const pending =profs.filter(p=>p.status==='pending');
     const approved=profs.filter(p=>p.status==='approved');
     const disabled=profs.filter(p=>p.status==='disabled');
     $('aPending').innerHTML = `<div style="font-weight:600;margin:14px 0 4px">🕓 待审批（${pending.length}）</div>` + (pending.length?
       `<div class="card list">`+pending.map(p=>
-        `<div class="chk"><span>${esc0(p.email||p.id)}</span><span class="st">`+
+        `<div class="chk"><span>${who(p)}</span><span class="st">`+
         `<button class="tab" data-act="y11" data-id="${p.id}" style="padding:5px 10px">批准 Y11</button> `+
         `<button class="tab" data-act="y12" data-id="${p.id}" style="padding:5px 10px">批准 Y12</button></span></div>`).join("")+`</div>`
       : `<div class="msg" style="color:var(--muted)">暂无待审批</div>`);
     $('aApproved').innerHTML = `<div style="font-weight:600;margin:16px 0 4px">✅ 已批准（${approved.length}）</div>` + (approved.length?
       `<div class="card list">`+approved.map(p=>{
         const exp=p.access_until, expired=exp&&new Date(exp)<new Date(), on=online.get(p.id);
-        return `<div class="chk ${expired?'miss':'ok'}"><span>${esc0(p.email||p.id)} `+
+        return `<div class="chk ${expired?'miss':'ok'}"><span>${who(p)} `+
           `<b style="color:var(--blue-d)">${(p.tier||'').toUpperCase()}</b>`+
           `<small style="color:var(--muted)"> · 到期 ${fmtD(exp)}${expired?'（已过期）':''}${on?' · 🟢在线':''}</small></span>`+
           `<span class="st">`+
@@ -380,7 +388,7 @@
       : `<div class="msg" style="color:var(--muted)">暂无</div>`);
     $('aDisabled').innerHTML = disabled.length? `<div style="font-weight:600;margin:16px 0 4px">🚫 已停用（${disabled.length}）</div>`+
       `<div class="card list">`+disabled.map(p=>
-        `<div class="chk"><span>${esc0(p.email||p.id)} <small style="color:var(--muted)">${(p.tier||'').toUpperCase()}</small></span>`+
+        `<div class="chk"><span>${who(p)} <small style="color:var(--muted)">${(p.tier||'').toUpperCase()}</small></span>`+
         `<span class="st"><button class="tab" data-act="y11" data-id="${p.id}" style="padding:5px 10px">恢复→Y11</button> `+
         `<button class="tab" data-act="y12" data-id="${p.id}" style="padding:5px 10px">恢复→Y12</button></span></div>`).join("")+`</div>` : '';
   }
@@ -391,6 +399,7 @@
       if(act==='y11'||act==='y12'){ const {error}=await sb.rpc('vce_approve',{p_user:id,p_tier:act,p_months:12}); if(error)throw error; }
       else if(act==='renew'){ const {error}=await sb.rpc('vce_approve',{p_user:id,p_tier:b.dataset.tier,p_months:12}); if(error)throw error; }
       else if(act==='disable'){ if(!confirm('确定停用这个账号？停用后该学生无法查看内容。')) { b.disabled=false; return; } const {error}=await sb.from('vce_profiles').update({status:'disabled'}).eq('id',id); if(error)throw error; }
+      else if(act==='rename'){ const cur=(ACCT.get(id)||{}).display_name||''; const nv=prompt('学生姓名：',cur); if(nv===null){ b.disabled=false; return; } const {error}=await sb.from('vce_profiles').update({display_name:nv.trim().slice(0,40)||null}).eq('id',id); if(error)throw error; }
       else if(act==='kick'){ const {error}=await sb.from('vce_active_sessions').delete().eq('user_id',id); if(error)throw error; }
       await loadAccounts();
     }catch(err){ $('aMsg').textContent='操作失败：'+(err.message||err); $('aMsg').className='msg b'; b.disabled=false; }
