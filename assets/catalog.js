@@ -153,20 +153,25 @@ window.CATALOG = {
           ] }
       ],
       writing:[
-        // ⚠ 受保护内容：正文存 Supabase vce_lessons（y11-xzw-01…06），公开仓只有目录条目
+        // ⚠ 受保护内容：正文存 Supabase vce_lessons（y11-xzw-01…10），公开仓只有目录条目
         // 数据源 03_Input\小作文\小作文材料库-网站上传.docx，构建脚本 06_Scripts\xiaozuowen\build.py
         { id:"y11-xzw", drill:true,
           title:"小作文材料库", url:"units/protected/index.html?id=y11-xzw-01",
           tags:["小作文","材料","阅读","听力","作文题","书信","邮件","日记","演讲稿","校报文章",
                 "露营","人工智能","AI","开放日","大学","丽江","旅游","文化演出","川剧变脸",
-                "汉服","学生代表理事会","SRC"], ready:true,
+                "汉服","学生代表理事会","SRC","美食","北京","烤鸭","成都","火锅","饮食文化",
+                "智能设备","隐私","数据图表"], ready:true,
           sections:[
             { id:"y11-xzw-01", n:1, title:"学校秋季露营活动介绍",           url:"units/protected/index.html?id=y11-xzw-01", ready:true },
             { id:"y11-xzw-02", n:2, title:"中学生使用人工智能（AI）写作业的调查", url:"units/protected/index.html?id=y11-xzw-02", ready:true },
             { id:"y11-xzw-03", n:3, title:"天星大学2022年开放日",           url:"units/protected/index.html?id=y11-xzw-03", ready:true },
             { id:"y11-xzw-04", n:4, title:"丽江旅游介绍",                   url:"units/protected/index.html?id=y11-xzw-04", ready:true },
             { id:"y11-xzw-05", n:5, title:"中国传统文化演出",               url:"units/protected/index.html?id=y11-xzw-05", ready:true },
-            { id:"y11-xzw-06", n:6, title:"认识我们的学生代表理事会",       url:"units/protected/index.html?id=y11-xzw-06", ready:true }
+            { id:"y11-xzw-06", n:6, title:"认识我们的学生代表理事会",       url:"units/protected/index.html?id=y11-xzw-06", ready:true },
+            { id:"y11-xzw-07", n:7, title:"北京美食简介",                   url:"units/protected/index.html?id=y11-xzw-07", ready:true },
+            { id:"y11-xzw-08", n:8, title:"寻味成都：美食与文化的交响",     url:"units/protected/index.html?id=y11-xzw-08", ready:true },
+            { id:"y11-xzw-09", n:9, title:"AI走入我们的生活——便利还是烦恼？", url:"units/protected/index.html?id=y11-xzw-09", ready:true },
+            { id:"y11-xzw-10", n:10, title:"我们如何与AI相处",              url:"units/protected/index.html?id=y11-xzw-10", ready:true }
           ] }
       ],
       review:[
