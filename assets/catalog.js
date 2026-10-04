@@ -110,7 +110,17 @@ window.CATALOG = {
             { id:"geren-jiating-6", n:6, title:"文章 · 进阶 SLA", url:"units/geren-jiating/6.html", ready:true },
             { id:"geren-jiating-7", n:7, title:"综合练习 · 计分", url:"units/geren-jiating/7.html", ready:true }
           ] }
-      ], "听力":[], "阅读":[], "作文":[], "综合":[] },
+      ], "听力":[], "阅读":[], "作文":[
+        // T4 Wk1 课堂练习的网站版：学生先做网站（选择题），再做纸面（练书写，答案从网站找）。脚本 06_Scripts\shuofu_jhs\build.py
+        { title:"说服文-到北京中学做交换生", url:"units/shuofu-jiaohuansheng/index.html",
+          tags:["说服文","交换生","交换生项目","寄宿家庭","北京","宣传","体验","品尝","故宫","开阔眼界",
+                "读万卷书不如行万里路","心动不如行动","选词填空","造句","改错","阅读理解","词卡","拼音","作文"], ready:true,
+          sections:[
+            { id:"shuofu-jiaohuansheng-1", n:1, title:"读文章", url:"units/shuofu-jiaohuansheng/1.html", ready:true },
+            { id:"shuofu-jiaohuansheng-2", n:2, title:"字词",   url:"units/shuofu-jiaohuansheng/2.html", ready:true },
+            { id:"shuofu-jiaohuansheng-3", n:3, title:"句子",   url:"units/shuofu-jiaohuansheng/3.html", ready:true }
+          ] }
+      ], "综合":[] },
       homework:[], exam:[], other:[
         { title:"足部", url:"units/other/foot/index.html",
           tags:["足部","汉字","词卡","拼音","读音","例句"], ready:true },
