@@ -92,11 +92,28 @@
 
     // 占单设备坑
     const r = await A.claimSession();
+    // 2026-10-05：学生自己换设备（手机 → 电脑），不用老师操作。
+    // 「在这台设备继续用」= 删掉本账号的占用记录（RLS 允许删自己的）再重新占坑，另一台下次打开就被挡在这页。
     if (r === "occupied") {
-      show("<h2>⚠️ 已在另一台设备登录</h2>" +
-           "<p>一个账号只能用一台设备。请先在那台设备退出登录，或联系老师解除。<br>" +
-           "This account is active on another device.</p>" +
-           "<button class='btn' id='lo'>退出并在此登录 Log out & use here</button>");
+      show("<h2>⚠️ 这个账号正在另一台设备上使用</h2>" +
+           "<p>一个账号同一时间只能在一台设备上用。<br>" +
+           "想换到这台设备：点下面的蓝色按钮，另一台设备会自动下线。<br>" +
+           "This account is in use on another device. Tap the blue button to use it here — the other device will be signed out.</p>" +
+           "<button class='btn' id='here'>在这台设备继续用 Use it here</button><br>" +
+           "<button class='btn ghost' id='lo'>换个账号 Use another account</button>" +
+           "<p id='hereMsg' style='color:#c0392b'></p>");
+      document.getElementById("here").onclick = async (e) => {
+        e.target.disabled = true; e.target.textContent = "切换中… Switching…";
+        try {
+          await A.claimRelease();
+          const r2 = await A.claimSession();
+          if (r2 === "claimed" || r2 === "ok" || r2 === "took_over") { location.reload(); return; }
+          throw new Error(r2);
+        } catch (err) {
+          e.target.disabled = false; e.target.textContent = "在这台设备继续用 Use it here";
+          document.getElementById("hereMsg").textContent = "切换没成功，请再点一次；还不行就点「换个账号」重新登录。(" + (err.message || "") + ")";
+        }
+      };
       document.getElementById("lo").onclick = async () => { await A.logout(); toLogin(); };
       return;
     }
@@ -120,12 +137,29 @@
     const s = document.createElement("script");
     s.src = "../../assets/lesson.js";
     s.onload = async () => {
+      addLogoutButton();
       const teacher = await A.isTeacher();        // 老师：只显品牌行，投屏不漏邮箱
       applyWatermark(A.currentEmail(), teacher);
       armAntiCopy();
     };
     s.onerror = () => show("<h2>引擎加载失败</h2><p>请重试。</p>");
     document.body.appendChild(s);   // lesson.js 立即执行、重写 body
+  }
+
+  // ---- 顶栏「🚪 退出」（2026-10-05）----
+  // 用完学校/公用电脑要退出，不然下一个人能用你的账号；退出也会放掉单设备占用，换设备更顺。
+  function addLogoutButton(){
+    const bar = document.querySelector(".navbtns");
+    if (!bar || document.getElementById("logoutBtn")) return;
+    const a = document.createElement("a");
+    a.id = "logoutBtn"; a.href = "javascript:void(0)"; a.textContent = "🚪 退出 Log out";
+    a.style.marginLeft = "auto";
+    a.onclick = async () => {
+      if (!confirm("退出登录？\n用完学校或别人的电脑，一定要退出。\n\nLog out now? Always log out on a shared computer.")) return;
+      try { await A.logout(); } catch (e) {}
+      location.href = "../../index.html";
+    };
+    bar.appendChild(a);
   }
 
   // ---- 水印（双行：品牌大字 + 访客标识小字，平铺半透明）----

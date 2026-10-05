@@ -284,9 +284,11 @@
     const box = document.getElementById("idcard"); if(!box) return;
     const id = loadId();
     if(id && id.cls && id.seat){                       // 已记住 → 收起成一行
+      // 2026-10-05：学校公用电脑会记住上一个学生，「换人」做成醒目按钮 + 一句提醒，免得成绩记到别人名下
       box.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
         <div style="font-weight:600">📇 你是 <span style="color:var(--blue-d)">${esc(id.cls)} · ${esc(String(id.seat))}号</span></div>
-        <button id="idChange" style="${_linkCss}">不是你？换人</button></div>`;
+        <button id="idChange" style="background:#fff4e5;border:1.5px solid #f0a33a;color:#9a5a00;border-radius:16px;padding:5px 12px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">不是你？点这里换人 Not you?</button></div>
+        <div style="font-size:12.5px;color:var(--muted);margin-top:4px">用学校或别人的电脑，先看看上面是不是你的班级和座号 · On a shared computer, check this is you</div>`;
       document.getElementById("idChange").onclick = () => { clearId(); ensureRoster(() => renderId("pick")); };
       return;
     }
