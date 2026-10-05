@@ -135,7 +135,14 @@
       const back = `<div class="emo">${esc(v.emo||"")}</div>`+
                    (zh?`<div class="bk-zh">${esc(zh)}</div>`:"")+
                    `<div class="bk-en">${esc(en)}</div>`;
-      return `<button class="flip"><div class="inner"><div class="side front">${spk}<div class="hz">${esc(v.hz)}</div><div class="py">${esc(py)}</div></div><div class="side back">${back}</div></div></button>`;
+      // 长词缩字号（2026-10-05）：按最长一行的字数分档 l5/l6/l8，4 字以内不加类、样式不变；
+      // 带逗号的俗语在逗号后换行（读万卷书，／不如行万里路）；拼音长了也缩小
+      const lines = String(v.hz).split(/(?<=[，,])/);
+      const n = Math.max(...lines.map(t=>t.replace(/[，,。！？、\s]/g,"").length));
+      const lc = n>=7 ? " l8" : n===6 ? " l6" : n===5 ? " l5" : "";
+      const hzHtml = lines.map(esc).join("<br>");
+      const pyc = py.length>22 ? " long" : "";
+      return `<button class="flip"><div class="inner"><div class="side front">${spk}<div class="hz${lc}">${hzHtml}</div><div class="py${pyc}">${esc(py)}</div></div><div class="side back">${back}</div></div></button>`;
     }).join("");
     return `<div class="card"><div class="grid">${c}</div><div class="hint">👆 点卡片翻面，点 🔊 听读音 · tap to flip, 🔊 to listen</div></div>`;
   }

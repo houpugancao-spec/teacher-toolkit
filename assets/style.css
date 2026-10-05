@@ -110,6 +110,12 @@ audio{width:100%;margin:4px 0 10px;height:40px}
 .flip .front{background:#fff}
 .flip .front .hz{font-size:30px;font-weight:700}
 .flip .front .py{color:var(--muted);font-size:13px;margin-top:2px}
+/* 长词缩字号（lesson.js vocab() 按最长一行字数加类；4 字以内不加类）。卡宽手机约 150px、桌面约 165px */
+.flip .front .hz.l5{font-size:24px}
+.flip .front .hz.l6{font-size:21px}
+.flip .front .hz.l8{font-size:17px}
+.flip .front .hz.l5,.flip .front .hz.l6,.flip .front .hz.l8{line-height:1.25;text-align:center;padding:0 6px}
+.flip .front .py.long{font-size:11.5px;line-height:1.25;text-align:center;padding:0 8px}
 .flip .back{background:var(--blue);color:#fff;transform:rotateY(180deg);font-size:17px;padding:6px 8px;text-align:center}
 .flip .back .emo{font-size:24px;margin-bottom:1px;line-height:1}
 .flip .back .bk-zh{font-size:16px;font-weight:600;line-height:1.25}
