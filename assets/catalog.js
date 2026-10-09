@@ -122,10 +122,15 @@ window.CATALOG = {
           ] }
       ], "综合":[] },
       homework:[], exam:[], other:[
-        { title:"足部", url:"units/other/foot/index.html",
-          tags:["足部","汉字","词卡","拼音","读音","例句"], ready:true },
-        { title:"止部", url:"units/other/stop/index.html",
-          tags:["止部","汉字","词卡","拼音","读音","例句"], ready:true }
+        // 止部分四节（止/足/行/辶），旧「足部」并入第 2 节（units/other/foot/ 只留跳转页）。页面生成：06_Scripts\bushou_zhi\build_pages.py
+        { id:"other-zhibu", drill:true, title:"止部", url:"units/other/stop/index.html",
+          tags:["止部","足部","行部","辶部","走之旁","汉字","词卡","拼音","读音","例句"], ready:true,
+          sections:[
+            { id:"other-zhibu-1", n:1, title:"止", url:"units/other/stop/1.html", ready:true },
+            { id:"other-zhibu-2", n:2, title:"足", url:"units/other/stop/2.html", ready:true },
+            { id:"other-zhibu-3", n:3, title:"行", url:"units/other/stop/3.html", ready:true },
+            { id:"other-zhibu-4", n:4, title:"辶", url:"units/other/stop/4.html", ready:true }
+          ] }
       ]
     },
     {

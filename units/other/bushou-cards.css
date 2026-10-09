@@ -1,0 +1,93 @@
+/* 部首分节词卡（止部、心部…）共用样式。页面由备课台 06_Scripts/bushou_zhi/build_pages.py 生成 */
+.prototype-wrap{
+  max-width:1120px;margin:0 auto;padding:18px 16px 40px;
+  font-family:'LXGW Kai','KaiTi','楷体','STKaiti',serif;
+}
+.prototype-head{margin:14px 0 20px}
+.prototype-title{margin:0;font-size:26px;line-height:1.25}
+.prototype-sub{margin:4px 0 0;color:var(--muted);font:15px/1.45 Arial,sans-serif}
+.zb-key{color:var(--blue-d)}
+
+/* 顶部 / 底部导航：首页、目录、上一节、下一节、回到顶部 */
+.zb-nav{display:flex;flex-wrap:wrap;gap:8px}
+.zb-nav a{
+  padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:#fff;
+  color:var(--blue-d);font:600 15px/1.3 Arial,sans-serif;text-decoration:none;
+}
+.zb-nav a:hover{background:#eef5ff}
+.zb-bottom{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);justify-content:center}
+
+/* 目录页 */
+.zb-secs{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.zb-sec{
+  display:flex;align-items:center;gap:14px;padding:20px 22px;border:2px solid var(--line);
+  border-radius:18px;background:#fff;text-decoration:none;color:var(--ink);
+  box-shadow:0 8px 22px rgba(26,34,48,.08);
+}
+.zb-sec:hover{border-color:#bad3fb}
+.zb-sec .zb-n{font:18px Arial,sans-serif;color:var(--muted);white-space:nowrap}
+.zb-sec .zb-key{font-size:52px;line-height:1}
+.zb-sec .zb-key.long{flex:1;font-size:26px;line-height:1.35;letter-spacing:.08em}
+.zb-sec .zb-cnt{margin-left:auto;color:var(--muted);font:15px Arial,sans-serif;white-space:nowrap}
+
+/* 词卡 */
+.prototype-stage{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:18px;padding:8px 0 4px;
+}
+.prototype-card{width:100%;height:390px;outline:none}
+.prototype-card:focus-visible .side{box-shadow:0 0 0 4px rgba(31,111,235,.24)}
+.prototype-card .side{
+  border-radius:22px;border:2px solid var(--line);
+  box-shadow:0 12px 30px rgba(26,34,48,.12);padding:28px;
+}
+.prototype-card .front{background:#fff}
+.prototype-card .front .hz{
+  font-size:92px;font-weight:400;line-height:1.08;color:var(--ink);text-align:center;
+}
+.prototype-card .front .hz.len-1{font-size:108px}
+.prototype-card .front .hz.len-3{font-size:70px}
+.prototype-card .front .hz.len-4{font-size:58px}
+.prototype-card .front .hz.len-long{font-size:36px}
+.prototype-card .front .py{
+  margin-top:18px;color:#0758c9;font:29px/1.25 Arial,sans-serif;text-align:center;max-width:100%;
+}
+.prototype-card .front .hz.len-4~.py{font-size:23px}
+.prototype-card .front .hz.len-long~.py{font-size:21px}
+.prototype-card .spk{
+  position:absolute;right:18px;top:18px;width:58px;height:58px;
+  border-radius:50%;border:1px solid #bad3fb;background:#eef5ff;font-size:27px;cursor:pointer;
+}
+.prototype-card .spk:hover{background:#deebff}
+.prototype-card .back{
+  background:#fff;display:flex;flex-direction:column;align-items:stretch;
+  justify-content:flex-start;text-align:left;
+}
+.meaning-label,.example-label{color:var(--muted);font-size:16px;font-weight:700;letter-spacing:.05em}
+.meaning-label.en-label{font-family:Arial,sans-serif}
+.meaning-zh{margin-top:7px;font-size:27px;line-height:1.45;color:var(--ink)}
+.meaning-en{margin-top:6px;color:#0758c9;font:21px/1.35 Arial,sans-serif}
+.example-block{margin-top:auto;padding-top:17px;border-top:1px solid var(--line)}
+.example-zh{margin-top:7px;font-size:25px;line-height:1.45;color:var(--ink)}
+.audio-status{
+  margin:18px 0 0;text-align:center;min-height:24px;color:#0758c9;font-size:16px;
+}
+@media(max-width:600px){
+  .prototype-wrap{padding:14px 12px 32px}
+  .prototype-title{font-size:23px}
+  .zb-nav a{font-size:14px;padding:6px 11px}
+  .prototype-stage{grid-template-columns:1fr;gap:16px}
+  .prototype-card{height:370px}
+  .prototype-card .side{padding:24px}
+  .prototype-card .front .hz{font-size:84px}
+  .prototype-card .front .hz.len-1{font-size:100px}
+  .prototype-card .front .hz.len-3{font-size:64px}
+  .prototype-card .front .hz.len-4{font-size:54px}
+  .prototype-card .front .hz.len-long{font-size:34px}
+  .prototype-card .front .py{font-size:27px}
+  .prototype-card .front .hz.len-4~.py{font-size:22px}
+  .prototype-card .front .hz.len-long~.py{font-size:20px}
+  .meaning-zh{font-size:25px}
+  .meaning-en{font-size:20px}
+  .example-zh{font-size:23px}
+}
