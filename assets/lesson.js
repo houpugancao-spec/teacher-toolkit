@@ -132,9 +132,12 @@
       const en = v.en || (WORDS[v.hz] && WORDS[v.hz].en) || "";
       const zh = v.zh || (WORDS[v.hz] && WORDS[v.hz].zh) || "";   // 中文释义（有才显示，向后兼容旧卡）
       const spk = au ? `<span class="spk" data-au="${esc(au)}">🔊</span>` : "";
-      const back = `<div class="emo">${esc(v.emo||"")}</div>`+
+      // enFront（2026-10-10，大作文常用词）：英文挪到正面拼音下，背面只放一个中文例句；不设此开关的旧卡不变
+      const back = s.enFront ? `<div class="bk-zh ex">${esc(zh)}</div>` :
+                   `<div class="emo">${esc(v.emo||"")}</div>`+
                    (zh?`<div class="bk-zh">${esc(zh)}</div>`:"")+
                    `<div class="bk-en">${esc(en)}</div>`;
+      const enF = s.enFront ? `<div class="en-f">${esc(en)}</div>` : "";
       // 长词缩字号（2026-10-05）：按最长一行的字数分档 l5/l6/l8，4 字以内不加类、样式不变；
       // 带逗号的俗语在逗号后换行（读万卷书，／不如行万里路）；拼音长了也缩小
       const lines = String(v.hz).split(/(?<=[，,])/);
@@ -142,9 +145,9 @@
       const lc = n>=7 ? " l8" : n===6 ? " l6" : n===5 ? " l5" : "";
       const hzHtml = lines.map(esc).join("<br>");
       const pyc = py.length>22 ? " long" : "";
-      return `<button class="flip"><div class="inner"><div class="side front">${spk}<div class="hz${lc}">${hzHtml}</div><div class="py${pyc}">${esc(py)}</div></div><div class="side back">${back}</div></div></button>`;
+      return `<button class="flip${s.enFront?" ef":""}"><div class="inner"><div class="side front">${spk}<div class="hz${lc}">${hzHtml}</div><div class="py${pyc}">${esc(py)}</div>${enF}</div><div class="side back">${back}</div></div></button>`;
     }).join("");
-    return `<div class="card"><div class="grid">${c}</div><div class="hint">👆 点卡片翻面，点 🔊 听读音 · tap to flip, 🔊 to listen</div></div>`;
+    return `<div class="card"><div class="grid${s.enFront?" ef-grid":""}">${c}</div><div class="hint">👆 点卡片${s.enFront?"看例句":"翻面"}，点 🔊 听读音 · tap to flip, 🔊 to listen</div></div>`;
   }
   // 字卡（大纲必备汉字）：正面 🔊+字+拼音+英文；背面 三个常用词 + 成语／俗语／名言，或一段例句／简介。
   // 没有背面内容的卡（姓氏、地名）只有正面，不翻面。

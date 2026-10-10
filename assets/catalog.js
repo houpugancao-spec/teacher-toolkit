@@ -167,6 +167,24 @@ window.CATALOG = {
             { id:"y11-dzw-11", n:11, title:"AI推动医疗发展的影响",               url:"units/protected/index.html?id=y11-dzw-11", ready:true },
             { id:"y11-dzw-12", n:12, title:"青年人选择自由职业，到低消费地区生活", url:"units/protected/index.html?id=y11-dzw-12", ready:true },
             { id:"y11-dzw-13", n:13, title:"电动车的现状",                       url:"units/protected/index.html?id=y11-dzw-13", ready:true }
+          ] },
+        // ⚠ 受保护内容：正文存 Supabase vce_lessons（y11-sfcy-01、y11-pgcy-01/02），公开仓只有目录条目和音频
+        // 构建脚本 06_Scripts\changyongci\build.py；词卡用 vocab enFront（正面 词+拼音+英文，背面例句）
+        // 说服文只有一节：不加 drill，主页直接进；留 sections 是为了课页面包屑能认出单元
+        { id:"y11-sfcy",
+          title:"说服文-常用词", url:"units/protected/index.html?id=y11-sfcy-01",
+          tags:["大作文","说服文","常用词","词卡","拼音","读音","例句","建议","呼吁","机会",
+                "犹豫","选择","后悔","机不可失","千载难逢"], ready:true,
+          sections:[
+            { id:"y11-sfcy-01", n:1, title:"14 张词卡", url:"units/protected/index.html?id=y11-sfcy-01", ready:true }
+          ] },
+        { id:"y11-pgcy", drill:true,
+          title:"评估文-常用词", url:"units/protected/index.html?id=y11-pgcy-01",
+          tags:["大作文","评估文","常用词","词卡","拼音","读音","例句","过渡","开头","结尾",
+                "显而易见","众所周知","毋庸置疑","不可否认","客观","利弊","见仁见智","褒贬不一","拭目以待"], ready:true,
+          sections:[
+            { id:"y11-pgcy-01", n:1, title:"过渡作用的词汇",     url:"units/protected/index.html?id=y11-pgcy-01", ready:true },
+            { id:"y11-pgcy-02", n:2, title:"开头结尾常用的词汇", url:"units/protected/index.html?id=y11-pgcy-02", ready:true }
           ] }
       ],
       writing:[
