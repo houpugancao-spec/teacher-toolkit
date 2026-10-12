@@ -114,11 +114,13 @@ window.CATALOG = {
         // T4 Wk1 课堂练习的网站版：学生先做网站（选择题），再做纸面（练书写，答案从网站找）。脚本 06_Scripts\shuofu_jhs\build.py
         { title:"说服文-到北京中学做交换生", url:"units/shuofu-jiaohuansheng/index.html",
           tags:["说服文","交换生","交换生项目","寄宿家庭","北京","宣传","体验","品尝","故宫","开阔眼界",
-                "读万卷书不如行万里路","心动不如行动","选词填空","造句","改错","阅读理解","词卡","拼音","作文"], ready:true,
+                "读万卷书不如行万里路","心动不如行动","选词填空","造句","改错","阅读理解","词卡","拼音","作文",
+                "范文词句","说服语气","连接词","熟能生巧","受益匪浅","机不可失时不再来"], ready:true,
           sections:[
             { id:"shuofu-jiaohuansheng-1", n:1, title:"读文章", url:"units/shuofu-jiaohuansheng/1.html", ready:true },
             { id:"shuofu-jiaohuansheng-2", n:2, title:"字词",   url:"units/shuofu-jiaohuansheng/2.html", ready:true },
-            { id:"shuofu-jiaohuansheng-3", n:3, title:"句子",   url:"units/shuofu-jiaohuansheng/3.html", ready:true }
+            { id:"shuofu-jiaohuansheng-3", n:3, title:"句子",   url:"units/shuofu-jiaohuansheng/3.html", ready:true },
+            { id:"shuofu-jiaohuansheng-4", n:4, title:"范文词句", url:"units/shuofu-jiaohuansheng/4.html", ready:true }
           ] }
       ], "综合":[] },
       homework:[], exam:[], other:[
