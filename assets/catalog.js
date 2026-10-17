@@ -163,7 +163,7 @@ window.CATALOG = {
           tags:["大作文","热点话题","议论文","说服文","评估文","阅读","好词","好句","关联词","仿写",
                 "小贴士","词卡","拼音","读音","人工智能","AI","无人驾驶","机器人","老人","社交媒体",
                 "创业","退学","教育","兼职","四天工作日","短剧","影视","医疗","自由职业","数字游民",
-                "电动车","新能源","环保","汽车"], ready:true,
+                "电动车","新能源","环保","汽车","范文","成语","俗语","句型"], ready:true,
           sections:[
             { id:"y11-dzw-01", n:1,  title:"人工智能",                           url:"units/protected/index.html?id=y11-dzw-01", ready:true },
             { id:"y11-dzw-02", n:2,  title:"人工智能：机遇与挑战",               url:"units/protected/index.html?id=y11-dzw-02", ready:true },
@@ -177,7 +177,9 @@ window.CATALOG = {
             { id:"y11-dzw-10", n:10, title:"AI短剧对影视行业的冲击",             url:"units/protected/index.html?id=y11-dzw-10", ready:true },
             { id:"y11-dzw-11", n:11, title:"AI推动医疗发展的影响",               url:"units/protected/index.html?id=y11-dzw-11", ready:true },
             { id:"y11-dzw-12", n:12, title:"青年人选择自由职业，到低消费地区生活", url:"units/protected/index.html?id=y11-dzw-12", ready:true },
-            { id:"y11-dzw-13", n:13, title:"电动车的现状",                       url:"units/protected/index.html?id=y11-dzw-13", ready:true }
+            { id:"y11-dzw-13", n:13, title:"电动车的现状",                       url:"units/protected/index.html?id=y11-dzw-13", ready:true },
+            // 2026-10-17 第13节范文的词句用法（词卡+选择题，范文全文不上线），紧跟第13节、编号同为 13；脚本 06_Scripts\dzw_fanwen\
+            { id:"y11-dzw-13fw", n:13, title:"电动车·范文词句用法",              url:"units/protected/index.html?id=y11-dzw-13fw", ready:true }
           ] },
         // ⚠ 受保护内容：正文存 Supabase vce_lessons（y11-sfcy-01、y11-pgcy-01/02），公开仓只有目录条目和音频
         // 构建脚本 06_Scripts\changyongci\build.py；词卡用 vocab enFront（正面 词+拼音+英文，背面例句）
