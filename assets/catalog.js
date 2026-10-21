@@ -125,11 +125,13 @@ window.CATALOG = {
         // 第二篇说服文（阅读 + 听力）。与 Y11 小作文材料库第 1 节同一篇，用户特许只这一篇公开；Y11 那份不动。脚本 06_Scripts\shuofu_luying\build.py
         { title:"说服文-秋季露营", url:"units/shuofu-luying/index.html",
           tags:["说服文","露营","秋季露营","搭帐篷","徒步","篝火晚会","生存技能","睡袋","保暖","手电筒",
-                "携带","专门","担心","无聊","听力","阅读理解","选词填空","造句","改错","词卡","拼音","作文"], ready:true,
+                "携带","专门","担心","无聊","听力","阅读理解","选词填空","造句","改错","词卡","拼音","作文",
+                "范文词句","说服语气","开头","结尾","中心句","犹豫","多虑","动心","一举多得","千载难逢","心动不如行动"], ready:true,
           sections:[
             { id:"shuofu-luying-1", n:1, title:"读文章", url:"units/shuofu-luying/1.html", ready:true },
             { id:"shuofu-luying-2", n:2, title:"字词",   url:"units/shuofu-luying/2.html", ready:true },
-            { id:"shuofu-luying-3", n:3, title:"句子",   url:"units/shuofu-luying/3.html", ready:true }
+            { id:"shuofu-luying-3", n:3, title:"句子",   url:"units/shuofu-luying/3.html", ready:true },
+            { id:"shuofu-luying-4", n:4, title:"范文词句", url:"units/shuofu-luying/4.html", ready:true }
           ] }
       ], "综合":[] },
       homework:[], exam:[], other:[

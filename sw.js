@@ -1,7 +1,7 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v76";
+const CACHE = "vce-zhongwen-v77";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./login.html", "./manifest.json", "./icon.svg",
   "./assets/icons/icon-192.png", "./assets/icons/icon-512.png",
@@ -37,7 +37,7 @@ const CORE = [
   "./units/shuofu-jiaohuansheng/words.js",
   // 练习 · 作文 · 说服文-秋季露营（读音、听力音频不进 CORE，同词卡惯例）
   "./units/shuofu-luying/index.html", "./units/shuofu-luying/1.html", "./units/shuofu-luying/2.html",
-  "./units/shuofu-luying/3.html", "./units/shuofu-luying/words.js",
+  "./units/shuofu-luying/3.html", "./units/shuofu-luying/4.html", "./units/shuofu-luying/words.js",
   // 练习一 · 人物介绍
   "./units/renwu-practice/index.html", "./units/renwu-practice/1.html",
   "./units/renwu-practice/2.html", "./units/renwu-practice/3.html",
