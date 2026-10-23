@@ -132,6 +132,15 @@ window.CATALOG = {
             { id:"shuofu-luying-2", n:2, title:"字词",   url:"units/shuofu-luying/2.html", ready:true },
             { id:"shuofu-luying-3", n:3, title:"句子",   url:"units/shuofu-luying/3.html", ready:true },
             { id:"shuofu-luying-4", n:4, title:"范文词句", url:"units/shuofu-luying/4.html", ready:true }
+          ] },
+        // 第一篇评估文（对话：先听后读）。源：小作文材料库 Word「电动车的利弊」，不在 Y11 受保护库。脚本 06_Scripts\pinggu_ddc\build.py
+        { title:"评估文-电动车的利弊", url:"units/pinggu-diandongche/index.html",
+          tags:["评估文","电动车","燃油车","利与弊","环保","续航里程","充电桩","充电设施","电池老化","空气污染",
+                "对话","听力","阅读理解","选词填空","造句","改错","词卡","拼音","作文","报告"], ready:true,
+          sections:[
+            { id:"pinggu-diandongche-1", n:1, title:"读文章", url:"units/pinggu-diandongche/1.html", ready:true },
+            { id:"pinggu-diandongche-2", n:2, title:"字词",   url:"units/pinggu-diandongche/2.html", ready:true },
+            { id:"pinggu-diandongche-3", n:3, title:"句子",   url:"units/pinggu-diandongche/3.html", ready:true }
           ] }
       ], "综合":[] },
       homework:[], exam:[], other:[
