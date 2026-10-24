@@ -190,6 +190,8 @@ window.CATALOG = {
             { id:"y11-dzw-10", n:10, title:"AI短剧对影视行业的冲击",             url:"units/protected/index.html?id=y11-dzw-10", ready:true },
             { id:"y11-dzw-11", n:11, title:"AI推动医疗发展的影响",               url:"units/protected/index.html?id=y11-dzw-11", ready:true },
             { id:"y11-dzw-12", n:12, title:"青年人选择自由职业，到低消费地区生活", url:"units/protected/index.html?id=y11-dzw-12", ready:true },
+            // 2026-10-24 第12节范文「数字游民的得与失」的词句用法（词卡+选择题，范文全文不上线），紧跟第12节、编号同为 12；脚本 06_Scripts\dzw_fanwen12\
+            { id:"y11-dzw-12fw", n:12, title:"青年人·范文词句用法",              url:"units/protected/index.html?id=y11-dzw-12fw", ready:true },
             { id:"y11-dzw-13", n:13, title:"电动车的现状",                       url:"units/protected/index.html?id=y11-dzw-13", ready:true },
             // 2026-10-17 第13节范文的词句用法（词卡+选择题，范文全文不上线），紧跟第13节、编号同为 13；脚本 06_Scripts\dzw_fanwen\
             { id:"y11-dzw-13fw", n:13, title:"电动车·范文词句用法",              url:"units/protected/index.html?id=y11-dzw-13fw", ready:true }
