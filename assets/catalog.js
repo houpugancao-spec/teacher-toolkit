@@ -182,6 +182,8 @@ window.CATALOG = {
             { id:"y11-dzw-02", n:2,  title:"人工智能：机遇与挑战",               url:"units/protected/index.html?id=y11-dzw-02", ready:true },
             { id:"y11-dzw-03", n:3,  title:"无人驾驶出租车",                     url:"units/protected/index.html?id=y11-dzw-03", ready:true },
             { id:"y11-dzw-04", n:4,  title:"机器人陪伴老人",                     url:"units/protected/index.html?id=y11-dzw-04", ready:true },
+            // 2026-10-29 第4节范文「机器人陪伴老人的利弊」的词句用法（词卡+选择题，范文全文不上线），紧跟第4节、编号同为 4；脚本 06_Scripts\dzw_fanwen04\
+            { id:"y11-dzw-04fw", n:4,  title:"机器人·范文词句用法",              url:"units/protected/index.html?id=y11-dzw-04fw", ready:true },
             { id:"y11-dzw-05", n:5,  title:"社交媒体",                           url:"units/protected/index.html?id=y11-dzw-05", ready:true },
             { id:"y11-dzw-06", n:6,  title:"大学退学去创业",                     url:"units/protected/index.html?id=y11-dzw-06", ready:true },
             { id:"y11-dzw-07", n:7,  title:"AI对教育的双重影响",                 url:"units/protected/index.html?id=y11-dzw-07", ready:true },
