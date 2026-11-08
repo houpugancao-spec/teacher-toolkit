@@ -57,22 +57,52 @@
     return fetch(restBase + path, opts);
   }
 
+  // ---------- 认证请求的错误分类 ----------
+  // 2026-11-08 教训：Supabase 超额被限时回 402 {message}，旧代码把它兜底成「邮箱或密码不对」，
+  // 老师和学生都以为密码错。现在按状态码区分：网络错 / 服务不可用 / 请求太频繁 / 真·密码错。
+  const MSG_NET  = "网络连不上，请检查网络后重试。Network error — please check your connection and try again.";
+  const MSG_DOWN = "登录服务暂时不可用（不是你的密码问题），请稍后再试或联系老师。Login service is temporarily unavailable (not a password problem) — please try later or contact your teacher.";
+  const MSG_MANY = "尝试次数太多，请等几分钟再试。Too many attempts — please wait a few minutes.";
+  const MSG_PW   = "邮箱或密码不对 Wrong email or password";
+
+  // 发认证请求：网络断了直接抛「网络错」；回包不是 JSON 也不炸（当成空对象）
+  async function authCall(path, body){
+    let r;
+    try { r = await authFetch(path, { method:"POST", body: JSON.stringify(body) }); }
+    catch(e){ throw new Error(MSG_NET); }
+    let data = {};
+    try { data = await r.json(); } catch(e){}
+    return { r, data };
+  }
+
+  // 非 2xx 的通用分类；返回 null 表示交给调用方按业务细分
+  function serviceError(status){
+    if (status === 402 || status === 503 || status >= 500) return new Error(MSG_DOWN + "（" + status + "）");
+    if (status === 429) return new Error(MSG_MANY);
+    return null;
+  }
+
   // ---------- 认证动作 ----------
   // name 放进 user metadata，由数据库触发器写入 vce_profiles.display_name
   async function signup(email, password, name){
     const body = { email, password };
     if (name) body.data = { name };
-    const r = await authFetch("/signup", { method:"POST", body: JSON.stringify(body) });
-    const data = await r.json();
-    if (!r.ok) throw new Error(data.msg || data.error_description || data.error || ("注册失败 " + r.status));
+    const { r, data } = await authCall("/signup", body);
+    if (!r.ok) throw serviceError(r.status) || new Error(data.msg || data.error_description || data.error || data.message || ("注册失败 " + r.status));
     if (data.access_token) saveSession(data);   // 未开邮箱确认时直接给 session
     return data;   // 含 { access_token?, user, ... }
   }
 
   async function login(email, password){
-    const r = await authFetch("/token?grant_type=password", { method:"POST", body: JSON.stringify({ email, password }) });
-    const data = await r.json();
-    if (!r.ok) throw new Error(data.error_description || data.msg || "邮箱或密码不对 Wrong email or password");
+    const { r, data } = await authCall("/token?grant_type=password", { email, password });
+    if (!r.ok) {
+      const svc = serviceError(r.status);
+      if (svc) throw svc;
+      // 只有 Supabase 明确说「凭据不对」才显示密码错
+      const raw = data.msg || data.error_description || data.message || "";
+      if (data.error_code === "invalid_credentials" || /invalid login credentials/i.test(raw)) throw new Error(MSG_PW);
+      throw new Error("登录失败（" + r.status + "）：" + (raw || "请稍后再试或联系老师") + "  Login failed, please try again or contact your teacher.");
+    }
     saveSession(data);
     return data;
   }
