@@ -107,8 +107,8 @@
       <button class="tab" data-view="accounts">🔓 账号审批</button>
       <button id="logoutBtn" style="margin-left:auto;padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit;background:#fff;cursor:pointer">退出</button>
     </div>
-    <div id="orphanWarn" class="warn"></div>
-    <div id="yearNote" style="font-size:12px;color:var(--muted);margin:-2px 0 8px"></div>
+    <!-- 花名册外的提交：只在两个「交作业」页显示（那里才影响统计）；「只显示某日起」那行 11-23 删掉（每年 12-15 清成绩，不用再手动改日期） -->
+    <div id="orphanWarn" class="warn" style="display:none"></div>
 
     <!-- 视图①：成绩明细（原看板）-->
     <div id="viewDetail">
@@ -154,7 +154,7 @@
 
     <!-- 视图④：账号审批（Y11/Y12 访问锁）-->
     <div id="viewAccounts" style="display:none">
-      <div class="controls"><button id="aRefresh">🔄 刷新</button><span id="aMsg" class="msg"></span></div>
+      <div id="aMsg" class="msg" style="min-height:0"></div>
       <div id="aPending"></div>
       <div id="aApproved"></div>
       <div id="aDisabled"></div>
@@ -243,7 +243,6 @@
     ALLROWS=data||[];
     ROWS=(data||[]).filter(r=>!cut || new Date(r.created_at)>=new Date(cut));
     m.textContent="";
-    $('yearNote').textContent = cut ? `📅 只显示 ${cut} 起的提交（共 ${ROWS.length} 条）· 明年重置改 report-config.js 的 schoolYearStart` : '';
     fillFilters();
     render();
     buildReport();
@@ -448,6 +447,7 @@
     $('viewDetail').style.display     = v==='detail'     ? '' : 'none';
     $('viewByStudent').style.display  = v==='byStudent'  ? '' : 'none';
     $('viewByExercise').style.display = v==='byExercise' ? '' : 'none';
+    $('orphanWarn').style.display     = (v==='byStudent'||v==='byExercise') ? '' : 'none';
     $('viewAccounts').style.display   = v==='accounts'   ? '' : 'none';
     if(v==='byStudent') renderStudent();
     if(v==='byExercise') renderExercise();
@@ -581,7 +581,6 @@
       await loadAccounts();
     }catch(err){ $('aMsg').textContent='操作失败：'+(err.message||err); $('aMsg').className='msg b'; b.disabled=false; }
   });
-  $('aRefresh').onclick=loadAccounts;
 
   init();
 })();
