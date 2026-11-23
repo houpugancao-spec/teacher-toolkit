@@ -172,6 +172,10 @@ audio{width:100%;margin:4px 0 10px;height:40px}
 .rd-fold>summary::-webkit-details-marker{display:none}
 .rd-fold[open]>summary{margin-bottom:12px;background:#eef4ff}
 .rd-fold[open] .o,.rd-fold:not([open]) .c{display:none}
+/* 样板课一行字（L.banner，2026-11-23 10 年级 WK1）：点了去注册；只作用于设了 banner 的课页 */
+.demo-banner{display:block;margin:-4px 0 16px;padding:10px 14px;border:1.5px dashed #f0a33a;border-radius:12px;
+  background:#fff8ec;color:#8a5200;font-weight:600;font-size:15px;text-decoration:none}
+.demo-banner small{display:block;font-weight:400;font-size:12.5px;color:#a06a1c;margin-top:2px}
 .reading .rd-p{margin:0 0 12px;text-indent:2em}
 .reading .dl{margin:0 0 10px}
 .reading .dl .who{color:var(--blue-d);margin-right:2px}

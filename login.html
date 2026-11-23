@@ -25,27 +25,39 @@
   .msg.err{background:var(--no-bg);color:var(--no)}
   .hint{font-size:12px;color:var(--muted);margin-top:10px;text-align:center;line-height:1.6}
   .backlink{display:block;text-align:center;margin-top:18px;font-size:14px;color:var(--blue)}
+  /* 按年级注册（2026-11-23）：大标题【注册「VCE准备」】+ 备注 + 英文小字；底下可换年级 */
+  .gtitle{font-size:24px;font-weight:700;color:var(--blue-d);margin:0}
+  .gnote{font-size:15px;color:#33415c;margin-top:8px;line-height:1.6}
+  .gnote small{display:block;color:var(--muted);font-size:12.5px}
+  .gswitch{font-size:13px;color:var(--muted);text-align:center;margin:0 0 16px}
+  .gswitch a{display:inline-block;margin:2px 3px;padding:3px 10px;border:1px solid var(--line);border-radius:14px;color:var(--blue-d);cursor:pointer;background:#fff}
+  .gswitch a.on{background:var(--blue);border-color:var(--blue);color:#fff}
+  .gswitch.need a{border-color:var(--blue);font-size:15px;padding:6px 14px}
+  .tosignup{display:block;width:100%;margin-top:12px;padding:11px 0;background:#fff;color:var(--blue-d);border:1.5px solid var(--blue);border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
+  [hidden]{display:none!important}
 </style>
 </head>
 <body>
 <div class="topbar"><div class="row"><div class="brand">VCE 中文</div></div></div>
 <div class="authwrap">
-  <div class="hero" style="text-align:center"><h1 style="font-size:22px">🔒 Y11 / Y12 内容</h1><p style="color:var(--muted);font-size:14px;margin-top:4px">登录后可见 · 准备班无需登录</p></div>
+  <div class="hero" style="text-align:center" id="hero"></div>
 
   <div class="authcard" id="card">
     <div class="tabs">
       <button id="tabLogin" class="on">登录 Log in</button>
       <button id="tabSignup">注册 Register</button>
     </div>
+    <div class="gswitch" id="gswitch" hidden></div>
     <div class="fld" id="nameFld" hidden><label>姓名 Name（中文名或英文名 Chinese or English name）</label><input id="name" type="text" autocomplete="name" maxlength="40" placeholder="例 e.g. 王小明 / Tom Wang"></div>
     <div class="fld"><label>邮箱 Email</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
     <div class="fld"><label>密码 Password</label><input id="password" type="password" autocomplete="current-password" placeholder="至少 6 位 at least 6"></div>
     <button class="btn" id="submitBtn">登录 Log in</button>
     <div class="msg" id="msg"></div>
-    <div class="hint" id="hint">注册后需老师审批通过才能查看内容<br>After registering, wait for teacher approval</div>
+    <button class="tosignup" id="toSignup" hidden></button>
+    <div class="hint" id="hint"></div>
   </div>
 
-  <a class="backlink" href="index.html">← 返回首页（准备班免费内容）Back to home</a>
+  <a class="backlink" href="index.html">← 返回首页 Back to home</a>
 </div>
 
 <script src="assets/auth.js"></script>
@@ -58,9 +70,49 @@
   const next = params.get("next") || "index.html";
   let mode = "login";   // 'login' | 'signup'
 
+  // ---- 按年级注册（2026-11-23 用户定）----
+  // 从哪个年级点进来（?grade=prep|y11|y12），就注册哪个年级；页面写明注册后能看什么。
+  // 选的年级随注册存进档案（申请年级），老师在看板按它批准。
+  const GRADES = {
+    prep: { name:"VCE准备", en:"VCE Prep",
+            note:"Y11 和 Y12 的内容需要分别注册解锁", noteEn:"Y11 and Y12 content each need a separate registration." },
+    y11:  { name:"Y11", en:"Y11",
+            note:"可学习 Y11 和 VCE准备 的内容；Y12 的内容需要单独注册解锁", noteEn:"Includes Y11 and VCE Prep content; Y12 content needs a separate registration." },
+    y12:  { name:"Y12", en:"Y12",
+            note:"可学习全站内容", noteEn:"Access to all content on the site." }
+  };
+  let grade = GRADES[params.get("grade")] ? params.get("grade") : null;
+
   const msgEl = $("msg");
   function msg(text, kind){ msgEl.textContent = text; msgEl.className = "msg show " + (kind||"info"); }
   function clearMsg(){ msgEl.className = "msg"; }
+
+  function renderGrade(){
+    const g = grade && GRADES[grade];
+    const hero = $("hero"), sw = $("gswitch"), to = $("toSignup");
+    if (mode === "signup") {
+      hero.innerHTML = g
+        ? `<h1 class="gtitle">注册「${g.name}」</h1><div class="gnote">${g.note}<small>Register for ${g.en} · ${g.noteEn}</small></div>`
+        : `<h1 class="gtitle">注册 Register</h1><div class="gnote">请先选你要注册的年级<small>Choose your year level first</small></div>`;
+      sw.hidden = false;
+      sw.classList.toggle("need", !g);
+      sw.innerHTML = (g ? "要注册别的年级？Another year level? " : "") +
+        Object.keys(GRADES).map(k => `<a data-g="${k}" class="${k===grade?"on":""}">${GRADES[k].name}</a>`).join("");
+      to.hidden = true;
+    } else {
+      hero.innerHTML = g
+        ? `<h1 style="font-size:22px">🔒 ${g.name} 的课程</h1><p style="color:var(--muted);font-size:14px;margin-top:4px">登录后可见 · Log in to view</p>`
+        : `<h1 style="font-size:22px">🔒 登录 Log in</h1><p style="color:var(--muted);font-size:14px;margin-top:4px">注册的课程登录后可见 · 公开的课程不用登录</p>`;
+      sw.hidden = true;
+      to.hidden = false;
+      to.textContent = g ? `还没有账号？注册「${g.name}」 Register →` : "还没有账号？注册 Register →";
+    }
+    $("hint").innerHTML = mode === "signup"
+      ? "注册后请等老师批准。账号有效到当年 12 月 15 日，同一时间只能在一台设备上用。<br>Wait for teacher approval after registering. Accounts last until 15 December and work on one device at a time."
+      : "";
+  }
+  $("gswitch").onclick = e => { const a = e.target.closest("a[data-g]"); if (!a) return; grade = a.dataset.g; renderGrade(); clearMsg(); };
+  $("toSignup").onclick = () => setMode("signup");
 
   function setMode(m){
     mode = m;
@@ -69,6 +121,7 @@
     $("submitBtn").textContent = m==="login" ? "登录 Log in" : "注册 Register";
     $("password").autocomplete = m==="login" ? "current-password" : "new-password";
     $("nameFld").hidden = m!=="signup";   // 姓名栏只在注册时出现
+    renderGrade();
     clearMsg();
   }
   $("tabLogin").onclick  = () => setMode("login");
@@ -79,13 +132,14 @@
     const p = await A.getProfile();
     if (!p) { msg("账号已创建，正在等待建档…请稍后重试登录", "info"); return; }
     if (p.status === "pending") {
-      msg("✅ 注册成功！你的账号正在等待老师审批。批准后即可查看 Y11/Y12 内容。\nRegistered — waiting for teacher approval.", "ok");
+      msg("✅ 注册成功！你的账号正在等待老师审批，批准后就能看课程。\nRegistered — waiting for teacher approval.", "ok");
       return;
     }
     if (p.status === "disabled") { msg("此账号已被停用，请联系老师。Account disabled.", "err"); return; }
     if (p.status === "approved") {
-      if (p.access_until && new Date(p.access_until) < new Date()) {
-        msg("此账号的访问期限已到期，请联系老师续期。Access expired.", "err"); return;
+      // 🛡 长期保留的账号（同事等）不看到期日
+      if (!p.keep && p.access_until && new Date(p.access_until) < new Date()) {
+        msg("此账号已到期，请联系老师。Access expired.", "err"); return;
       }
       // 已批准且有效 → 占单设备坑
       msg("登录中…占用设备锁…", "info");
@@ -108,11 +162,12 @@
     const name = $("name").value.trim();
     if (mode === "signup" && !name) { msg("请填写姓名，方便老师认出你。Please enter your name.", "err"); return; }
     if (mode === "signup" && pw.length < 6) { msg("密码至少 6 位。Password ≥ 6 chars.", "err"); return; }
+    if (mode === "signup" && !grade) { msg("请先在上面选你要注册的年级。Please choose your year level above.", "err"); return; }
     const btn = $("submitBtn"); btn.disabled = true;
     try {
       if (mode === "signup") {
         clearMsg();
-        const d = await A.signup(email, pw, name);
+        const d = await A.signup(email, pw, name, grade);
         if (!d.access_token) {
           // 开了邮箱确认：需要先确认邮箱
           msg("📧 注册成功！请到邮箱点确认链接后再登录。（若没收到，联系老师）\nCheck your email to confirm, then log in.", "ok");
@@ -134,7 +189,8 @@
     routeAfterAuth().catch(e => msg((e && e.message) || "出错了，请重试。Something went wrong.", "err"));
   }
 
-  setMode("login");
+  // ?mode=signup（如样板课那行字）直接进注册；从锁住的课跳来默认登录，下面有「注册」按钮
+  setMode(params.get("mode") === "signup" ? "signup" : "login");
 })();
 </script>
 </body>

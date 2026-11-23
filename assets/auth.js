@@ -1,6 +1,6 @@
 /* ============================================================
    VCE 访问锁 · 前端认证 / 受保护内容模块
-   —— 仅 Y11/Y12 受保护内容加载；准备班（公开）不引用本文件。
+   —— 受保护内容（VCE准备 新课 / Y11 / Y12）加载；公开课页不引用本文件。
    —— 只用 publishable key + 用户登录后的 JWT，绝不含任何 secret。
    对外暴露 window.VCEAuth
    ============================================================ */
@@ -83,10 +83,14 @@
   }
 
   // ---------- 认证动作 ----------
-  // name 放进 user metadata，由数据库触发器写入 vce_profiles.display_name
-  async function signup(email, password, name){
+  // name、grade（申请年级 prep/y11/y12）放进 user metadata，
+  // 由数据库触发器写入 vce_profiles.display_name / requested_tier（2026-11-23 加 grade）
+  async function signup(email, password, name, grade){
     const body = { email, password };
-    if (name) body.data = { name };
+    const meta = {};
+    if (name) meta.name = name;
+    if (grade) meta.grade = grade;
+    if (name || grade) body.data = meta;
     const { r, data } = await authCall("/signup", body);
     if (!r.ok) throw serviceError(r.status) || new Error(data.msg || data.error_description || data.error || data.message || ("注册失败 " + r.status));
     if (data.access_token) saveSession(data);   // 未开邮箱确认时直接给 session

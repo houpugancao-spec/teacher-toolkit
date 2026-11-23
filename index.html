@@ -182,7 +182,7 @@
         const wk=state.unit?course.weeks.find(w=>w.id===state.unit):null;
         if(!wk){ state.unit=null; listEl.innerHTML=grid(course.weeks.map(weekCard).join("")); return; }
         listEl.innerHTML=grid((wk.groups||[]).map(gr=>`<div class="secdiv">${gr.ico||""} ${gr.name}</div>`+
-          ((gr.sections||[]).length?(gr.sections||[]).map(s=>linkCard({url:s.url,title:s.title,ready:s.ready,tags:s.tags||[]})).join(""):`<div class="lcard soon"><div class="no"><span class="badge">敬请期待</span></div></div>`)).join(""));
+          ((gr.sections||[]).length?(gr.sections||[]).map(s=>linkCard({url:s.url,title:((s.url||"").indexOf("units/protected/")>=0?"🔒 ":"")+s.title,ready:s.ready,tags:s.tags||[]})).join(""):`<div class="lcard soon"><div class="no"><span class="badge">敬请期待</span></div></div>`)).join(""));
         return;
       }
       const ov = course.overview

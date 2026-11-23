@@ -43,6 +43,20 @@
   .seat.miss{background:#fdecec;color:var(--no);border-color:#f2c2c2}
   .misslist{margin-top:12px;font-size:15px;font-weight:600}
   .misslist .no{color:var(--no)}
+  /* 三个年级标签（2026-11-23）*/
+  .gtag{display:inline-block;padding:1px 7px;border-radius:9px;font-size:12px;font-weight:600;white-space:nowrap}
+  .g-prep{background:#fff3e0;color:#a35d00}.g-y11{background:#e8f1ff;color:#1b5bc4}.g-y12{background:#f1e9ff;color:#6a3bb8}
+  .gsec{font-weight:700;margin:14px 0 4px;font-size:15px}
+  .keep-on{background:#e9f8ef!important;border-color:#7cc89a!important;color:var(--ok)!important}
+  .purge-note{background:#fff8ec;border:1px solid #f0c27a;color:#8a5200;border-radius:10px;padding:9px 12px;margin:10px 0;font-size:14px}
+  /* 12 月 15 日清公开课成绩的弹窗 */
+  .modal{position:fixed;inset:0;background:rgba(20,30,50,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+  .modal[hidden]{display:none}
+  .modal-box{background:#fff;border-radius:16px;max-width:440px;width:100%;padding:22px 20px;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+  .modal-box h3{margin:0 0 8px;font-size:18px}
+  .modal-box p{margin:0 0 14px;line-height:1.6;font-size:15px}
+  .modal-box button{display:block;width:100%;margin-top:8px;padding:11px 0;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;border:1.5px solid var(--line);background:#fff}
+  .modal-box .danger{background:#c0392b;border-color:#c0392b;color:#fff}
 </style>
 </head>
 <body>
@@ -72,6 +86,7 @@
     <!-- 视图①：成绩明细（原看板）-->
     <div id="viewDetail">
       <div class="controls">
+        <select id="fGrade"><option value="">全部年级</option><option>VCE准备</option><option>Y11</option><option>Y12</option></select>
         <select id="fCat"><option value="">全部类别</option></select>
         <select id="fLesson"><option value="">全部项目</option></select>
         <select id="fClass"><option value="">全部班级</option></select>
@@ -88,6 +103,7 @@
     <!-- 视图②：按学生 —— 这名学生哪些没交 -->
     <div id="viewByStudent" style="display:none">
       <div class="controls">
+        <select id="sGrade"><option value="">全部年级</option><option>VCE准备</option><option>Y11</option><option>Y12</option></select>
         <select id="sClass"></select>
         <select id="sSeat"></select>
         <button id="sRefresh">🔄 刷新</button>
@@ -99,6 +115,7 @@
     <!-- 视图③：按练习 —— 这一节谁没交 -->
     <div id="viewByExercise" style="display:none">
       <div class="controls">
+        <select id="eGrade"><option value="">全部年级</option><option>VCE准备</option><option>Y11</option><option>Y12</option></select>
         <select id="eLesson"></select>
         <select id="eClass"></select>
         <button id="eRefresh">🔄 刷新</button>
@@ -114,6 +131,20 @@
       <div id="aPending"></div>
       <div id="aApproved"></div>
       <div id="aDisabled"></div>
+    </div>
+  </div>
+
+  <!-- 每年 12 月 15 日：问老师清不清公开课成绩（2026-11-23 用户定：确认才删，不删就问几天后再提醒）-->
+  <div class="modal" id="scModal" hidden>
+    <div class="modal-box">
+      <h3>🗓 清理日到了（12 月 15 日）</h3>
+      <p>要清除<b>截至今天的所有公开课成绩</b>吗？共 <b id="scN">0</b> 条。<br>
+        <span style="color:#c0392b">删了就找不回来</span>，建议先下载备份。<br>
+        <small style="color:var(--muted)">学生账号的成绩不在这里：账号到期清除时会跟着一起删。</small></p>
+      <button id="scBackup">⬇ 先下载备份（Excel 能打开）</button>
+      <button id="scClear" class="danger">🗑 确认清除</button>
+      <button id="scLater">⏰ 先不删，过几天再问我</button>
+      <div id="scMsg" class="msg"></div>
     </div>
   </div>
 
@@ -135,6 +166,23 @@
   // 学期条目（10 年级 T1…）：T1·WK1 句式
   (window.CATALOG?CATALOG.grades:[]).forEach(g=>(g.lecture||[]).forEach(co=>(co.weeks||[]).forEach(wk=>(wk.groups||[]).forEach(gr=>(gr.sections||[]).forEach(s=>{LMAP[s.id]=`${co.no}·${wk.no} ${s.title}`;})))));
   const lname=id=>LMAP[id]||id;
+
+  // lesson id → 年级（VCE准备 / Y11 / Y12）：看 catalog 里哪个年级收了这一节（含受保护课的 ?id=）。
+  // catalog 查不到的旧练习按 id 前缀猜：y11- → Y11、y12- → Y12，其余算 VCE准备（2026-11-23）
+  const GNAME={prep:"VCE准备",y11:"Y11",y12:"Y12"}, GORDER=["VCE准备","Y11","Y12"];
+  const GMAP={};
+  (window.CATALOG?CATALOG.grades:[]).forEach(g=>{
+    const name=GNAME[g.id]||g.name;
+    (function walk(o){
+      if(Array.isArray(o)){ o.forEach(walk); return; }
+      if(!o||typeof o!=="object") return;
+      if(typeof o.id==="string" && !(o.id in GMAP)) GMAP[o.id]=name;
+      if(typeof o.url==="string"){ const m=o.url.match(/[?&]id=([^&#]+)/); if(m && !(m[1] in GMAP)) GMAP[m[1]]=name; }
+      Object.keys(o).forEach(k=>{ if(o[k]&&typeof o[k]==="object") walk(o[k]); });
+    })(g);
+  });
+  const gradeOf=id=>GMAP[id]||(/^y11-/.test(id)?"Y11":/^y12-/.test(id)?"Y12":"VCE准备");
+  const gtag=g=>`<span class="gtag g-${g==="VCE准备"?"prep":g.toLowerCase()}">${g}</span>`;
 
   const $=id=>document.getElementById(id);
   let ROWS=[];
@@ -165,13 +213,46 @@
     const {data,error}=await sb.from('kongzi_results').select('*').order('created_at',{ascending:false});
     if(error){m.textContent="读取失败："+error.message+"（是否已加 select 权限策略？）";m.className="msg b";return;}
     const cut=(window.REPORT_CONFIG||{}).schoolYearStart;
+    ALLROWS=data||[];
     ROWS=(data||[]).filter(r=>!cut || new Date(r.created_at)>=new Date(cut));
     m.textContent="";
     $('yearNote').textContent = cut ? `📅 只显示 ${cut} 起的提交（共 ${ROWS.length} 条）· 明年重置改 report-config.js 的 schoolYearStart` : '';
     fillFilters();
     render();
     buildReport();
+    checkScoreClear();
   }
+
+  /* ===== 12 月 15 日清公开课成绩（弹窗问老师）===== */
+  let ALLROWS=[], SC_CHECKED=false;
+  async function checkScoreClear(){
+    if(SC_CHECKED) return; SC_CHECKED=true;            // 每次打开看板只问一次
+    const {data:st,error}=await sb.from('vce_settings').select('score_clear_at').eq('id',1).maybeSingle();
+    if(error||!st||!st.score_clear_at||new Date(st.score_clear_at)>new Date()) return;
+    const {data:n}=await sb.rpc('vce_public_score_count');
+    $('scN').textContent=n||0; $('scMsg').textContent=''; $('scModal').hidden=false;
+  }
+  $('scBackup').onclick=()=>{
+    const rows=ALLROWS.filter(r=>!r.user_id);
+    const head=["时间UTC","年级","类别","班级","座号","课节id","课节","得分","满分"];
+    const lines=rows.map(r=>[r.created_at,gradeOf(r.lesson),r.category||'授课',r.class_code||'',r.seat_no||'',r.lesson,lname(r.lesson),r.score,r.max_score].map(x=>`"${String(x).replace(/"/g,'""')}"`).join(","));
+    const csv="﻿"+[head.join(","),...lines].join("\n");
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download="公开课成绩备份_"+new Date().toISOString().slice(0,10)+".csv";a.click();
+    $('scMsg').textContent=`✓ 已下载 ${rows.length} 条`; $('scMsg').className='msg g';
+  };
+  $('scClear').onclick=async()=>{
+    if(!confirm(`真的清除 ${$('scN').textContent} 条公开课成绩？删了就找不回来。`)) return;
+    const {data:n,error}=await sb.rpc('vce_clear_public_scores');
+    if(error){ $('scMsg').textContent='清除失败：'+error.message; $('scMsg').className='msg b'; return; }
+    $('scModal').hidden=true; alert(`已清除 ${n} 条公开课成绩。明年 12 月 15 日会再问你。`); load();
+  };
+  $('scLater').onclick=async()=>{
+    const v=prompt('几天后再问你？（1–365 天）','7'); if(v===null) return;
+    const d=parseInt(v,10); if(!(d>=1&&d<=365)){ alert('请填 1 到 365 之间的天数'); return; }
+    const {data:t,error}=await sb.rpc('vce_snooze_score_clear',{p_days:d});
+    if(error){ $('scMsg').textContent='设置失败：'+error.message; $('scMsg').className='msg b'; return; }
+    $('scModal').hidden=true; alert(`好，${fmtD(t)} 再问你。`);
+  };
   function fill(sel,vals,labelFn,ph){
     const cur=sel.value;
     sel.innerHTML=`<option value="">${ph||'全部'}</option>`+vals.map(v=>`<option value="${v}">${labelFn?labelFn(v):v}</option>`).join("");
@@ -190,16 +271,17 @@
     fill($('fSeat'), seats, null, '全部座号');
   }
   function fillLessons(){
-    const cat=$('fCat').value;
-    const ls=[...new Set(ROWS.filter(r=>!cat||(r.category||'授课')===cat).map(r=>r.lesson))].sort();
+    const cat=$('fCat').value, gr=$('fGrade').value;
+    const ls=[...new Set(ROWS.filter(r=>(!cat||(r.category||'授课')===cat)&&(!gr||gradeOf(r.lesson)===gr)).map(r=>r.lesson))].sort();
     fill($('fLesson'), ls, lname, '全部项目');
   }
   $('fCat').onchange=()=>{fillLessons();render();};
+  $('fGrade').onchange=()=>{fillLessons();render();};
   $('fLesson').onchange=render; $('fClass').onchange=()=>{fillSeats();render();}; $('fSeat').onchange=render;
 
   function filtered(){
-    const cat=$('fCat').value, l=$('fLesson').value, c=$('fClass').value, s=$('fSeat').value.trim();
-    return ROWS.filter(r=>(!cat||(r.category||'授课')===cat)&&(!l||r.lesson===l)&&(!c||r.class_code===c)&&(!s||String(r.seat_no)===s));
+    const gr=$('fGrade').value, cat=$('fCat').value, l=$('fLesson').value, c=$('fClass').value, s=$('fSeat').value.trim();
+    return ROWS.filter(r=>(!gr||gradeOf(r.lesson)===gr)&&(!cat||(r.category||'授课')===cat)&&(!l||r.lesson===l)&&(!c||r.class_code===c)&&(!s||String(r.seat_no)===s));
   }
   function render(){
     const rows=filtered();
@@ -211,12 +293,12 @@
     $('metrics').innerHTML=
       metric("总提交数",n)+metric("参与班级",classes)+metric("平均正确率",avg+"%");
     // 表格
-    let h=`<tr><th>时间(墨尔本)</th><th>类别</th><th>班级</th><th>座号</th><th>课节/项目</th><th>得分</th></tr>`;
+    let h=`<tr><th>时间(墨尔本)</th><th>年级</th><th>类别</th><th>班级</th><th>座号</th><th>课节/项目</th><th>得分</th></tr>`;
     h+=rows.map(r=>{
       const t=new Date(r.created_at).toLocaleString('en-AU',{timeZone:'Australia/Melbourne',year:'2-digit',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
       const p=r.max_score?Math.round(r.score/r.max_score*100):0;
       const cls=p>=80?'hi':p>=50?'mid':'lo';
-      return `<tr><td>${t}</td><td>${r.category||'授课'}</td><td>${r.class_code||''}</td><td>${r.seat_no||''}</td><td>${lname(r.lesson)}</td><td><span class="pct ${cls}">${r.score}/${r.max_score} · ${p}%</span></td></tr>`;
+      return `<tr><td>${t}</td><td>${gtag(gradeOf(r.lesson))}</td><td>${r.category||'授课'}</td><td>${r.class_code||''}</td><td>${r.seat_no||''}</td><td>${lname(r.lesson)}</td><td><span class="pct ${cls}">${r.score}/${r.max_score} · ${p}%</span></td></tr>`;
     }).join("");
     $('tbl').innerHTML=h;
     renderAnalysis(rows);
@@ -256,9 +338,16 @@
     const classes=Object.keys(RC.roster);
     fill($('sClass'), classes, null, '选班级');
     fill($('eClass'), classes, null, '选班级');
-    fill($('eLesson'), RC.assignments.map(a=>a.id), assignName, '选练习/课节');
+    fillELesson();
     fillSeat();
   }
+  // 按练习：先选年级，练习下拉只列这个年级的
+  function fillELesson(){
+    const gr=$('eGrade').value;
+    fill($('eLesson'), RC.assignments.filter(a=>!gr||gradeOf(a.id)===gr).map(a=>a.id), a=>`${assignName(a)}（${gradeOf(a)}）`, '选练习/课节');
+  }
+  $('eGrade').onchange=()=>{ fillELesson(); renderExercise(); };
+  $('sGrade').onchange=()=>renderStudent();
   function fillSeat(){
     const cls=$('sClass').value, seats=cls?(RC.roster[cls]||[]):[];
     fill($('sSeat'), seats.map(String), null, '选座号');
@@ -287,12 +376,13 @@
     const cls=$('sClass').value, seat=seatNum($('sSeat').value), box=$('sList');
     if(!cls || seat==null){ $('sMetrics').innerHTML=''; box.innerHTML="<div class='msg' style='color:var(--muted)'>选班级 + 座号，看这名学生每一节交了没</div>"; return; }
     const C=NORM(cls);
-    const items=RC.assignments.map(a=>({a, row:SUBMITTED.get(C+'|'+seat+'|'+a.id)}));
+    const sg=$('sGrade').value;
+    const items=RC.assignments.filter(a=>!sg||gradeOf(a.id)===sg).map(a=>({a, row:SUBMITTED.get(C+'|'+seat+'|'+a.id)}));
     const done=items.filter(x=>x.row).length, total=items.length;
     $('sMetrics').innerHTML=metric("该交",total)+metric("已交",done)+metric("未交",total-done);
     let h='', grp='';
     items.forEach(({a,row})=>{
-      if(a.group!==grp){ grp=a.group; h+=`<div class="grp">${grp}</div>`; }
+      if(a.group!==grp){ grp=a.group; h+=`<div class="grp">${gtag(gradeOf(a.id))} ${grp}</div>`; }
       if(row){ const t=new Date(row.created_at).toLocaleDateString('en-AU',{timeZone:'Australia/Melbourne',month:'2-digit',day:'2-digit'});
         h+=`<div class="chk ok"><span>${a.name}</span><span class="st">✅ ${row.score}/${row.max_score} · ${t}</span></div>`;
       } else { h+=`<div class="chk miss"><span>${a.name}</span><span class="st">❌ 未交</span></div>`; }
@@ -339,8 +429,8 @@
 
   $('csvBtn').onclick=()=>{
     const rows=filtered();
-    const head=["时间UTC","类别","班级","座号","课节id","课节","得分","满分","正确率%"];
-    const lines=rows.map(r=>[r.created_at,r.category||'授课',r.class_code||'',r.seat_no||'',r.lesson,lname(r.lesson),r.score,r.max_score,r.max_score?Math.round(r.score/r.max_score*100):''].map(x=>`"${String(x).replace(/"/g,'""')}"`).join(","));
+    const head=["时间UTC","年级","类别","班级","座号","课节id","课节","得分","满分","正确率%"];
+    const lines=rows.map(r=>[r.created_at,gradeOf(r.lesson),r.category||'授课',r.class_code||'',r.seat_no||'',r.lesson,lname(r.lesson),r.score,r.max_score,r.max_score?Math.round(r.score/r.max_score*100):''].map(x=>`"${String(x).replace(/"/g,'""')}"`).join(","));
     const csv="﻿"+[head.join(","),...lines].join("\n");
     const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download="成绩_"+new Date().toISOString().slice(0,10)+".csv";a.click();
   };
@@ -348,6 +438,7 @@
   /* ===== 账号审批（Y11/Y12 访问锁）===== */
   const fmtD = d => d ? new Date(d).toLocaleDateString('en-AU',{timeZone:'Australia/Melbourne',year:'2-digit',month:'2-digit',day:'2-digit'}) : '';
   let ACCT=new Map();   // id → profile（改名时取当前名）
+  let NEXT_CUT=null;    // 下一个 12 月 15 日（数据库 vce_next_cutoff 算）
   async function loadAccounts(){
     const msg=$('aMsg'); msg.textContent='读取中…'; msg.className='msg';
     const [{data:profs,error:e1},{data:sess}] = await Promise.all([
@@ -356,6 +447,8 @@
     ]);
     if(e1){ msg.textContent='读取失败：'+e1.message; msg.className='msg b'; return; }
     msg.textContent='';
+    if(!NEXT_CUT){ const {data:c}=await sb.rpc('vce_next_cutoff'); NEXT_CUT=c||null; }
+    const {data:{session}}=await sb.auth.getSession(); MY_EMAIL=(session&&session.user&&session.user.email)||"";
     const online=new Map((sess||[]).map(s=>[s.user_id,s]));
     ACCT=new Map((profs||[]).map(p=>[p.id,p]));
     renderAccounts(profs||[], online);
@@ -365,41 +458,74 @@
     ` <button class="tab" data-act="rename" data-id="${p.id}" title="改名" style="padding:1px 6px">✏️</button>`+
     ` <small style="color:var(--muted)">${esc0(p.email||p.id)}</small>`;
   const byName = (a,b) => (a.display_name||'￿').localeCompare(b.display_name||'￿','zh');
+  // 三个年级（2026-11-23）：批准按钮三个，学生注册时申请的年级排第一、加粗；
+  // 已批准按年级分三块；🛡 长期保留（同事等）每年 12 月 15 日不清除；「续期 1 年」取消（到期统一 12 月 15 日）
+  const TIERS=["prep","y11","y12"];
+  const approveBtns=(p,verb)=>{
+    const req=p.requested_tier, order=req&&TIERS.includes(req)?[req,...TIERS.filter(t=>t!==req)]:TIERS;
+    return order.map(t=>`<button class="tab${t===req?' on':''}" data-act="approve" data-tier="${t}" data-id="${p.id}" style="padding:5px 10px">${verb} ${GNAME[t]}</button>`).join(" ");
+  };
+  // 用户 11-23 要求：审核注册一定要明确年级 → 申请年级用大号标签；没选年级的标红
+  const reqTag=p=>p.requested_tier
+    ?` <span style="font-size:14px">申请 <span class="gtag g-${p.requested_tier}" style="font-size:15px;padding:3px 10px">${GNAME[p.requested_tier]}</span></span>`
+    :` <span class="gtag" style="font-size:14px;padding:3px 10px;background:#fdecec;color:var(--no)">⚠ 没选年级，批准前请先问学生</span>`;
+  let MY_EMAIL="";
   function renderAccounts(profs, online){
     profs = profs.slice().sort(byName);
     const pending =profs.filter(p=>p.status==='pending');
     const approved=profs.filter(p=>p.status==='approved');
     const disabled=profs.filter(p=>p.status==='disabled');
-    $('aPending').innerHTML = `<div style="font-weight:600;margin:14px 0 4px">🕓 待审批（${pending.length}）</div>` + (pending.length?
+    const isMe=p=>MY_EMAIL&&p.email===MY_EMAIL;
+    // 下次清除（规则同数据库 vce_purge_expired）：不保留、不是老师自己，且 已批准到期 / 没批准的旧注册
+    const cut=NEXT_CUT?new Date(NEXT_CUT):null;
+    const willGo=cut?profs.filter(p=>!p.keep&&!isMe(p)&&((p.status==='approved'&&p.access_until&&new Date(p.access_until)<=cut)||(p.status!=='approved'&&new Date(p.created_at)<cut))).length:0;
+    const note=cut?`<div class="purge-note">🗓 下次清除：<b>${fmtD(cut)}</b>（12 月 15 日）· 到时会清除 <b>${willGo}</b> 个账号和它们的成绩；标了 🛡 长期保留的不清除</div>`:'';
+    $('aPending').innerHTML = note + `<div style="font-weight:600;margin:14px 0 4px">🕓 待审批（${pending.length}）</div>` + (pending.length?
       `<div class="card list">`+pending.map(p=>
-        `<div class="chk"><span>${who(p)}</span><span class="st">`+
-        `<button class="tab" data-act="y11" data-id="${p.id}" style="padding:5px 10px">批准 Y11</button> `+
-        `<button class="tab" data-act="y12" data-id="${p.id}" style="padding:5px 10px">批准 Y12</button></span></div>`).join("")+`</div>`
+        `<div class="chk"><span>${who(p)}${reqTag(p)}</span><span class="st">${approveBtns(p,'批准')}</span></div>`).join("")+`</div>`
       : `<div class="msg" style="color:var(--muted)">暂无待审批</div>`);
+    const row=p=>{
+      const exp=p.access_until, expired=!p.keep&&exp&&new Date(exp)<new Date(), on=online.get(p.id), me=isMe(p);
+      return `<div class="chk ${expired?'miss':'ok'}"><span>${who(p)} `+
+        `<small style="color:var(--muted)">${p.keep||me?'🛡 长期保留':'到期 '+fmtD(exp)+(expired?'（已过期）':'')}${on?' · 🟢在线':''}</small></span>`+
+        `<span class="st">`+
+        (on?`<button class="tab" data-act="kick" data-id="${p.id}" style="padding:5px 10px">踢下线</button> `:'')+
+        (me?'':`<button class="tab${p.keep?' keep-on':''}" data-act="keep" data-keep="${p.keep?1:0}" data-id="${p.id}" style="padding:5px 10px" title="标了就每年 12 月 15 日都不清除">🛡 ${p.keep?'已长期保留':'长期保留'}</button> `)+
+        `<select class="tab" data-act="retier" data-id="${p.id}" style="padding:5px 6px">${TIERS.map(t=>`<option value="${t}"${t===p.tier?' selected':''}>${GNAME[t]}</option>`).join("")}</select> `+
+        (me?'':`<button class="tab" data-act="disable" data-id="${p.id}" style="padding:5px 10px">停用</button>`)+`</span></div>`;
+    };
     $('aApproved').innerHTML = `<div style="font-weight:600;margin:16px 0 4px">✅ 已批准（${approved.length}）</div>` + (approved.length?
-      `<div class="card list">`+approved.map(p=>{
-        const exp=p.access_until, expired=exp&&new Date(exp)<new Date(), on=online.get(p.id);
-        return `<div class="chk ${expired?'miss':'ok'}"><span>${who(p)} `+
-          `<b style="color:var(--blue-d)">${(p.tier||'').toUpperCase()}</b>`+
-          `<small style="color:var(--muted)"> · 到期 ${fmtD(exp)}${expired?'（已过期）':''}${on?' · 🟢在线':''}</small></span>`+
-          `<span class="st">`+
-          (on?`<button class="tab" data-act="kick" data-id="${p.id}" style="padding:5px 10px">踢下线</button> `:'')+
-          `<button class="tab" data-act="renew" data-id="${p.id}" data-tier="${p.tier||'y11'}" style="padding:5px 10px">续期1年</button> `+
-          `<button class="tab" data-act="disable" data-id="${p.id}" style="padding:5px 10px">停用</button></span></div>`;
-      }).join("")+`</div>`
+      TIERS.map(t=>{ const list=approved.filter(p=>p.tier===t);
+        return `<div class="gsec">${gtag(GNAME[t])} ${list.length} 人</div>`+(list.length?`<div class="card list">${list.map(row).join("")}</div>`:`<div class="msg" style="color:var(--muted)">暂无</div>`);
+      }).join("")
       : `<div class="msg" style="color:var(--muted)">暂无</div>`);
     $('aDisabled').innerHTML = disabled.length? `<div style="font-weight:600;margin:16px 0 4px">🚫 已停用（${disabled.length}）</div>`+
       `<div class="card list">`+disabled.map(p=>
-        `<div class="chk"><span>${who(p)} <small style="color:var(--muted)">${(p.tier||'').toUpperCase()}</small></span>`+
-        `<span class="st"><button class="tab" data-act="y11" data-id="${p.id}" style="padding:5px 10px">恢复→Y11</button> `+
-        `<button class="tab" data-act="y12" data-id="${p.id}" style="padding:5px 10px">恢复→Y12</button></span></div>`).join("")+`</div>` : '';
+        `<div class="chk"><span>${who(p)} ${p.tier?gtag(GNAME[p.tier]):''}</span>`+
+        `<span class="st">${approveBtns(p,'恢复→')}</span></div>`).join("")+`</div>` : '';
   }
+  // 改年级（下拉）
+  $('viewAccounts').addEventListener('change', async e=>{
+    const s=e.target.closest('select[data-act="retier"]'); if(!s) return;
+    s.disabled=true;
+    try{ const {error}=await sb.from('vce_profiles').update({tier:s.value}).eq('id',s.dataset.id); if(error)throw error; await loadAccounts(); }
+    catch(err){ $('aMsg').textContent='操作失败：'+(err.message||err); $('aMsg').className='msg b'; s.disabled=false; }
+  });
   $('viewAccounts').addEventListener('click', async e=>{
     const b=e.target.closest('button[data-act]'); if(!b) return;
     const id=b.dataset.id, act=b.dataset.act; b.disabled=true;
     try{
-      if(act==='y11'||act==='y12'){ const {error}=await sb.rpc('vce_approve',{p_user:id,p_tier:act,p_months:12}); if(error)throw error; }
-      else if(act==='renew'){ const {error}=await sb.rpc('vce_approve',{p_user:id,p_tier:b.dataset.tier,p_months:12}); if(error)throw error; }
+      if(act==='approve'){
+        // 每次批准都确认年级；和学生申请的不一样要特别提醒
+        const p=ACCT.get(id)||{}, t=b.dataset.tier, req=p.requested_tier;
+        let q=`批准「${p.display_name||p.email||''}」为【${GNAME[t]}】？`;
+        if(!req) q+=`\n\n⚠ 这个学生注册时没选年级。`;
+        else if(req!==t) q+=`\n\n⚠ 注意：他申请的是【${GNAME[req]}】，你要批的是【${GNAME[t]}】。`;
+        if(!confirm(q)){ b.disabled=false; return; }
+        const {error}=await sb.rpc('vce_approve',{p_user:id,p_tier:b.dataset.tier,p_months:12}); if(error)throw error; }
+      else if(act==='keep'){ const on=b.dataset.keep!=='1';
+        if(!on && !confirm('取消长期保留？取消后，这个账号会在 12 月 15 日被清除。')) { b.disabled=false; return; }
+        const {error}=await sb.from('vce_profiles').update({keep:on}).eq('id',id); if(error)throw error; }
       else if(act==='disable'){ if(!confirm('确定停用这个账号？停用后该学生无法查看内容。')) { b.disabled=false; return; } const {error}=await sb.from('vce_profiles').update({status:'disabled'}).eq('id',id); if(error)throw error; }
       else if(act==='rename'){ const cur=(ACCT.get(id)||{}).display_name||''; const nv=prompt('学生姓名：',cur); if(nv===null){ b.disabled=false; return; } const {error}=await sb.from('vce_profiles').update({display_name:nv.trim().slice(0,40)||null}).eq('id',id); if(error)throw error; }
       else if(act==='kick'){ const {error}=await sb.from('vce_active_sessions').delete().eq('user_id',id); if(error)throw error; }

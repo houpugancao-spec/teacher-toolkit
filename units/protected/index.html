@@ -76,7 +76,18 @@
   const nextParam = encodeURIComponent("units/protected/index.html" + location.search);
 
   function show(html){ gate.innerHTML = html; }
-  function toLogin(){ location.href = "../../login.html?next=" + nextParam; }
+  // 这节课属于哪个年级（看 catalog 里谁收了它）→ 登录页就显示「注册「VCE准备」」等（2026-11-23）
+  function gradeOf(lessonId){
+    let g = null;
+    ((window.CATALOG && CATALOG.grades) || []).forEach(gr => {
+      if (!g && lessonId && JSON.stringify(gr).indexOf('"' + lessonId + '"') >= 0) g = gr.id;
+    });
+    return ({ prep:"prep", y11:"y11", y12:"y12" })[g] || "";
+  }
+  function toLogin(){
+    const g = gradeOf(id);
+    location.href = "../../login.html?next=" + nextParam + (g ? "&grade=" + g : "");
+  }
 
   async function boot(){
     if (!id) { show("<h2>缺少课程编号</h2><p>Missing lesson id.</p><a class='btn' href='../../index.html'>返回首页</a>"); return; }
@@ -86,7 +97,7 @@
     const p = await A.getProfile();
     if (!p) { toLogin(); return; }
     if (p.status !== "approved" ||
-        (p.access_until && new Date(p.access_until) < new Date())) {
+        (!p.keep && p.access_until && new Date(p.access_until) < new Date())) {   // 🛡 长期保留不看到期日
       toLogin(); return;   // 登录页会显示"等审批/已过期"
     }
 

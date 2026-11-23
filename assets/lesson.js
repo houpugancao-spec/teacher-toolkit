@@ -276,6 +276,7 @@
   </div>
   <div class="wrap">
     ${isOverview ? "" : `<div class="seclabel"><span class="sn">${curTag}</span>${esc(L.title)}</div>`}
+    ${L.banner ? `<a class="demo-banner" href="${esc(L.banner.href)}">${esc(L.banner.text)}${L.banner.en?`<small>${esc(L.banner.en)}</small>`:""}</a>` : ""}
     ${idcard}
     ${L.sections.map(section).join("")}
     ${submitBox}
@@ -478,10 +479,14 @@
     }
   });
 
-  function postResult(p){
+  // 受保护课页（加载了 auth.js、已登录）用本人的登录凭证交：数据库自动在成绩上记「是哪个账号」，
+  // 账号 12 月 15 日清除时成绩跟着删（2026-11-23）。公开课页没有 VCEAuth → 照旧匿名交，不记账号。
+  async function postResult(p){
+    let tok = SUPABASE_KEY;
+    try { const A = window.VCEAuth; if(A && A.isLoggedIn()){ const t = await A.getAccessToken(); if(t) tok = t; } } catch(e){}
     return fetch(SUPABASE_URL+"/rest/v1/kongzi_results",{
       method:"POST",
-      headers:{"apikey":SUPABASE_KEY,"Authorization":"Bearer "+SUPABASE_KEY,"Content-Type":"application/json","Prefer":"return=minimal"},
+      headers:{"apikey":SUPABASE_KEY,"Authorization":"Bearer "+tok,"Content-Type":"application/json","Prefer":"return=minimal"},
       body:JSON.stringify(p)
     });
   }
