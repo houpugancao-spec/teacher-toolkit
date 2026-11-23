@@ -58,16 +58,27 @@
   .modal-box button{display:block;width:100%;margin-top:8px;padding:11px 0;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;border:1.5px solid var(--line);background:#fff}
   .modal-box .danger{background:#c0392b;border-color:#c0392b;color:#fff}
   /* 手机排版（2026-11-23 用户：手机上超出宽度）：账号一行变两层——上面姓名/年级/到期，下面按钮自动换行、按钮加大好点 */
-  .chk small{word-break:break-all}
+  .chk small{overflow-wrap:anywhere}   /* 长邮箱能断行，但「到期 15/12/26」放得下就整段换行，不拆开 */
+  /* 审批页（2026-11-23 用户：人多会乱、功能键太大）：顶上分类计数并列，点开名单；功能键小号一行 */
+  .acc-chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .acc-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border:1.5px solid var(--line);border-radius:20px;background:#fff;
+    font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;color:#33415c}
+  .acc-chip b{font-size:15px;color:var(--blue-d)}
+  .acc-chip.hot{border-color:#f0a33a;background:#fff8ec}
+  .acc-chip.on{border-color:var(--blue-d);box-shadow:0 0 0 2px rgba(31,111,235,.18)}
+  #viewAccounts .chk .st{display:flex;flex-wrap:nowrap;gap:5px;align-items:center}
+  .mini{padding:3px 9px;border:1px solid var(--line);border-radius:14px;background:#fff;font-size:12.5px;font-family:inherit;
+    cursor:pointer;color:#33415c;white-space:nowrap;line-height:1.5}
+  select.mini{padding:3px 4px}
+  .mini.on{background:var(--blue-d);border-color:var(--blue-d);color:#fff}
   @media (max-width:640px){
     .topbar #who{display:none!important}
     .tabs{gap:5px}
     .tabs .tab{padding:7px 10px;font-size:13px}
     .controls select,.controls button{flex:1 1 44%;min-width:0;padding:9px 8px}
-    #viewAccounts .chk{flex-direction:column;align-items:stretch;gap:8px;padding:11px 12px}
-    #viewAccounts .chk .st{white-space:normal;display:flex;flex-wrap:wrap;gap:6px}
-    #viewAccounts .chk .st .tab{flex:1 1 30%;min-height:40px;padding:6px 8px!important;font-size:14px;text-align:center}
-    #viewAccounts .chk .st select.tab{flex:1 1 30%}
+    #viewAccounts .chk{flex-direction:column;align-items:stretch;gap:6px;padding:10px 12px}
+    #viewAccounts .chk .st{justify-content:flex-start}
+    .acc-chip{padding:6px 10px;font-size:13px}
     .purge-note{font-size:13px}
     table.res{font-size:12.5px}
     table.res th,table.res td{padding:7px 6px}
@@ -479,7 +490,7 @@
   const TIERS=["prep","y11","y12"];
   const approveBtns=(p,verb)=>{
     const req=p.requested_tier, order=req&&TIERS.includes(req)?[req,...TIERS.filter(t=>t!==req)]:TIERS;
-    return order.map(t=>`<button class="tab${t===req?' on':''}" data-act="approve" data-tier="${t}" data-id="${p.id}" style="padding:5px 10px">${verb} ${GNAME[t]}</button>`).join(" ");
+    return order.map(t=>`<button class="mini${t===req?' on':''}" data-act="approve" data-tier="${t}" data-id="${p.id}">${verb} ${GNAME[t]}</button>`).join("");
   };
   // 用户 11-23 要求：审核注册一定要明确年级 → 申请年级用大号标签；没选年级的标红
   const reqTag=p=>p.requested_tier
@@ -496,30 +507,52 @@
     const cut=NEXT_CUT?new Date(NEXT_CUT):null;
     const willGo=cut?profs.filter(p=>!p.keep&&!isMe(p)&&((p.status==='approved'&&p.access_until&&new Date(p.access_until)<=cut)||(p.status!=='approved'&&new Date(p.created_at)<cut))).length:0;
     const note=cut?`<div class="purge-note">🗓 下次清除：<b>${fmtD(cut)}</b>（12 月 15 日）· 到时会清除 <b>${willGo}</b> 个账号和它们的成绩；标了 🛡 长期保留的不清除</div>`:'';
-    $('aPending').innerHTML = note + `<div style="font-weight:600;margin:14px 0 4px">🕓 待审批（${pending.length}）</div>` + (pending.length?
-      `<div class="card list">`+pending.map(p=>
-        `<div class="chk"><span>${who(p)}${reqTag(p)}</span><span class="st">${approveBtns(p,'批准')}</span></div>`).join("")+`</div>`
-      : `<div class="msg" style="color:var(--muted)">暂无待审批</div>`);
+    // 用户 11-23：人多了乱 → 顶上一排分类计数，点哪个才展开哪个名单；
+    // 长期保留（老师、同事）只放在「🛡 长期保留」里，三个年级的人数只算学生
+    const kept=approved.filter(p=>p.keep||isMe(p));
+    const tierList=t=>approved.filter(p=>p.tier===t&&!p.keep&&!isMe(p));
+    const groups=[
+      {k:'pending', label:'🕓 待审批', list:pending},
+      {k:'prep',    label:'VCE准备', list:tierList('prep'), cls:'g-prep'},
+      {k:'y11',     label:'Y11',     list:tierList('y11'),  cls:'g-y11'},
+      {k:'y12',     label:'Y12',     list:tierList('y12'),  cls:'g-y12'},
+      {k:'keep',    label:'🛡 长期保留', list:kept}
+    ].concat(disabled.length?[{k:'disabled', label:'🚫 已停用', list:disabled}]:[]);
+    // 第一次打开：有待审批就先展开待审批；老师点同一个再收起（''）就保持收起
+    if(ACC_VIEW!=='' && !groups.some(g=>g.k===ACC_VIEW)) ACC_VIEW = pending.length ? 'pending' : '';
+    const chips=`<div class="acc-chips">`+groups.map(g=>
+      `<button class="acc-chip ${g.cls||''}${g.k===ACC_VIEW?' on':''}${g.k==='pending'&&g.list.length?' hot':''}" data-acc="${g.k}">${g.label}<b>${g.list.length}</b></button>`).join("")+`</div>`;
+    $('aPending').innerHTML = note + chips;
+    // 一行：姓名 邮箱 · 到期 ｜ 🛡 年级 停用（「踢下线」去掉：学生自己能换设备，要挡人用「停用」）
     const row=p=>{
       const exp=p.access_until, expired=!p.keep&&exp&&new Date(exp)<new Date(), on=online.get(p.id), me=isMe(p);
       return `<div class="chk ${expired?'miss':'ok'}"><span>${who(p)} `+
-        `<small style="color:var(--muted)">${p.keep||me?'🛡 长期保留':'到期 '+fmtD(exp)+(expired?'（已过期）':'')}${on?' · 🟢在线':''}</small></span>`+
+        `<small style="color:var(--muted)">${p.keep||me?'🛡 长期保留':'到期&nbsp;'+fmtD(exp)+(expired?'（已过期）':'')}${on?' · 🟢在线':''}</small></span>`+
         `<span class="st">`+
-        (on?`<button class="tab" data-act="kick" data-id="${p.id}" style="padding:5px 10px">踢下线</button> `:'')+
-        (me?'':`<button class="tab${p.keep?' keep-on':''}" data-act="keep" data-keep="${p.keep?1:0}" data-id="${p.id}" style="padding:5px 10px" title="标了就每年 12 月 15 日都不清除">🛡 ${p.keep?'已长期保留':'长期保留'}</button> `)+
-        `<select class="tab" data-act="retier" data-id="${p.id}" style="padding:5px 6px">${TIERS.map(t=>`<option value="${t}"${t===p.tier?' selected':''}>${GNAME[t]}</option>`).join("")}</select> `+
-        (me?'':`<button class="tab" data-act="disable" data-id="${p.id}" style="padding:5px 10px">停用</button>`)+`</span></div>`;
+        (me?'':`<button class="mini${p.keep?' keep-on':''}" data-act="keep" data-keep="${p.keep?1:0}" data-id="${p.id}" title="标了就每年 12 月 15 日都不清除">🛡${p.keep?' 已保留':' 保留'}</button>`)+
+        `<select class="mini" data-act="retier" data-id="${p.id}" title="改年级">${TIERS.map(t=>`<option value="${t}"${t===p.tier?' selected':''}>${GNAME[t]}</option>`).join("")}</select>`+
+        (me?'':`<button class="mini" data-act="disable" data-id="${p.id}">停用</button>`)+`</span></div>`;
     };
-    $('aApproved').innerHTML = `<div style="font-weight:600;margin:16px 0 4px">✅ 已批准（${approved.length}）</div>` + (approved.length?
-      TIERS.map(t=>{ const list=approved.filter(p=>p.tier===t);
-        return `<div class="gsec">${gtag(GNAME[t])} ${list.length} 人</div>`+(list.length?`<div class="card list">${list.map(row).join("")}</div>`:`<div class="msg" style="color:var(--muted)">暂无</div>`);
-      }).join("")
-      : `<div class="msg" style="color:var(--muted)">暂无</div>`);
-    $('aDisabled').innerHTML = disabled.length? `<div style="font-weight:600;margin:16px 0 4px">🚫 已停用（${disabled.length}）</div>`+
-      `<div class="card list">`+disabled.map(p=>
-        `<div class="chk"><span>${who(p)} ${p.tier?gtag(GNAME[p.tier]):''}</span>`+
-        `<span class="st">${approveBtns(p,'恢复→')}</span></div>`).join("")+`</div>` : '';
+    const g=groups.find(x=>x.k===ACC_VIEW);
+    let body='';
+    if(!g) body=`<div class="msg" style="color:var(--muted)">👆 点上面的分类，打开名单</div>`;
+    else if(!g.list.length) body=`<div class="msg" style="color:var(--muted)">${g.label}：暂无</div>`;
+    else if(g.k==='pending') body=`<div class="card list">`+g.list.map(p=>
+        `<div class="chk"><span>${who(p)}${reqTag(p)}</span><span class="st">${approveBtns(p,'批准')}</span></div>`).join("")+`</div>`;
+    else if(g.k==='disabled') body=`<div class="card list">`+g.list.map(p=>
+        `<div class="chk"><span>${who(p)} ${p.tier?gtag(GNAME[p.tier]):''}</span><span class="st">${approveBtns(p,'恢复→')}</span></div>`).join("")+`</div>`;
+    else body=`<div class="card list">${g.list.map(p=>g.k==='keep'?row(p).replace('</small></span>',` ${p.tier?gtag(GNAME[p.tier]):''}</small></span>`):row(p)).join("")}</div>`;
+    $('aApproved').innerHTML = body;
+    $('aDisabled').innerHTML = '';
+    LAST_ACC=[profs,online];
   }
+  // 点分类计数 → 展开那个名单（再点一次收起）
+  let ACC_VIEW=null, LAST_ACC=null;
+  $('viewAccounts').addEventListener('click', e=>{
+    const c=e.target.closest('[data-acc]'); if(!c||!LAST_ACC) return;
+    ACC_VIEW = ACC_VIEW===c.dataset.acc ? '' : c.dataset.acc;
+    renderAccounts(LAST_ACC[0], LAST_ACC[1]);
+  });
   // 改年级（下拉）
   $('viewAccounts').addEventListener('change', async e=>{
     const s=e.target.closest('select[data-act="retier"]'); if(!s) return;
