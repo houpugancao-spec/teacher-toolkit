@@ -165,6 +165,13 @@ audio{width:100%;margin:4px 0 10px;height:40px}
 /* ---- 课文 / 文字稿（reading）---- */
 .reading .rd-img{width:100%;border-radius:12px;margin-bottom:12px;display:block}
 .reading .rd-body{font-size:17px;line-height:2}
+/* 原文默认收起（reading 区块 fold:true，2026-11-23 10 年级听力）；只作用于开了开关的区块 */
+.rd-fold{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.rd-fold>summary{cursor:pointer;list-style:none;display:inline-block;padding:7px 14px;border:1.5px solid var(--blue);border-radius:18px;
+  color:var(--blue-d);font-weight:600;font-size:14.5px;background:#fff;user-select:none}
+.rd-fold>summary::-webkit-details-marker{display:none}
+.rd-fold[open]>summary{margin-bottom:12px;background:#eef4ff}
+.rd-fold[open] .o,.rd-fold:not([open]) .c{display:none}
 .reading .rd-p{margin:0 0 12px;text-indent:2em}
 .reading .dl{margin:0 0 10px}
 .reading .dl .who{color:var(--blue-d);margin-right:2px}

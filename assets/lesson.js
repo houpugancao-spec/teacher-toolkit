@@ -41,15 +41,33 @@
       }
     }));
   });
+  // 授课里的「学期」条目（2026-11-23，10 年级 T1）：学期 › 周 › 分组（听力 / 阅读加写作 / 口语 / 本周大纲字）› 页。
+  // 一周里各组的 sections 摊平成一串，当作「一门课」算上一页/下一页和目录；旧课没有 weeks，走不到这里，行为不变。
+  let term=null, week=null;
+  (CAT?CAT.grades:[]).forEach((g,gi)=>(g.lecture||[]).forEach(co=>(co.weeks||[]).forEach(wk=>{
+    const flat=[];
+    (wk.groups||[]).forEach(gr=>(gr.sections||[]).forEach(s=>flat.push(Object.assign({grp:gr.name,grpIco:gr.ico||""},s))));
+    if(flat.some(s=>s.id===L.id)){
+      term=co; week=Object.assign({},wk,{sections:flat}); course=week;
+      gradeName=g.name; gradeIdx=gi; catId="lecture"; skillName=null;
+    }
+  })));
   // 单元带 arabic:true（如大纲必备汉字 37 节）序号用阿拉伯数字：第23节；其余照旧用 一二三
   const NUM = n => (course&&course.arabic) ? String(n) : (CN[n-1]||String(n));
   const secs = course?(course.sections||[]):[];
   const si = secs.findIndex(s=>s.id===L.id);
   const curN = si>=0?secs[si].n:(L.n||1);
-  const prev = si>0 ? secs[si-1] : null;
-  const next = si>=0 && si<secs.length-1 ? secs[si+1] : null;
+  // 学期周页：上一页/下一页跳过还没上线的（敬请期待）；旧课 navSecs 就是 secs，结果与改造前相同
+  const navSecs = term ? secs.filter(s=>s.ready!==false) : secs;
+  const ni = navSecs.findIndex(s=>s.id===L.id);
+  const prev = ni>0 ? navSecs[ni-1] : null;
+  const next = ni>=0 && ni<navSecs.length-1 ? navSecs[ni+1] : null;
+  // 每页的小标签：旧课「第三节」；学期周页用所属分组「🎧 听力」
+  const secTag = sc => term ? ((sc.grpIco?sc.grpIco+" ":"")+esc(sc.grp)) : `第${NUM(sc.n)}节`;
+  const curTag = (term && si>=0) ? secTag(secs[si]) : `第${NUM(curN)}节`;
   // 练习类条目没有 no（第九课/第十课那种编号），filter 掉避免显示 "undefined 标题"
-  const courseLabel = course ? [course.no,course.title].filter(Boolean).join(" ") : (L.unitTitle||"");
+  const courseLabel = term ? `${term.no} · ${week.no} ${week.title}`
+                    : course ? [course.no,course.title].filter(Boolean).join(" ") : (L.unitTitle||"");
   const rel = u => "../../" + u;                 // 课页在 units/<u>/，根目录退两级
   const navLink = (le,label)=> le && le.ready!==false
       ? `<a href="${rel(le.url)}">${label}</a>`
@@ -95,7 +113,10 @@
         ? `<p class="dl"><b class="who">${esc(role)}：</b>${linkify(t)}</p>`
         : `<p class="rd-p">${linkify(t)}</p>`;
     }).join("");
-    return `<div class="card reading">${fig}${audio}<div class="rd-body">${paras}</div><div class="hint">👆 有下划线的词可以点，看解释、听读音 · Tap underlined words</div></div>`;
+    const txt = `<div class="rd-body">${paras}</div><div class="hint">👆 有下划线的词可以点，看解释、听读音 · Tap underlined words</div>`;
+    // fold:true（2026-11-23，10 年级听力）：原文默认收起，学生听录音时自己选看不看；没设的旧区块不变
+    const foldTxt = s.fold ? `<details class="rd-fold"><summary><span class="o">📄 看原文 · Show the transcript</span><span class="c">🙈 收起原文 · Hide the transcript</span></summary>${txt}</details>` : txt;
+    return `<div class="card reading">${fig}${audio}${foldTxt}</div>`;
   }
   // 分节导航（总览页用）
   function sectionnav(s){
@@ -186,9 +207,10 @@
   // ---- 组装页面 ----
   const isOverview = (L.kind==="overview");   // 课文总览页：无计分、无提交
   const scored = maxScore>0 && !isOverview;   // 有可评分题才显示计分/提交
-  document.title = isOverview ? `${courseLabel} · ${L.title}` : `${courseLabel} 第${NUM(curN)}节 · ${L.title}`;
+  document.title = isOverview ? `${courseLabel} · ${L.title}` : `${courseLabel} ${curTag.replace(/^\S+ /,"")} · ${L.title}`;
   const brandSmall = isOverview
     ? esc(L.title) + (L.subtitle?" · "+esc(L.subtitle):"")
+    : term ? `${curTag} · ${esc(L.title)}`
     : `第${NUM(curN)}节 · ${esc(L.title)} ${L.subtitle?"· "+esc(L.subtitle):""}`;
   const scoreBox = scored ? `<div class="score">⭐ <span id="score">0</span>/${maxScore}</div>` : "";
   // 面包屑：主页 › 年级 › 分类，每一级都可点，不再跳级回主页。
@@ -209,10 +231,14 @@
     let h="#g="+gradeIdx;
     if(catId) h+="&cat="+encodeURIComponent(catId);
     if(skillName) h+="&skill="+encodeURIComponent(skillName);
+    if(term) return h+"&course="+encodeURIComponent(term.id)+"&unit="+encodeURIComponent(week.id);
     if(catId==="lecture" && course && course.id) h+="&course="+encodeURIComponent(course.id);
     return h;
   })();
-  const upLabel = (catId==="lecture" && course)
+  // 学期周页：小导航是 主页 › 年级 › T1 › WK1（多给学期一级，免得学生要回主页重新点）
+  const termLink = term ? `<a href="../../index.html#g=${gradeIdx}&cat=lecture&course=${encodeURIComponent(term.id)}">${esc(term.no)}</a>` : "";
+  const upLabel = term ? `${week.no} ${week.title}`
+    : (catId==="lecture" && course)
       ? [course.no,course.title].filter(Boolean).join(" ")
       : (skillName || catLabel);
   // 「☰ 目录」：只有在 catalog 里查得到同单元兄弟节（secs>1）且不是总览页时才出现。
@@ -220,7 +246,7 @@
   const hasToc = !isOverview && secs.length > 1;
   const tocBtn = hasToc ? `<a id="tocBtn" href="javascript:void(0)">☰ 目录</a>` : "";
   const tocPanel = hasToc ? `<div class="toc" id="tocPanel" hidden>` + secs.map(sc=>{
-      const label = `第${NUM(sc.n)}节 ${esc(sc.title)}`;
+      const label = `${secTag(sc)} ${esc(sc.title)}`;
       if(sc.ready===false) return `<span class="soon">${label}</span>`;
       return sc.id===L.id ? `<a class="cur" href="${rel(sc.url)}">${label}</a>`
                           : `<a href="${rel(sc.url)}">${label}</a>`;
@@ -228,10 +254,10 @@
 
   const navRow = (gradeIdx>=0
       ? `<a href="../../index.html">🏠 主页</a>`+
-        `<a href="../../index.html#g=${gradeIdx}">${esc(gradeName)}</a>`+
+        `<a href="../../index.html#g=${gradeIdx}">${esc(gradeName)}</a>`+ termLink +
         (upLabel ? `<a href="../../index.html${upHash}">${esc(upLabel)}</a>` : "")
       : `<a href="../../index.html">🏠 主页</a><a href="../../index.html">🔍 目录/搜索</a>`)+
-    (isOverview ? "" : `${tocBtn}${navLink(prev,"◀ 上一节")}${navLink(next,"下一节 ▶")}`);
+    (isOverview ? "" : `${tocBtn}${navLink(prev,term?"◀ 上一页":"◀ 上一节")}${navLink(next,term?"下一页 ▶":"下一节 ▶")}`);
   const idcard = scored ? `<div class="card idcard" id="idcard"></div>` : "";
   const submitBox = scored ? `<div class="card" style="text-align:center">
       <div style="font-weight:600;margin-bottom:10px">做完了？把成绩交给老师 👇<br><small style="color:#6b7686;font-weight:400">Finished? Send your score to the teacher</small></div>
@@ -249,11 +275,11 @@
     ${tocPanel}
   </div>
   <div class="wrap">
-    ${isOverview ? "" : `<div class="seclabel"><span class="sn">第${NUM(curN)}节</span>${esc(L.title)}</div>`}
+    ${isOverview ? "" : `<div class="seclabel"><span class="sn">${curTag}</span>${esc(L.title)}</div>`}
     ${idcard}
     ${L.sections.map(section).join("")}
     ${submitBox}
-    <p class="foot">${esc(gradeName)} · ${esc(courseLabel)}${isOverview?"":" · 第"+NUM(curN)+"节"}<br>学生自测练习</p>
+    <p class="foot">${esc(gradeName)} · ${esc(courseLabel)}${isOverview?"":" · "+curTag}<br>学生自测练习</p>
   </div>`;
   document.body.innerHTML = body;
 

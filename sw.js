@@ -1,7 +1,7 @@
 /* Service Worker —— 离线缓存
    缓存网页+资源+音频，学生在线打开一次后即可离线做题。
    加新单元后请把 CACHE 版本号 +1（触发更新）。 */
-const CACHE = "vce-zhongwen-v82";
+const CACHE = "vce-zhongwen-v83";
 const CORE = [
   "./", "./index.html", "./teacher.html", "./login.html", "./manifest.json", "./icon.svg",
   "./assets/icons/icon-192.png", "./assets/icons/icon-512.png",
@@ -31,6 +31,9 @@ const CORE = [
   "./units/zhuge/img/beat1.png", "./units/zhuge/img/beat2.png", "./units/zhuge/img/beat3.png",
   "./units/zhuge/img/beat4.png", "./units/zhuge/img/beat5.png", "./units/zhuge/img/beat6.png",
   "./units/zhuge/img/beat7.png", "./units/zhuge/img/portrait-card.png",
+  // 授课 · 10 年级 T1 · WK1 自我介绍（听力音频、读音不进 CORE，同词卡惯例）
+  "./units/t1-wk1/1.html", "./units/t1-wk1/2.html", "./units/t1-wk1/3.html",
+  "./units/t1-wk1/4.html", "./units/t1-wk1/5.html", "./units/t1-wk1/6.html",
   // 练习 · 作文 · 说服文-到北京中学做交换生（读音不进 CORE，同词卡惯例）
   "./units/shuofu-jiaohuansheng/index.html", "./units/shuofu-jiaohuansheng/1.html",
   "./units/shuofu-jiaohuansheng/2.html", "./units/shuofu-jiaohuansheng/3.html", "./units/shuofu-jiaohuansheng/4.html",

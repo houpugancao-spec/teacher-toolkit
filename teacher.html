@@ -132,6 +132,8 @@
   // lesson id → 好看的名字（读 catalog）
   const LMAP={};
   (window.CATALOG?CATALOG.grades:[]).forEach(g=>(g.lecture||[]).forEach(co=>(co.sections||[]).forEach(s=>{LMAP[s.id]=`${co.no}${co.title}·第${CN[s.n-1]}节`;})));
+  // 学期条目（10 年级 T1…）：T1·WK1 句式
+  (window.CATALOG?CATALOG.grades:[]).forEach(g=>(g.lecture||[]).forEach(co=>(co.weeks||[]).forEach(wk=>(wk.groups||[]).forEach(gr=>(gr.sections||[]).forEach(s=>{LMAP[s.id]=`${co.no}·${wk.no} ${s.title}`;})))));
   const lname=id=>LMAP[id]||id;
 
   const $=id=>document.getElementById(id);

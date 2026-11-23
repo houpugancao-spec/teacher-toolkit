@@ -72,6 +72,9 @@
   const FLAT=[];
   C.grades.forEach(g=>{
     (g.lecture||[]).forEach(co=>(co.sections||[]).forEach(s=>FLAT.push({url:s.url,title:`第${CN[s.n-1]}节 ${s.title}`,ready:s.ready,tags:s.tags||[],path:`${g.name} · 授课 · ${co.no} ${co.title}`})));
+    // 学期条目（T1…）：学期 › 周 › 分组 › 页，每页进索引
+    (g.lecture||[]).forEach(co=>(co.weeks||[]).forEach(wk=>(wk.groups||[]).forEach(gr=>(gr.sections||[]).forEach(s=>FLAT.push({
+      url:s.url,title:`${wk.no} ${gr.name} · ${s.title}`,ready:s.ready,tags:s.tags||[],path:`${g.name} · 授课 · ${co.no} · ${wk.no} ${wk.title}`})))));
     const pr=g.practice||{};
     Object.keys(pr).forEach(sk=>(pr[sk]||[]).forEach(it=>FLAT.push({url:it.url,title:it.title,ready:it.ready,tags:it.tags||[],path:`${g.name} · 练习 · ${sk}`})));
     // 除授课/练习外的类别（含年级自定义的），都是「项目数组」，一律按同一种方式进搜索索引
@@ -95,12 +98,26 @@
   // ---- 卡片 ----
   function catCard(g,c){
     let cnt=0;
-    if(c.id==="lecture")cnt=(g.lecture||[]).length+" 门课";
+    if(c.id==="lecture"){const lc=g.lecture||[],nt=lc.filter(x=>x.weeks).length;
+      cnt=(nt?nt+" 个学期 · ":"")+(lc.length-nt)+" 门课";}
     else if(c.id==="practice"){let n=0;Object.values(g.practice||{}).forEach(a=>n+=a.length);cnt=n+" 个练习";}
     else cnt=(g[c.id]||[]).length+" 项";
     return `<div class="lcard nav cat" data-cat="${c.id}"><span class="ico">${c.ico||CAT_ICO[c.id]||"📁"}</span><div><div class="tt">${c.name}</div><div class="cnt">${cnt}</div></div></div>`;
   }
-  function courseCard(co){return `<div class="lcard nav" data-course="${co.id}"><div class="no">${co.no}</div><div class="tt">${co.title}</div><div class="cnt">${co.topic||""} · ${(co.sections||[]).length} 节</div></div>`;}
+  // 学期卡（T1…）：还没有一周上线 → 敬请期待、不可点
+  const wkReady=wk=>(wk.groups||[]).some(gr=>(gr.sections||[]).some(s=>s.ready!==false));
+  function termCard(co){
+    const n=(co.weeks||[]).length, done=(co.weeks||[]).filter(wkReady).length;
+    if(!done) return `<div class="lcard soon"><div class="no">${co.no}</div><div class="tt">${co.title}</div><div class="no"><span class="badge">敬请期待</span></div></div>`;
+    return `<div class="lcard nav" data-course="${co.id}"><div class="no">${co.no}</div><div class="tt">${co.title}</div><div class="cnt">${co.topic?co.topic+" · ":""}${n} 周 · 已上线 ${done}</div></div>`;
+  }
+  // 周卡：标题下列出各组，有内容 ✅、还没做 ⏳
+  function weekCard(wk){
+    if(!wkReady(wk)) return `<div class="lcard soon"><div class="no">${wk.no}</div><div class="tt">${wk.title||""}</div><div class="no"><span class="badge">敬请期待</span></div></div>`;
+    const tags=(wk.groups||[]).map(gr=>`<span>${gr.ico||""}${gr.name} ${(gr.sections||[]).some(s=>s.ready!==false)?"✅":"⏳"}</span>`).join("");
+    return `<div class="lcard nav" data-unit="${wk.id}"><div class="no">${wk.no}</div><div class="tt">${wk.title}</div><div class="tags">${tags}</div></div>`;
+  }
+  function courseCard(co){if(co.weeks)return termCard(co);return `<div class="lcard nav" data-course="${co.id}"><div class="no">${co.no}</div><div class="tt">${co.title}</div><div class="cnt">${co.topic||""} · ${(co.sections||[]).length} 节</div></div>`;}
   function skillCard(g,sk){return `<div class="lcard nav" data-skill="${sk}"><div class="tt">${sk}</div><div class="cnt">${(g.practice[sk]||[]).length} 个</div></div>`;}
   function linkCard(it,label){
     // 卡片小字：有分节的（练习类）显示节名，比一堆关键词有用；没分节的才回退到 tags。
@@ -138,7 +155,11 @@
       if(state.course||state.skill||state.unit)h+=`<a data-nav="cat">${catName(state.cat,g)}</a>`;
       else h+=`<span class="cur">${catName(state.cat,g)}</span>`;
     }
-    if(state.course){const co=g.lecture.find(x=>x.id===state.course);h+=`<span class="sep">›</span><span class="cur">${co.no} ${co.title}</span>`;}
+    if(state.course){const co=g.lecture.find(x=>x.id===state.course);
+      const wk=co&&co.weeks&&state.unit?co.weeks.find(w=>w.id===state.unit):null;
+      if(co&&wk) h+=`<span class="sep">›</span><a data-nav="course">${co.no} ${co.title}</a><span class="sep">›</span><span class="cur">${wk.no} ${wk.title}</span>`;
+      else if(co) h+=`<span class="sep">›</span><span class="cur">${co.no} ${co.title}</span>`;
+      crumbEl.innerHTML=h; return;}
     if(state.skill){h+=`<span class="sep">›</span><span class="cur">${state.skill}</span>`;}
     // 单元下钻（如「作文-话题-基础词句」的 15 节）多一级
     if(state.unit){const u=findUnit(g);if(u)h+=`<span class="sep">›</span><span class="cur">${u.title}</span>`;}
@@ -155,6 +176,15 @@
     if(state.cat==="lecture"){
       if(!state.course){ const co=g.lecture||[]; listEl.innerHTML=co.length?grid(co.map(courseCard).join("")):empty(); return; }
       const course=g.lecture.find(x=>x.id===state.course);
+      if(!course){ state.course=state.unit=null; render(); return; }
+      // 学期：没选周 → 周卡；选了周 → 一页里按分组（听力/阅读加写作/口语/本周大纲字）列出各页
+      if(course.weeks){
+        const wk=state.unit?course.weeks.find(w=>w.id===state.unit):null;
+        if(!wk){ state.unit=null; listEl.innerHTML=grid(course.weeks.map(weekCard).join("")); return; }
+        listEl.innerHTML=grid((wk.groups||[]).map(gr=>`<div class="secdiv">${gr.ico||""} ${gr.name}</div>`+
+          ((gr.sections||[]).length?(gr.sections||[]).map(s=>linkCard({url:s.url,title:s.title,ready:s.ready,tags:s.tags||[]})).join(""):`<div class="lcard soon"><div class="no"><span class="badge">敬请期待</span></div></div>`)).join(""));
+        return;
+      }
       const ov = course.overview
         ? `<a class="lcard" href="${course.overview}"><div class="no">📖 课文总览</div><div class="tt">全文朗读 + 分节</div><div class="cnt">先从这里开始</div></a>`
         : "";
@@ -188,6 +218,7 @@
     const el=e.target.closest('[data-cat],[data-course],[data-skill],[data-unit],[data-nav]'); if(!el)return;
     if(el.dataset.nav==="grade"){state.cat=state.course=state.skill=state.unit=null;}
     else if(el.dataset.nav==="cat"){state.course=state.skill=state.unit=null;}
+    else if(el.dataset.nav==="course"){state.unit=null;}
     else if(el.dataset.cat){state.cat=el.dataset.cat;state.course=null;state.skill=null;state.unit=null;}
     else if(el.dataset.course){state.course=el.dataset.course;}
     else if(el.dataset.skill){state.skill=el.dataset.skill;}

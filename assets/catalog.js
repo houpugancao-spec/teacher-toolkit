@@ -20,6 +20,44 @@ window.CATALOG = {
     {
       id:"prep", name:"VCE准备",
       lecture:[
+        // ── 10 年级教材（2026-11-23 起）：学期 T1–T4 › 周 WK1–9 › 分组 › 页 ──
+        // 有 weeks[] 的条目是「学期」；index.html / lesson.js 按 学期›周›分组 显示，孔子/诸葛亮等旧课不受影响。
+        // 生成脚本 2026_claude_VCEteaching\06_Scripts\y10_u1_jia\web_w1.py；听力题目和答案只在纸面卷，不上网站
+        {
+          id:"y10-t1", no:"T1", title:"第一学期", topic:"家 · 学校",
+          weeks:[
+            { id:"t1-wk1", no:"WK1", title:"自我介绍", groups:[
+              { name:"听力", ico:"🎧", sections:[
+                { id:"t1-wk1-1", n:1, title:"Text 1 · 新同学自我介绍", url:"units/t1-wk1/1.html", ready:true,
+                  tags:["听力","自我介绍","新同学","词卡","跟读"] },
+                { id:"t1-wk1-2", n:2, title:"Text 2 · 在学校办公室填入学表格", url:"units/t1-wk1/2.html", ready:true,
+                  tags:["听力","入学表格","生日","电话号码","词卡","跟读"] },
+                { id:"t1-wk1-3", n:3, title:"Text 3 · 新笔友的语音留言", url:"units/t1-wk1/3.html", ready:true,
+                  tags:["听力","笔友","语音留言","词卡","跟读"] }
+              ]},
+              { name:"阅读加写作", ico:"📖", sections:[
+                { id:"t1-wk1-4", n:4, title:"句式", url:"units/t1-wk1/4.html", ready:true,
+                  tags:["句式","姓","叫","岁","住在","生日","爱好","选词","语序","改错"] },
+                { id:"t1-wk1-r", n:5, title:"阅读", ready:false },
+                { id:"t1-wk1-g", n:6, title:"看题判断文体", ready:false }
+              ]},
+              { name:"口语", ico:"🗣️", sections:[
+                { id:"t1-wk1-5", n:7, title:"介绍自己 · 新朋友见面", url:"units/t1-wk1/5.html", ready:true,
+                  tags:["口语","介绍自己","新朋友见面","对话"] }
+              ]},
+              { name:"本周大纲字", ico:"🔤", sections:[
+                { id:"t1-wk1-6", n:8, title:"67 字 · 74 张字卡", url:"units/t1-wk1/6.html", ready:true,
+                  tags:["大纲字","字卡","姓名","国籍","学校","爱好"] }
+              ]}
+            ]},
+            { id:"t1-wk2", no:"WK2", title:"家人" },
+            { id:"t1-wk3", no:"WK3" }, { id:"t1-wk4", no:"WK4" }, { id:"t1-wk5", no:"WK5" },
+            { id:"t1-wk6", no:"WK6" }, { id:"t1-wk7", no:"WK7" }, { id:"t1-wk8", no:"WK8" }, { id:"t1-wk9", no:"WK9" }
+          ]
+        },
+        { id:"y10-t2", no:"T2", title:"第二学期", weeks:[] },
+        { id:"y10-t3", no:"T3", title:"第三学期", weeks:[] },
+        { id:"y10-t4", no:"T4", title:"第四学期", weeks:[] },
         {
           id:"kongzi", no:"第九课", title:"孔子", topic:"人物·文化",
           overview:"units/kongzi/index.html",      // 课文总览页（《学而不厌》全文朗读+划线词+分节）
