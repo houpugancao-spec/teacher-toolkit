@@ -39,7 +39,7 @@
   .devhelp summary{cursor:pointer;color:var(--blue-d);font-weight:600;line-height:1.5}
   .devhelp ol{margin:10px 0 6px;padding-left:22px;line-height:1.7}
   .devhelp p{margin:6px 0;line-height:1.6}
-  .devhelp .en{font-size:12.5px;color:var(--muted)}
+  .devhelp .en{display:block;font-size:12px;font-weight:400;color:var(--muted);line-height:1.45;margin-top:1px}
 </style>
 </head>
 <body>
@@ -63,14 +63,17 @@
     <div class="hint" id="hint"></div>
     <!-- 换设备说明（2026-11-23 用户：标注在注册页，方便学生查看）-->
     <details class="devhelp">
-      <summary>📱 一个账号同一时间只能在一台设备上用 · 换设备怎么办？</summary>
+      <summary>📱 一个账号同一时间只能在一台设备上用 · 换设备怎么办？<small class="en">One account works on one device at a time · How to switch devices?</small></summary>
       <ol>
-        <li>在新设备（比如电脑）上，用<b>同一个邮箱和密码</b>登录。</li>
-        <li>看到「这个账号正在另一台设备上使用」，点蓝色按钮<b>「在这台设备继续用」</b>。</li>
-        <li>旧设备会自动下线。想换回去，在旧设备上同样点一次就行。</li>
+        <li>在新设备（比如电脑）上，用<b>同一个邮箱和密码</b>登录。
+          <small class="en">On the new device (e.g. a computer), log in with the same email and password.</small></li>
+        <li>看到「这个账号正在另一台设备上使用」，点蓝色按钮<b>「在这台设备继续用」</b>。
+          <small class="en">When you see “This account is in use on another device”, tap the blue “Use it here” button.</small></li>
+        <li>旧设备会自动下线。想换回去，在旧设备上同样点一次就行。
+          <small class="en">The old device is signed out automatically. To switch back, do the same on the old device.</small></li>
       </ol>
-      <p>💡 用学校或别人的电脑，用完一定点页面上方的<b>「🚪 退出」</b>，不然下一个人能用你的账号。</p>
-      <p class="en">One account works on one device at a time. To switch: log in on the new device and tap “Use it here” — the old device is signed out. Always log out on shared computers.</p>
+      <p>💡 用学校或别人的电脑，用完一定点页面上方的<b>「🚪 退出」</b>，不然下一个人能用你的账号。
+        <small class="en">On a school or shared computer, always tap “🚪 Log out” at the top when you finish, or the next person can use your account.</small></p>
     </details>
   </div>
 
