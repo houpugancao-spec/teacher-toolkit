@@ -93,6 +93,10 @@
     if (!id) { show("<h2>缺少课程编号</h2><p>Missing lesson id.</p><a class='btn' href='../../index.html'>返回首页</a>"); return; }
     if (!A.isLoggedIn()) { toLogin(); return; }
 
+    // 老师账号（2026-11-23 用户：老师可以多台设备同时用）：跳过审批状态和单设备锁；
+    // 老师本来就能读全部受保护课（数据库 vce_lessons_teacher_all），不占设备锁也拉得到内容
+    const teacher = await A.isTeacher();
+    if (!teacher) {
     // 校验档案状态
     const p = await A.getProfile();
     if (!p) { toLogin(); return; }
@@ -129,6 +133,7 @@
       return;
     }
     if (r === "not_allowed") { toLogin(); return; }
+    }   // ← 学生账号的审批 / 单设备检查到此为止
 
     // 拉取受保护内容（RLS 按 tier 放行）
     let row;
@@ -149,7 +154,7 @@
     s.src = "../../assets/lesson.js";
     s.onload = async () => {
       addLogoutButton();
-      const teacher = await A.isTeacher();        // 老师：只显品牌行，投屏不漏邮箱
+      // 老师：只显品牌行，投屏不漏邮箱（teacher 上面已查过）
       applyWatermark(A.currentEmail(), teacher);
       armAntiCopy();
     };

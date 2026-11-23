@@ -57,6 +57,22 @@
   .modal-box p{margin:0 0 14px;line-height:1.6;font-size:15px}
   .modal-box button{display:block;width:100%;margin-top:8px;padding:11px 0;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;border:1.5px solid var(--line);background:#fff}
   .modal-box .danger{background:#c0392b;border-color:#c0392b;color:#fff}
+  /* 手机排版（2026-11-23 用户：手机上超出宽度）：账号一行变两层——上面姓名/年级/到期，下面按钮自动换行、按钮加大好点 */
+  .chk small{word-break:break-all}
+  @media (max-width:640px){
+    .topbar #who{display:none!important}
+    .tabs{gap:5px}
+    .tabs .tab{padding:7px 10px;font-size:13px}
+    .controls select,.controls button{flex:1 1 44%;min-width:0;padding:9px 8px}
+    #viewAccounts .chk{flex-direction:column;align-items:stretch;gap:8px;padding:11px 12px}
+    #viewAccounts .chk .st{white-space:normal;display:flex;flex-wrap:wrap;gap:6px}
+    #viewAccounts .chk .st .tab{flex:1 1 30%;min-height:40px;padding:6px 8px!important;font-size:14px;text-align:center}
+    #viewAccounts .chk .st select.tab{flex:1 1 30%}
+    .purge-note{font-size:13px}
+    table.res{font-size:12.5px}
+    table.res th,table.res td{padding:7px 6px}
+    .modal-box{padding:18px 16px}
+  }
 </style>
 </head>
 <body>

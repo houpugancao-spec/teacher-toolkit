@@ -35,6 +35,11 @@
   .gswitch.need a{border-color:var(--blue);font-size:15px;padding:6px 14px}
   .tosignup{display:block;width:100%;margin-top:12px;padding:11px 0;background:#fff;color:var(--blue-d);border:1.5px solid var(--blue);border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
   [hidden]{display:none!important}
+  .devhelp{margin-top:16px;border-top:1px dashed var(--line);padding-top:12px;font-size:14px;color:#33415c}
+  .devhelp summary{cursor:pointer;color:var(--blue-d);font-weight:600;line-height:1.5}
+  .devhelp ol{margin:10px 0 6px;padding-left:22px;line-height:1.7}
+  .devhelp p{margin:6px 0;line-height:1.6}
+  .devhelp .en{font-size:12.5px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -53,8 +58,20 @@
     <div class="fld"><label>密码 Password</label><input id="password" type="password" autocomplete="current-password" placeholder="至少 6 位 at least 6"></div>
     <button class="btn" id="submitBtn">登录 Log in</button>
     <div class="msg" id="msg"></div>
+    <button class="btn" id="takeover" style="margin-top:10px" hidden>在这台设备继续用 Use it here</button>
     <button class="tosignup" id="toSignup" hidden></button>
     <div class="hint" id="hint"></div>
+    <!-- 换设备说明（2026-11-23 用户：标注在注册页，方便学生查看）-->
+    <details class="devhelp">
+      <summary>📱 一个账号同一时间只能在一台设备上用 · 换设备怎么办？</summary>
+      <ol>
+        <li>在新设备（比如电脑）上，用<b>同一个邮箱和密码</b>登录。</li>
+        <li>看到「这个账号正在另一台设备上使用」，点蓝色按钮<b>「在这台设备继续用」</b>。</li>
+        <li>旧设备会自动下线。想换回去，在旧设备上同样点一次就行。</li>
+      </ol>
+      <p>💡 用学校或别人的电脑，用完一定点页面上方的<b>「🚪 退出」</b>，不然下一个人能用你的账号。</p>
+      <p class="en">One account works on one device at a time. To switch: log in on the new device and tap “Use it here” — the old device is signed out. Always log out on shared computers.</p>
+    </details>
   </div>
 
   <a class="backlink" href="index.html">← 返回首页 Back to home</a>
@@ -111,7 +128,19 @@
       ? "注册后请等老师批准。账号有效到当年 12 月 15 日，同一时间只能在一台设备上用。<br>Wait for teacher approval after registering. Accounts last until 15 December and work on one device at a time."
       : "";
   }
-  $("gswitch").onclick = e => { const a = e.target.closest("a[data-g]"); if (!a) return; grade = a.dataset.g; renderGrade(); clearMsg(); };
+  $("takeover").onclick = async () => {
+    const b = $("takeover"); b.disabled = true; b.textContent = "切换中… Switching…";
+    try {
+      await A.claimRelease();
+      const r2 = await A.claimSession();
+      if (r2 === "claimed" || r2 === "ok" || r2 === "took_over") { location.href = next; return; }
+      throw new Error(r2);
+    } catch (e) {
+      b.disabled = false; b.textContent = "在这台设备继续用 Use it here";
+      msg("切换没成功，请再点一次；还不行请联系老师。(" + ((e && e.message) || "") + ")", "err");
+    }
+  };
+  $("gswitch").onclick =e => { const a = e.target.closest("a[data-g]"); if (!a) return; grade = a.dataset.g; renderGrade(); clearMsg(); };
   $("toSignup").onclick = () => setMode("signup");
 
   function setMode(m){
@@ -121,6 +150,7 @@
     $("submitBtn").textContent = m==="login" ? "登录 Log in" : "注册 Register";
     $("password").autocomplete = m==="login" ? "current-password" : "new-password";
     $("nameFld").hidden = m!=="signup";   // 姓名栏只在注册时出现
+    $("takeover").hidden = true;
     renderGrade();
     clearMsg();
   }
@@ -129,6 +159,8 @@
 
   // 登录/注册成功后：查 profile → 决定去向
   async function routeAfterAuth(){
+    // 老师账号（2026-11-23 用户：老师可以多台设备同时用）：不占单设备锁、不看审批状态，直接进
+    if (await A.isTeacher()) { location.href = next; return; }
     const p = await A.getProfile();
     if (!p) { msg("账号已创建，正在等待建档…请稍后重试登录", "info"); return; }
     if (p.status === "pending") {
@@ -145,8 +177,9 @@
       msg("登录中…占用设备锁…", "info");
       const r = await A.claimSession();
       if (r === "occupied") {
-        msg("⚠️ 此账号已在另一台设备登录。一个账号只能用一台设备。请先在那台设备退出，或联系老师解除。\nAlready logged in on another device.", "err");
-        await A.logout();   // 不放行
+        // 学生自己换设备（同受保护页的做法）：点按钮 = 放掉旧设备、占到这台；不点就不放行
+        msg("⚠️ 这个账号正在另一台设备上使用。一个账号同一时间只能在一台设备上用。\n想换到这台设备：点下面的蓝色按钮，另一台设备会自动下线。\nThis account is in use on another device. Tap the button to use it here.", "err");
+        $("takeover").hidden = false;
         return;
       }
       if (r === "not_allowed") { msg("账号尚未获批或已过期。Not approved/expired.", "err"); return; }
