@@ -38,15 +38,18 @@ window.CATALOG = {
               { name:"阅读加写作", ico:"📖", sections:[
                 { id:"t1-wk1-4", n:4, title:"句式", url:"units/t1-wk1/4.html", ready:true,
                   tags:["句式","姓","叫","岁","住在","生日","爱好","选词","语序","改错"] },
-                { id:"t1-wk1-r", n:5, title:"阅读", ready:false },
-                { id:"t1-wk1-g", n:6, title:"看题判断文体", ready:false }
+                { id:"t1-wk1-7", n:5, title:"阅读 · 新学校的第一天", url:"units/t1-wk1/7.html", ready:true,
+                  tags:["阅读","日记","记叙文","生词","阅读理解","审题"] },
+                { id:"t1-wk1-8", n:6, title:"范文词句 · 认识新同学", url:"units/t1-wk1/8.html", ready:true,
+                  tags:["范文","词卡","句式","既…又…","难道","果然","结构"] },
+                { id:"t1-wk1-g", n:7, title:"看题判断文体", ready:false }
               ]},
               { name:"口语", ico:"🗣️", sections:[
-                { id:"t1-wk1-5", n:7, title:"介绍自己 · 新朋友见面", url:"units/t1-wk1/5.html", ready:true,
+                { id:"t1-wk1-5", n:8, title:"介绍自己 · 新朋友见面", url:"units/t1-wk1/5.html", ready:true,
                   tags:["口语","介绍自己","新朋友见面","对话"] }
               ]},
               { name:"本周大纲字", ico:"🔤", sections:[
-                { id:"t1-wk1-6", n:8, title:"67 字 · 74 张字卡", url:"units/t1-wk1/6.html", ready:true,
+                { id:"t1-wk1-6", n:9, title:"67 字 · 74 张字卡", url:"units/t1-wk1/6.html", ready:true,
                   tags:["大纲字","字卡","姓名","国籍","学校","爱好"] }
               ]}
             ]},
